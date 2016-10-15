@@ -138,16 +138,13 @@ if [ -d ../home ]; then
 	cp -nr ../home/* ~ 
 fi
 
-if [ ! -d ~/bin ]; then
-	mkdir ~/bin
-fi
-
 if [ -d bin ]; then
-	cp -nr bin/* ~/bin
+	sudo chmod +x bin/*
+	# cp -nr bin/* ~/bin
 fi
 
-if [ -d ~/bin ]; then
-	sudo chmod +x ~/bin/*
+if [ ! -d ~/bin ]; then
+	ln -s "$PWD/bin" ~/bin
 fi
 
 if [ ! -d /links ]; then
