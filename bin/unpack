@@ -1,0 +1,37 @@
+#!/bin/sh
+
+if [ "$1" = "" ]; then
+	echo No file specified
+fi  
+
+if [ "${1##*.}" = "ace" ]; then
+	echo Unpacking ace file
+	/usr/local/bin/unace e "$1" 
+fi  
+
+if [ "${1##*.}" = "rar" ]; then
+	echo Unpacking rar file
+	/usr/local/bin/unrar e "$1"
+fi
+
+if [ "${1##*.}" = "zip" ]; then
+	echo Unpacking zip file
+	/usr/bin/unzip "$1"
+fi
+
+if [ "${1##*.}" = "tar" ]; then
+	echo Unpacking tar file
+	/bin/tar -xf "$1"
+fi
+
+if [ "${1##*.}" = "gz" ]; then
+	echo Unpacking gzip file	
+	/bin/gunzip -c "$1" | tar -xf -		
+fi
+
+if [ "${1##*.}" = "bz2" ]; then
+	echo Unpacking bzip file
+	/usr/bin/bunzip2 -c "$1" | tar -xf -		
+fi
+
+

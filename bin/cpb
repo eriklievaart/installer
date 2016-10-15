@@ -1,0 +1,3 @@
+#!/bin/sh
+cd ~/Public/cpb
+java -client -classpath .:cpb.jar:lib/* boot.Main "$@"

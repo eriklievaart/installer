@@ -1,0 +1,33 @@
+
+# remove old files
+rm -f test.sh
+rm -f live.sh
+rm -f put.zip
+
+echo ""
+ls -l files
+echo ""
+
+# create scripts
+java -jar ~/Public/email/email.jar
+
+if [ -a test.sh ]
+then
+	chmod a+x test.sh
+	chmod a+x live.sh
+
+	# edit message
+	vi message.txt
+
+	# zip all files
+	zip put test.sh live.sh message.txt files/*
+
+	# send zip to server
+	read -p "Send (y/n)?" SEND
+	if [ "$SEND" == "y" ]; then
+		echo "uploading zip";
+		curl -X PUT "http://eriklievaart.com/put" -F "file=@put.zip" -b "JSESSIONID=cookievalue"
+	else
+		echo "user abort";
+	fi
+fi

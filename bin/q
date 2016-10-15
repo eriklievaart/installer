@@ -1,0 +1,2 @@
+cd ~/Public/q
+java -client -classpath .:q.jar:lib/* boot.Main

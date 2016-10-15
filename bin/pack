@@ -1,0 +1,17 @@
+#!/bin/sh
+input=$1
+if [ "${input}" = "" ]; then
+	echo "No file specified"
+else
+	input=$1
+	length=${#input}
+
+	if [ "${input:length-1}" = "/" ]; then
+		tar -cf "${input:0:length-1}"".tar" $1
+		gzip "${input:0:length-1}"".tar"
+	else
+		tar -cf $1".tar" $1
+		gzip $1".tar"	
+	fi
+fi
+

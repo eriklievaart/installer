@@ -1,0 +1,3 @@
+
+scp /media/2000WD/backup/programming/projects/alive/upload/workspace/build/spool/zip/upload.war root@eriklievaart.com:/home/tomcat/webapps
+

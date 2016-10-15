@@ -1,0 +1,4 @@
+df -h;
+echo
+rm -rf /media/1500GB/.Trash-1000/files
+df -h

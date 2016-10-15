@@ -1,0 +1,2 @@
+cd ~/Public/links
+java -client -classpath .:url.jar:lib/* boot.Main

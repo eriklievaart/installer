@@ -1,0 +1,1 @@
+find ~/Downloads/ -name "*.nzb" -exec rm {} \;
