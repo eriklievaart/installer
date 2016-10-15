@@ -3,5 +3,5 @@
 if [ "$1" = "" ]; then
         firefox http://www.anidb.info
 else
- 	firefox http://anidb.net/perl-bin/animedb.pl?adb.search=$1&show=animelist&do.search=search
+ 	firefox "http://anidb.net/perl-bin/animedb.pl?adb.search=$1&show=animelist&do.search=search"
 fi

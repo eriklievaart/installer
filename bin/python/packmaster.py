@@ -10,6 +10,7 @@ from pathlib import Path
 
 root = os.getcwd()
 root_path = Path(root)
+print("running packmaster in: " + root)
 
 
 def unpack(glob, command, flag):
