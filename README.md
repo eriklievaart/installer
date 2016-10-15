@@ -1,3 +1,7 @@
+
+
+```
+#!shell
 sudo apt-get install -y git
 sudo mkdir /opt/zelfgemaakt
 cd !$
@@ -6,3 +10,6 @@ git clone https://bitbucket.org/Lievaart/installer.git
 cd installer
 sudo sh install.sh
 shutdown -r now
+
+
+```
