@@ -119,8 +119,6 @@ install mplayer
 install xine-ui
 install vlc
 install kaffeine
-# HVEC codec
-sudo apt-get install vlc-plugin-libde265
 
 install gparted
 install filelight
@@ -140,8 +138,11 @@ if [ -d ../home ]; then
 	cp -nr ../home/* ~ 
 fi
 
-if [ -d bin ]; then
+if [ ! -d ~/bin ]; then
 	mkdir ~/bin
+fi
+
+if [ -d bin ]; then
 	cp -nr bin/* ~/bin
 fi
 
@@ -166,7 +167,5 @@ if(! java -version 2>&1 | grep "version" | grep $JAVA_VERSION)
 then
 	echo "expecting java $JAVA_VERSION"
 fi
-
-
 
 
