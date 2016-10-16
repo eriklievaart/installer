@@ -1,4 +1,6 @@
 
+import settings
+
 import csv
 import os
 import os.path
@@ -10,9 +12,9 @@ from pathlib import Path
 
 
 class Ontologies:
-    alive = '/media/2000WD/backup/programming/projects/alive'
-    storage = os.path.join(alive, 'hg-index.csv')
-    path = Path(alive)
+    config = settings.read_settings()
+    storage = os.path.join(config['alive_dir'], 'hg-index.csv')
+    path = Path(config['alive_dir'])
 
 
 
@@ -20,7 +22,7 @@ def readIndex():
     tuples = []
     if not os.path.exists(Ontologies.storage):
         return None
-    print('reading cache: ' + Ontologies.storage)
+    print('reading cache: ' + Ontologies.storage + '\n')
     tuples = []
     with open(Ontologies.storage, newline='') as csvfile:
         reader = csv.reader(csvfile, delimiter=';', quotechar='|')

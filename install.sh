@@ -5,7 +5,7 @@ set -e                    # fail on errors
 sh -n install.sh          # check this file for syntax errors before executing it
 
 HOME=~
-LOGFILE=/var/log/installer_$(date +%y-%m-%d_%T).log
+LOGFILE=/tmp/installer_$(date +%y-%m-%d_%T).log
 UP_TO_DATE=false
 JAVA_PKG="openjdk-8-jdk"
 JAVA_VERSION="1.8"
@@ -31,7 +31,7 @@ check_status() {
 update_once() {
 	if [ $UP_TO_DATE ]
 	then
-		apt-get update
+		sudo apt-get update
 		check_status $?
 		UP_TO_DATE=true
 	fi
@@ -42,7 +42,7 @@ install() {
 	then
 		update_once
 		log "Installing $1."
-		apt-get -y install $1
+		sudo apt-get -y install $1
 		check_status $?
 	else
 		log "$1 is already installed"
@@ -50,17 +50,14 @@ install() {
 }
 
 if [ "$(id -u)" = "0" ]; then
-	echo "running with root priviliges"
-else
-	echo "usage: sudo sh install.sh"
-	die "This script must be run with root priviliges"
+	echo "usage: sh install.sh"
+	die "This script must be run as a normal user, not as root"
 fi
 
 if [ "$HOME" = "/root" ]; then
 	echo "usage: sudo sh install.sh"
 	die "run script with root priviliges, not as root user"
 fi
-
 
 sudo ufw enable # enable firewall
 echo ""
@@ -135,22 +132,25 @@ git config --global user.email "nospam@eriklievaart.com"
 
 # install my own creations
 if [ -d ../home ]; then
+	echo "copying files in home"
 	cp -nr ../home/* ~ 
 fi
 
-if [ -d bin ]; then
-	sudo chmod +x bin/*
-	# cp -nr bin/* ~/bin
+if [ ! -d ~/bin ]; then
+	mkdir ~/bin
 fi
 
-if [ ! -d ~/bin ]; then
-	ln -s "$PWD/bin" ~/bin
+if [ -d bin ]; then
+	echo "copying scripts in bin"
+	cp -nr bin/* ~/bin
+	sudo chmod +x ~/bin/*
 fi
 
 if [ ! -d /links ]; then
-	mkdir /links
-	chmod -R a+r /links
-	sudo ln -s /media/2000WD/backup/programming/resources/api/ /links/api
+	echo "creating links"
+	sudo mkdir /links
+	sudo chmod -R a+r /links
+	ln -s /media/2000WD/backup/programming/resources/api/ /links/api
 fi
 
 
