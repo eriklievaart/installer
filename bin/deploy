@@ -1,3 +1,6 @@
 
-scp /media/2000WD/backup/programming/projects/alive/upload/workspace/build/spool/zip/upload.war root@eriklievaart.com:/home/tomcat/webapps
+source ~/Public/settings.cfg
+echo "war = $war_file"
+
+scp $war_file root@eriklievaart.com:/home/tomcat/webapps
 
