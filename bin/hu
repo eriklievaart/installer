@@ -1,0 +1,2 @@
+cd ~/Public/hungarian
+java -client -classpath .:hungarian.jar:lib/* boot.Main

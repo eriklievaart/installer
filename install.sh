@@ -87,9 +87,6 @@ sudo cp -n /etc/default/grub /etc/default/grub.original
 sudo sed -i s/#[[:space:]]*GRUB_TERMINAL/GRUB_TERMINAL/ /etc/default/grub
 sudo update-grub
 
-# install drives
-sudo python3 fstab.py
-
 
 
 
@@ -98,6 +95,7 @@ install gedit
 install vim-gnome
 install kdiff3
 
+install gnome-terminal
 install pal
 install par2
 install unrar
@@ -110,7 +108,6 @@ install git-gui
 install tortoisehg
 install $JAVA_PKG
 install python3
-install apt-mirror
 
 install mplayer
 install xine-ui
@@ -124,9 +121,13 @@ install sabnzbdplus
 install synaptic
 install partimage
 install virtualbox-qt
+install android-tools-fastboot
 
-git config --global user.name "Erik Lievaart"
-git config --global user.email "nospam@eriklievaart.com"
+git config --global user.name "Jantje"
+git config --global user.email "nospam@example.com"
+
+# install drives
+sudo python3 fstab.py
 
 
 

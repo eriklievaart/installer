@@ -1,6 +1,6 @@
 
-source ~/Public/settings.cfg
+source ~/settings.cfg
 echo "war = $war_file"
 
-scp $war_file root@eriklievaart.com:/home/tomcat/webapps
+scp $war_file nospam@eriklievaart.com:/opt/tomcat/current/webapps
 

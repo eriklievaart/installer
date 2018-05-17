@@ -4,7 +4,7 @@ import os
 
 def read_settings():
 	home = os.getenv("HOME")
-	path = home + '/Public/settings.cfg'
+	path = home + '/bin/settings.cfg'
 	print('reading: ' + path)
 
 	settings = {}

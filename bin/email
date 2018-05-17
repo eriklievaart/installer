@@ -1,12 +1,21 @@
 
+cd ~/Public/email/test
+
 # remove old files
 rm -f test.sh
 rm -f live.sh
 rm -f put.zip
+rm -f attachments.zip
 
 echo ""
-ls -l files
+tree files
 echo ""
+
+echo "Clear files (y/n)?"
+read clear
+if [ "$clear" = "y" ]; then
+	rm -rf files/*
+fi
 
 # create scripts
 java -jar ~/Public/email/email.jar
@@ -20,7 +29,8 @@ then
 	vi message.txt
 
 	# zip all files
-	zip put test.sh live.sh message.txt files/*
+	zip -r attachments files/*
+	zip put test.sh live.sh message.txt attachments.zip
 
 	# send zip to server
 	read -p "Send (y/n)?" SEND

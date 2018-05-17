@@ -1,0 +1,2 @@
+cd ~/Public/synch
+java -client -classpath .:synch.jar:lib/* boot.Main

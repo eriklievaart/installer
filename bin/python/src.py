@@ -14,6 +14,7 @@ def invoke(p):
     print("Select action for " + p[2])
     print('c) commit')
     print('d) diff')
+    print('m) merge')
     print('p) push')
     print('u) pull & update')
     print('revert) revert')
@@ -26,6 +27,9 @@ def invoke(p):
         subprocess.call(['/usr/bin/hg', 'commit'])
     if command == 'd':
         subprocess.call(['/usr/bin/hg', 'diff', '-w'])
+    if command == 'm':
+        subprocess.call(['/usr/bin/hg', 'merge'])
+        subprocess.call(['/usr/bin/hg', 'commit'])
     if command == 'p':
         subprocess.call(['/usr/bin/hg', 'push', 'https://Lievaart@bitbucket.org/Lievaart/' + project[1]])
     if command == 'u':
