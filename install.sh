@@ -147,14 +147,6 @@ if [ -d bin ]; then
 	sudo chmod +x ~/bin/*
 fi
 
-if [ ! -d /links ]; then
-	echo "creating links"
-	sudo mkdir /links
-	sudo chmod -R a+r /links
-	ln -s /media/2000WD/backup/programming/resources/api/ /links/api
-fi
-
-
 echo ""
 
 
