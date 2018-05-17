@@ -11,7 +11,7 @@ git clone https://bitbucket.org/Lievaart/installer.git
 
 # run install script
 cd installer
-sudo sh install.sh
+sh install.sh
 shutdown -r now
 
 
