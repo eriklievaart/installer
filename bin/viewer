@@ -1,2 +1,0 @@
-cd ~/Public/viewer
-java -client -classpath .:viewer.jar:lib/* boot.Main

@@ -1,2 +1,0 @@
-cd ~/Public/antastic
-java -client -classpath .:antastic.jar:lib/* boot.Main

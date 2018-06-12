@@ -1,0 +1,16 @@
+
+skip.test=true
+skip.checkstyle=true
+
+pb-parser     master-jar
+javalightning master-jar
+toolkit       master-jar
+
+antastic      master-deploy-jar
+doclauncher   master-deploy-jar
+links         master-deploy-jar
+refactor      master-deploy-jar
+regex         master-deploy-jar
+
+# q             master-deploy-jar
+
