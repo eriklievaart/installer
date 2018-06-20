@@ -2,15 +2,15 @@
 skip.test=true
 skip.checkstyle=true
 
-pb-parser     master-jar
-javalightning master-jar
-toolkit       master-jar
+pb-parser     master-install
+javalightning master-install
+toolkit       master-install
 
-antastic      master-deploy-jar
-doclauncher   master-deploy-jar
-links         master-deploy-jar
-refactor      master-deploy-jar
-regex         master-deploy-jar
+antastic      master-jar-deploy
+doclauncher   master-jar-deploy
+links         master-jar-deploy
+refactor      master-jar-deploy
+regex         master-jar-deploy
 
-# q             master-deploy-jar
+# q             master-jar-deploy
 

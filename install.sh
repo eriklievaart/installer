@@ -11,20 +11,16 @@ UP_TO_DATE=false
 JAVA_PKG="openjdk-8-jdk"
 JAVA_VERSION="1.8"
 
-CHECKSTYLE_VERSION=6.14.1
+CHECKSTYLE_VERSION=8.11
 CHECKSTYLE_DESTINATION=~/Applications/checkstyle/checkstyle.jar
 CHECKSTYLE_CACHE="../cache/checkstyle/checkstyle-$CHECKSTYLE_VERSION.jar"
-CHECKSTYLE_URL="https://cytranet.dl.sourceforge.net/project/checkstyle/checkstyle/$CHECKSTYLE_VERSION/checkstyle-$CHECKSTYLE_VERSION-all.jar"
+CHECKSTYLE_URL="https://github.com/checkstyle/checkstyle/releases/download/checkstyle-$CHECKSTYLE_VERSION/checkstyle-$CHECKSTYLE_VERSION-all.jar"
 
 ANT_JUNIT_VERSION=1.8.4
 ANT_JUNIT_DESTINATION=~/.ant/lib/ant-junit.jar
 ANT_JUNIT_CACHE="../cache/ant-junit/ant-junit-$ANT_JUNIT_VERSION.jar"
 ANT_JUNIT_URL="https://repo1.maven.org/maven2/org/apache/ant/ant-junit/$ANT_JUNIT_VERSION/ant-junit-$ANT_JUNIT_VERSION.jar"
 
-ANT_CONTRIB_VERSION=1.0b2
-ANT_CONTRIB_DESTINATION=~/.ant/lib/ant-contrib.jar
-ANT_CONTRIB_CACHE="../cache/ant-junit/ant-contrib-$ANT_CONTRIB_VERSION.jar"
-ANT_CONTRIB_URL="https://cytranet.dl.sourceforge.net/project/ant-contrib/ant-contrib/ant-contrib-$ANT_CONTRIB_VERSION/ant-contrib-$ANT_CONTRIB_VERSION-bin.zip"
 
 
 
@@ -132,6 +128,30 @@ if [ ! -z "$(sudo grep '# *GRUB_TERMINAL' /etc/default/grub)" ]; then
 	sudo update-grub
 fi
 
+# register shortcuts for window snapping
+XFCE_SHORTCUTS_FILE=~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
+XFCE_SHORTCUTS_BACKUP="$XFCE_SHORTCUTS_FILE.bak"
+xfce_set() {
+        key="/xfwm4/custom/$1"
+        action="$2"
+        xfconf-query -c xfce4-keyboard-shortcuts -p "$key" -r -R                           # delete previous binding
+        xfconf-query --create -c xfce4-keyboard-shortcuts -t string -p "$key" -s "$action" # and set the new binding
+}
+if [ ! -f "$XFCE_SHORTCUTS_BACKUP" -a -f $XFCE_SHORTCUTS_FILE ]
+then
+	cp -n "$XFCE_SHORTCUTS_FILE" "$XFCE_SHORTCUTS_BACKUP"
+	xfce_set '<Primary><Shift>KP_Begin'     "maximize_window_key"
+	xfce_set '<Primary><Shift>KP_Home'      "tile_up_left_key"
+	xfce_set '<Primary><Shift>KP_Page_Up'   "tile_up_right_key"
+	xfce_set '<Primary><Shift>KP_End'       "tile_down_left_key"
+	xfce_set '<Primary><Shift>KP_Page_Down' "tile_down_right_key"
+	xfce_set '<Primary><Shift>KP_Left'      "tile_left_key"
+	xfce_set '<Primary><Shift>KP_Right'     "tile_right_key"
+	xfce_set '<Primary><Shift>KP_Up'        "tile_up_key"
+	xfce_set '<Primary><Shift>KP_Down'      "tile_down_key"
+fi
+
+
 
 
 # install default software
@@ -168,16 +188,8 @@ install virtualbox-qt
 install android-tools-fastboot
 
 log "installing eclipse"
-sh install-eclipse-minimal.sh >> $LOG_FILE
+sh eclipse-minimal.sh >> $LOG_FILE
 
-
-
-
-# smoke tests
-if (! java -version 2>&1 | grep "version" | grep $JAVA_VERSION)
-then
-	echo "expecting java $JAVA_VERSION"
-fi
 
 
 
@@ -197,14 +209,7 @@ fi
 fetch_url $CHECKSTYLE_CACHE  $CHECKSTYLE_URL  $CHECKSTYLE_DESTINATION
 fetch_url $ANT_JUNIT_CACHE   $ANT_JUNIT_URL   $ANT_JUNIT_DESTINATION
 
-if [ ! -f $ANT_CONTRIB_DESTINATION ]
-then
-	fetch_url $ANT_CONTRIB_CACHE $ANT_CONTRIB_URL
-	rm -rf /tmp/contrib
-	mkdir -p /tmp/contrib
-	unzip $ANT_CONTRIB_CACHE -d /tmp/contrib
-	find /tmp/contrib/ -name *.jar -exec mv {} $ANT_CONTRIB_DESTINATION \;
-fi
+
 
 # cd projects
 # sh projects.sh
@@ -214,6 +219,14 @@ fi
 
 # turn on numlock automatically, is this line necessary? Needs testing
 # /usr/bin/numlockx on
+
+
+
+# smoke tests
+if (! java -version 2>&1 | grep "version" | grep $JAVA_VERSION)
+then
+	echo "expecting java $JAVA_VERSION"
+fi
 
 
 
