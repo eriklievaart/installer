@@ -14,17 +14,23 @@ parents() {
 
 
 
-[ "$#" -ge 3 ] || die "3 arguments required: [CACHE_FILE] [URL] [FILE]..."
+[ "$#" -ge 2 ] || die "2 arguments required: [CACHE_FILE] [URL] [FILE]..."
 cache=$1
 url=$2
-
-
 
 
 if [ ! -f $cache ]
 then
 	parents $cache
 	wget $url -O $cache
+fi
+
+# delete cached file if it is empty
+size=$(wc -c < "$cache")
+if [ $size -le 0 ]
+then
+	rm $cache
+	die "downloaded file is empty: '$url'"
 fi
 
 shift 2

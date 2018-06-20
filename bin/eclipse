@@ -1,1 +1,19 @@
-~/Applications/eclipse/eclipse
+
+version=@version@
+home=~/Applications/eclipse
+executable="$home/$version/eclipse"
+
+if [ "$1" ]
+then
+	workspace=~/Development/workspace/$1
+	if [ -d "$workspace" ]
+	then
+		$executable -data $workspace &
+	else
+		echo "not a directory! $workspace"  
+	fi
+else
+	$executable &
+fi
+
+

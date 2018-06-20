@@ -4,6 +4,12 @@ lsblk
 
 DEVICES=$(lsblk -l -o NAME | sed '1d;/sd[a-z][0-9]/!d')
 MOUNTED=$(cat /proc/mounts | sed "/^\/dev/!d;s: .*::" | sort -u)
+FS="vfat ntfs"
+
+if [ "$1" ]
+then
+	FS="$1"
+fi
 
 echo ""
 echo "mounted:"
@@ -17,17 +23,20 @@ do
 	LABEL=$(echo "$FULL_INFO" | sed '/^[ \t]*IdLabel:/!d; s/.*[ \t]//')
 	TYPE=$(echo "$FULL_INFO" | sed '/^[ \t]*IdType:/!d; s/.*[ \t]//')
 
-	if [ "$TYPE" = "ntfs" -o "$TYPE" = "vfat" ]
-	then
-		echo "/dev/$DEVICE $TYPE ($LABEL) => $UUID"
-		if [ "$(echo "$MOUNTED" | grep $DEVICE)" != "" ]
+	for filter in $FS
+	do
+		if [ "$TYPE" = "$filter" ]
 		then
-			echo "already mounted"
-		else
-			udisksctl mount -b "/dev/$DEVICE"
+			echo "/dev/$DEVICE $TYPE ($LABEL) => $UUID"
+			if [ "$(echo "$MOUNTED" | grep $DEVICE)" != "" ]
+			then
+				echo "already mounted"
+			else
+				udisksctl mount -b "/dev/$DEVICE"
+			fi
+			echo ""
 		fi
-		echo ""
-	fi
+	done
 done
 
 

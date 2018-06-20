@@ -21,6 +21,12 @@ ANT_JUNIT_DESTINATION=~/.ant/lib/ant-junit.jar
 ANT_JUNIT_CACHE="../cache/ant-junit/ant-junit-$ANT_JUNIT_VERSION.jar"
 ANT_JUNIT_URL="https://repo1.maven.org/maven2/org/apache/ant/ant-junit/$ANT_JUNIT_VERSION/ant-junit-$ANT_JUNIT_VERSION.jar"
 
+ANT_CONTRIB_VERSION=1.0b2
+ANT_CONTRIB_DESTINATION=~/.ant/lib/ant-contrib.jar
+ANT_CONTRIB_CACHE="../cache/ant-junit/ant-contrib-$ANT_CONTRIB_VERSION.jar"
+ANT_CONTRIB_URL="https://cytranet.dl.sourceforge.net/project/ant-contrib/ant-contrib/ant-contrib-$ANT_CONTRIB_VERSION/ant-contrib-$ANT_CONTRIB_VERSION-bin.zip"
+
+
 
 die() {
     echo >&2 "Error: $@"
@@ -72,7 +78,7 @@ fetch_url() {
 
 	if [ -f $destination ]
 	then
-		echo "already installed: $destination"
+		log "already downloaded: $destination"
 	else
 		sh bin/wgetc $cache_file $url $destination
 	fi
@@ -161,9 +167,9 @@ install partimage
 install virtualbox-qt
 install android-tools-fastboot
 
+log "installing eclipse"
+sh install-eclipse-minimal.sh >> $LOG_FILE
 
-# turn on numlock automatically, is this line necessary? Needs testing
-# /usr/bin/numlockx on
 
 
 
@@ -191,11 +197,23 @@ fi
 fetch_url $CHECKSTYLE_CACHE  $CHECKSTYLE_URL  $CHECKSTYLE_DESTINATION
 fetch_url $ANT_JUNIT_CACHE   $ANT_JUNIT_URL   $ANT_JUNIT_DESTINATION
 
-cd projects
-sh projects.sh
+if [ ! -f $ANT_CONTRIB_DESTINATION ]
+then
+	fetch_url $ANT_CONTRIB_CACHE $ANT_CONTRIB_URL
+	rm -rf /tmp/contrib
+	mkdir -p /tmp/contrib
+	unzip $ANT_CONTRIB_CACHE -d /tmp/contrib
+	find /tmp/contrib/ -name *.jar -exec mv {} $ANT_CONTRIB_DESTINATION \;
+fi
+
+# cd projects
+# sh projects.sh
 
 
 
+
+# turn on numlock automatically, is this line necessary? Needs testing
+# /usr/bin/numlockx on
 
 
 
