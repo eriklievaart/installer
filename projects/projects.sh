@@ -12,19 +12,20 @@ if [ ! -d $git_dir ];then
 	mkdir $git_dir
 fi
 
-for repo in $(sed '/@EOF@/,$ d; s/=>.*//' repos.txt)
+
+for repo in $(curl -s https://api.github.com/users/eriklievaart/repos | jq '.[] | .name' | tr -d '"')
 do
 	repo_dir="$git_dir/$repo"
 	if [ -d $repo_dir ]
 	then
 		echo "repo already exists: $repo_dir"
 	else
-		git clone "https://bitbucket.org/Lievaart/$repo" $repo_dir
+		git clone "https://github.com/eriklievaart/$repo" $repo_dir
 	fi
 done
 
 echo "building ws"
-ant -f "$buildfile" -Dskip.test=true -Dskip.checkstyle=true -Dproject.name=ws master-deploy-jar -Dskip.resolve=true > /tmp/ant.log
+ant -f "$buildfile" -Dskip.test=true -Dskip.checkstyle=true -Dproject.name=ws master-jar-deploy -Dskip.resolve=true > /tmp/ant.log
 
 echo "building toolkit"
 ant -f "$buildfile" -Dskip.test=true -Dskip.checkstyle=true -Dproject.name=toolkit master-install >> /tmp/ant.log
