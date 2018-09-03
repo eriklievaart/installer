@@ -8,9 +8,12 @@ toolkit       master-install
 
 antastic      master-jar-deploy
 doclauncher   master-jar-deploy
+felix         master-jar-deploy
 links         master-jar-deploy
 refactor      master-jar-deploy
 regex         master-jar-deploy
+src           master-jar-deploy
 
-# q             master-jar-deploy
+toolkit       master-osgi-install
+q             master-osgi-deploy
 
