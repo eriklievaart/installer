@@ -163,6 +163,7 @@ install kdiff3
 install git-gui
 install $JAVA_PKG
 install python3
+install ant
 
 install pal
 install par2
@@ -170,6 +171,7 @@ install unrar
 install ssh
 install tree
 install curl
+install jq
 
 install mplayer
 install xine-ui
