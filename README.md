@@ -7,7 +7,7 @@ sudo apt-get install -y git
 sudo mkdir /opt/zelfgemaakt
 cd !$
 sudo chmod a+rw !$
-git clone https://bitbucket.org/Lievaart/installer.git
+git clone https://github.com/eriklievaart/installer.git
 
 # run install script
 cd installer
