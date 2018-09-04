@@ -1,6 +1,10 @@
 
+
+skip.preprocess=true
 skip.test=true
 skip.checkstyle=true
+skip.generate=true
+
 
 pb-parser     master-install
 javalightning master-install
@@ -16,5 +20,7 @@ refactor      master-jar-deploy
 regex         master-jar-deploy
 src           master-jar-deploy
 
+
 q             master-osgi-deploy
+
 
