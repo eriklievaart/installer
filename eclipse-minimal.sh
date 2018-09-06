@@ -18,7 +18,7 @@ ECLIPSEINIT_CACHE="../cache/eclipse/plugin/eclipseinit.jar"
 
 
 
-wgetc $ECLIPSE_PLATFORM_CACHE $ECLIPSE_PLATFORM_URL
+bin/wgetc $ECLIPSE_PLATFORM_CACHE $ECLIPSE_PLATFORM_URL
 
 
 if [ -d "$ECLIPSE_INSTALL" ]
@@ -39,7 +39,7 @@ else
 	# install plugins
 	echo "installing jdt, this may take a while..."
 	$ECLIPSE_INSTALL/eclipse -noSplash -application org.eclipse.equinox.p2.director -repository http://download.eclipse.org/eclipse/updates/4.7 -installIUs org.eclipse.jdt.feature.group
-	wgetc $ECLIPSEINIT_CACHE $ECLIPSEINIT_URL $ECLIPSE_PLUGINS
+	bin/wgetc $ECLIPSEINIT_CACHE $ECLIPSEINIT_URL $ECLIPSE_PLUGINS
 
 	# remove intro screen
 	rm $ECLIPSE_PLUGINS/org.eclipse.ui.intro*.jar
