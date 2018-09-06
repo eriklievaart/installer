@@ -189,9 +189,6 @@ install partimage
 install virtualbox-qt
 install android-tools-fastboot
 
-log "installing eclipse"
-sh eclipse-minimal.sh >> $LOG_FILE
-
 
 
 
@@ -211,6 +208,8 @@ fi
 fetch_url $CHECKSTYLE_CACHE  $CHECKSTYLE_URL  $CHECKSTYLE_DESTINATION
 fetch_url $ANT_JUNIT_CACHE   $ANT_JUNIT_URL   $ANT_JUNIT_DESTINATION
 
+log "installing eclipse"
+sh eclipse-minimal.sh >> $LOG_FILE
 
 
 # cd projects

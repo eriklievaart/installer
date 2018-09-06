@@ -16,6 +16,11 @@ ECLIPSEINIT_URL="http://www.eriklievaart.com/download?file=eclipseinit"
 ECLIPSEINIT_CACHE="../cache/eclipse/plugin/eclipseinit.jar"
 
 
+
+
+wgetc $ECLIPSE_PLATFORM_CACHE $ECLIPSE_PLATFORM_URL
+
+
 if [ -d "$ECLIPSE_INSTALL" ]
 then
 	echo "eclipse already installed"
@@ -28,7 +33,6 @@ else
 	chmod +x "$ECLIPSE_LAUNCHER"
 
 	# install binaries
-	wgetc $ECLIPSE_PLATFORM_CACHE $ECLIPSE_PLATFORM_URL
 	echo "unpacking $ECLIPSE_PLATFORM_CACHE to $ECLIPSE_INSTALL"
 	tar -v -xf "$ECLIPSE_PLATFORM_CACHE" -C "$ECLIPSE_INSTALL"  --strip 1
 
