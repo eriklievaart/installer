@@ -3,6 +3,15 @@ set -e                    # fail on errors
 sh -n install.sh          # check this file for syntax errors before executing it
 
 
+if [ "$HOME" = "/root" ]; then
+	die "do not run script as root!"
+fi
+
+if [ "$(id -u)" = "0" ]; then
+	die "do not run script as root!"
+fi
+
+
 HOME=~
 LOG_DIR=/tmp/installer
 LOG_FILE=$LOG_DIR/installer_$(date +%y-%m-%d_%T).log
@@ -47,15 +56,6 @@ fetch_url() {
 }
 
 
-
-
-if [ "$HOME" = "/root" ]; then
-	die "do not run script as root!"
-fi
-
-if [ "$(id -u)" = "0" ]; then
-	die "do not run script as root!"
-fi
 
 
 if [ ! -f ~/.gitconfig ]
@@ -117,7 +117,7 @@ if [ -d bin ]; then
 	echo ""
 	echo "copying scripts in bin"
 	cp -nr bin/* ~/bin
-	sudo chmod +x ~/bin/*
+	chmod +x ~/bin/*
 fi
 
 fetch_url $CHECKSTYLE_CACHE  $CHECKSTYLE_URL  $CHECKSTYLE_DESTINATION

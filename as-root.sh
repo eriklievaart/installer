@@ -1,6 +1,6 @@
 #!/bin/sh
 set -e                    # fail on errors
-sh -n install-as-root.sh          # check this file for syntax errors before executing it
+sh -n as-root.sh          # check this file for syntax errors before executing it
 
 
 JAVA_PKG="openjdk-8-jdk"
