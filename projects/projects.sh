@@ -34,7 +34,7 @@ echo "building antastic"
 ant -f "$buildfile" -Dskip.test=true -Dskip.checkstyle=true -Dproject.name=antastic master-jar-deploy >> /tmp/ant.log
 
 echo "generating antastic metadata"
-ws generate +
+ws antastic +
 
 echo "building remaining projects using antastic"
 antastic "$(pwd)/antastic.txt"
