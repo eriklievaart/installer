@@ -133,11 +133,3 @@ sh projects.sh
 
 
 
-# turn on numlock automatically, is this line necessary? Needs testing
-# /usr/bin/numlockx on
-
-
-
-
-
-
