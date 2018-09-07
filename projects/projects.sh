@@ -39,4 +39,5 @@ ws antastic +
 echo "building remaining projects using antastic"
 antastic "$(pwd)/antastic.txt"
 
+ws generate +
 
