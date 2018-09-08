@@ -12,6 +12,7 @@ if [ "$(id -u)" = "0" ]; then
 fi
 
 
+STAMP_START=$(date +%s)
 HOME=~
 LOG_DIR=/tmp/installer
 LOG_FILE=$LOG_DIR/installer_$(date +%y-%m-%d_%T).log
@@ -131,5 +132,7 @@ cd projects
 sh projects.sh
 
 
-
+STAMP_END=$(date +%s)
+spent=$(expr $STAMP_END - $STAMP_START)
+echo "total time spent = $spent seconds"
 
