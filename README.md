@@ -4,7 +4,7 @@
 sudo apt-get install -y git
 
 # download install script
-sudo mkdir /opt/zelfgemaakt
+mkdir ~/Development/git
 cd !$
 sudo chmod a+rw !$
 git clone https://github.com/eriklievaart/installer.git
@@ -12,7 +12,5 @@ git clone https://github.com/eriklievaart/installer.git
 # run install script
 cd installer
 sh install.sh
-shutdown -r now
-
 
 ```
