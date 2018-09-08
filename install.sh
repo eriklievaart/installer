@@ -133,6 +133,6 @@ sh projects.sh
 
 
 STAMP_END=$(date +%s)
-spent=$(expr $STAMP_END - $STAMP_START)
+spent=$(expr "$STAMP_END" '-' "$STAMP_START")
 echo "total time spent = $spent seconds"
 
