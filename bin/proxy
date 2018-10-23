@@ -1,0 +1,20 @@
+#!/bin/sh
+set -e
+
+config=~/.ssh/bin_proxy
+
+if [ ! -d ~/.ssh ]; then
+	echo "creating dir ~/.ssh"
+	mkdir ~/.ssh
+fi
+
+if [ -f $config ]; then
+	proxy=$(cat $config)
+	echo "proxy location: $proxy"
+	gnome-terminal --window-with-profile=blue -x ssh $proxy -D 12345
+else
+	echo "proxy not configured"
+	zenity --warning --text="Proxy not configured in $config"
+fi
+
+
