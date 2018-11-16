@@ -84,12 +84,12 @@ XFCE_SHORTCUTS_BACKUP="$XFCE_SHORTCUTS_FILE.bak"
 xfce_set() {
         key="/xfwm4/custom/$1"
         action="$2"
-        xfconf-query -c xfce4-keyboard-shortcuts -p "$key" -r -R                           # delete previous binding
         xfconf-query --create -c xfce4-keyboard-shortcuts -t string -p "$key" -s "$action" # and set the new binding
 }
 if [ ! -f "$XFCE_SHORTCUTS_BACKUP" -a -f $XFCE_SHORTCUTS_FILE ]
 then
 	cp -n "$XFCE_SHORTCUTS_FILE" "$XFCE_SHORTCUTS_BACKUP"
+	xfconf-query -c xfce4-keyboard-shortcuts -p "/xfwm4/custom/<Primary><Alt>F10" -r -R # delete maximize binding, it will be relaced
 	xfce_set '<Primary><Shift>KP_Begin'     "maximize_window_key"
 	xfce_set '<Primary><Shift>KP_Home'      "tile_up_left_key"
 	xfce_set '<Primary><Shift>KP_Page_Up'   "tile_up_right_key"
