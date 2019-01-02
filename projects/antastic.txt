@@ -6,11 +6,12 @@ skip.checkstyle=true
 skip.generate=true
 
 
-pb-parser     master-install
-javalightning master-install
-toolkit       master-install
-
 toolkit       master-osgi-install
+osgi          master-osgi-install
+javalightning master-osgi-install
+
+toolkit       master-install
+pb-parser     master-install
 
 antastic      master-jar-deploy
 doclauncher   master-jar-deploy
