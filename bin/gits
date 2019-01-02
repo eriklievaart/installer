@@ -1,0 +1,17 @@
+#!/bin/sh
+
+for dir in $(ls ~/Development/git)
+do
+	echo
+	echo "# $dir #"
+	cd ~/Development/git/$dir
+	git status
+
+	if [ "$#" -gt 0 ]
+	then
+		git "$@"
+	fi
+done
+
+# https://github.com/StreakyCobra/gws
+
