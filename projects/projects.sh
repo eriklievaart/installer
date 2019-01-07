@@ -18,7 +18,9 @@ do
 	repo_dir="$git_dir/$repo"
 	if [ -d $repo_dir ]
 	then
-		echo "repo already exists: $repo_dir"
+		cd $repo_dir
+		git pull
+		cd -
 	else
 		git clone "https://github.com/eriklievaart/$repo" $repo_dir
 	fi
