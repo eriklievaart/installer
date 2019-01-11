@@ -1,0 +1,52 @@
+#!/bin/sh
+
+#######################################################
+## verify files against hashes stored in smeta files ##
+#######################################################
+
+die() {
+    echo >&2 "$@"
+    exit 1
+}
+
+[ "$#" -eq 2 ] || die "2 arguments required: [verify] [smeta]"
+
+
+data=$(echo "$1" | sed -e 's:/*$:/:')
+smeta=$(echo "$2" | sed -e 's:/*$:/:')
+log=/tmp/smeta-$(date +%s).log
+
+RED='\033[0;31m'
+YELLOW='\033[0;33m'
+PLAIN='\033[0m'
+
+cd "$smeta"
+echo "verifying $data against $smeta" > $log
+echo "checksums: $smeta"
+echo "verify: $data"
+echo
+
+find . -name '*.smeta' | sed 's:^./::' | while read path
+do
+	expected=$(cat "$path" | sed '/^sha1/!d;s/^sha1=//')
+	check=$(echo "$data$path" | sed 's:.smeta$::')
+	file=$(echo "$path" | sed 's:.smeta$::')
+
+	if [ ! -f "$check" ]
+	then
+		echo "$YELLOW$file missing$PLAIN"
+		echo "missing file: $file" >> $log
+		continue
+	fi
+
+	actual=$(sha1sum "$check" | sed 's: .*::')
+	if [ "$actual" = "$expected" ]
+	then
+		echo "OK $file"
+	else
+		echo "$RED$file sha1 mismatch $expected $actual$PLAIN"
+		echo "hash failure: $file $expected $actual" >> $log
+	fi
+done
+
+
