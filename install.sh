@@ -20,12 +20,12 @@ UP_TO_DATE=false
 
 CHECKSTYLE_VERSION=8.11
 CHECKSTYLE_DESTINATION=~/Applications/checkstyle/checkstyle.jar
-CHECKSTYLE_CACHE="../cache/checkstyle/checkstyle-$CHECKSTYLE_VERSION.jar"
+CHECKSTYLE_CACHE=~/.cache/checkstyle/checkstyle-$CHECKSTYLE_VERSION.jar
 CHECKSTYLE_URL="https://github.com/checkstyle/checkstyle/releases/download/checkstyle-$CHECKSTYLE_VERSION/checkstyle-$CHECKSTYLE_VERSION-all.jar"
 
 ANT_JUNIT_VERSION=1.8.4
 ANT_JUNIT_DESTINATION=~/.ant/lib/ant-junit.jar
-ANT_JUNIT_CACHE="../cache/ant-junit/ant-junit-$ANT_JUNIT_VERSION.jar"
+ANT_JUNIT_CACHE=~/cache/ant-junit/ant-junit-$ANT_JUNIT_VERSION.jar
 ANT_JUNIT_URL="https://repo1.maven.org/maven2/org/apache/ant/ant-junit/$ANT_JUNIT_VERSION/ant-junit-$ANT_JUNIT_VERSION.jar"
 
 
@@ -116,8 +116,16 @@ fi
 
 if [ -d bin ]; then
 	echo ""
-	echo "copying scripts in bin"
-	cp -nr bin/* ~/bin
+	echo "linking scripts in bin"
+	for file in $(ls bin)
+	do
+		from=$PWD/bin/$file
+		to=~/bin/$file
+		if [ -f "$to" ]; then
+			rm "$to"
+		fi
+		ln -s "$from" "$to"
+	done
 	chmod +x ~/bin/*
 fi
 

@@ -1,16 +1,30 @@
 #!/bin/sh
 
+YELLOW='\033[1;33m'
+PLAIN='\033[0m'
+
 for dir in $(ls ~/Development/git)
 do
-	echo
-	echo "# $dir #"
 	cd ~/Development/git/$dir
-	git status
-
-	if [ "$#" -gt 0 ]
-	then
-		git "$@"
+	if [ ! -d ".git" ]; then
+		continue
 	fi
+
+	branch=$(git status | sed '/^On branch.*/!d; s/^On branch //')
+	untracked=$(git status | sed '/^Untracked.*/!d; s/ntracked.*//')
+	changes=$(git status | sed '/^Changes.*/!d; s/hanges.*//')
+	
+	if [ ! -z $untracked$changes ]; then
+		color=$YELLOW
+	fi
+	
+	echo "$color$dir [$branch] $untracked$changes$PLAIN"
+
+	if [ "$#" -gt 0 ]; then
+		git "$@"
+		echo
+	fi
+	color=""
 done
 
 # https://github.com/StreakyCobra/gws

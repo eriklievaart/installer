@@ -4,7 +4,7 @@ lsblk
 
 DEVICES=$(lsblk -l -o NAME | sed '1d;/sd[a-z][0-9]/!d')
 MOUNTED=$(cat /proc/mounts | sed "/^\/dev/!d;s: .*::" | sort -u)
-FS="vfat ntfs"
+FS="vfat ntfs ext4"
 
 if [ "$1" ]
 then
