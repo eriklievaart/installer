@@ -1,7 +1,7 @@
 
-version=@version@
-home=~/Applications/eclipse
-executable="$home/$version/eclipse"
+installer=~/Development/git/installer/eclipse-minimal.sh
+version=$(sed '/^ECLIPSE_VERSION/!d; s/.*=//' $installer)
+executable=~/Applications/eclipse/$version/eclipse
 
 if [ "$1" ]
 then

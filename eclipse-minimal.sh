@@ -26,14 +26,9 @@ then
 	echo "eclipse already installed"
 
 else
-	mkdir -p $ECLIPSE_INSTALL
-
-	# install launcher
-	sed "s/@version@/$ECLIPSE_VERSION/" bin/eclipse > "$ECLIPSE_LAUNCHER"
-	chmod +x "$ECLIPSE_LAUNCHER"
-
 	# install binaries
 	echo "unpacking $ECLIPSE_PLATFORM_CACHE to $ECLIPSE_INSTALL"
+	mkdir -p $ECLIPSE_INSTALL
 	tar -v -xf "$ECLIPSE_PLATFORM_CACHE" -C "$ECLIPSE_INSTALL"  --strip 1
 
 	# install plugins

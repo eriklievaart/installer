@@ -1,4 +1,5 @@
 #!/bin/sh
+# script to run git commands on multiple git repos simultaneously
 
 YELLOW='\033[1;33m'
 PLAIN='\033[0m'
@@ -10,11 +11,12 @@ do
 		continue
 	fi
 
+	color=""
 	branch=$(git status | sed '/^On branch.*/!d; s/^On branch //')
 	untracked=$(git status | sed '/^Untracked.*/!d; s/ntracked.*//')
 	changes=$(git status | sed '/^Changes.*/!d; s/hanges.*//')
 	
-	if [ ! -z $untracked$changes ]; then
+	if [ ! -z "$untracked$changes" ]; then
 		color=$YELLOW
 	fi
 	
@@ -24,7 +26,6 @@ do
 		git "$@"
 		echo
 	fi
-	color=""
 done
 
 # https://github.com/StreakyCobra/gws
