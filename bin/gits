@@ -20,7 +20,7 @@ do
 		color=$YELLOW
 	fi
 	
-	echo "$color$dir [$branch] $untracked$changes$PLAIN"
+	echo "$color[$branch] $dir $untracked$changes$PLAIN"
 
 	if [ "$#" -gt 0 ]; then
 		git "$@"
