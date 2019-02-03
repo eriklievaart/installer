@@ -1,4 +1,4 @@
 
-cd ~/Public/doclauncher
-java -client -classpath .:doclauncher.jar boot.Main "/links/api" $1 $2
+cd ~/Applications/doclauncher
+java -client -classpath .:doclauncher.jar com.eriklievaart.doclauncher.boot.Main ~/Applications/doclauncher/api $1 $2
 
