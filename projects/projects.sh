@@ -19,6 +19,7 @@ do
 	if [ -d $repo_dir ]
 	then
 		cd $repo_dir
+		echo "$repo_dir"
 		git pull
 		cd -
 	else

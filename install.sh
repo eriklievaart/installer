@@ -121,8 +121,8 @@ if [ -d bin ]; then
 	do
 		from=$PWD/bin/$file
 		to=~/bin/$file
-		if [ -f "$to" ]; then
-			rm "$to"
+		if [ -e "$to" ]; then
+			rm -rf "$to"
 		fi
 		ln -s "$from" "$to"
 	done
