@@ -28,6 +28,12 @@ ANT_JUNIT_DESTINATION=~/.ant/lib/ant-junit.jar
 ANT_JUNIT_CACHE=~/cache/ant-junit/ant-junit-$ANT_JUNIT_VERSION.jar
 ANT_JUNIT_URL="https://repo1.maven.org/maven2/org/apache/ant/ant-junit/$ANT_JUNIT_VERSION/ant-junit-$ANT_JUNIT_VERSION.jar"
 
+GUICE_VERSION=1.0
+GUICE_SRC_JAR_NAME="guice-$GUICE_VERSION-src.jar"
+GUICE_SRC_CACHE=~/cache/guice/$GUICE_SRC_JAR_NAME
+GUICE_SRC_DESTINATION=~/Development/repo/remote/com/google/inject/guice/1.0/$GUICE_SRC_JAR_NAME
+GUICE_SRC_URL="http://eriklievaart.com/download?file=guice1src"
+
 
 die() {
     echo >&2 "Error: $@"
@@ -131,6 +137,8 @@ fi
 
 fetch_url $CHECKSTYLE_CACHE  $CHECKSTYLE_URL  $CHECKSTYLE_DESTINATION
 fetch_url $ANT_JUNIT_CACHE   $ANT_JUNIT_URL   $ANT_JUNIT_DESTINATION
+fetch_url $GUICE_SRC_CACHE   $GUICE_SRC_URL   $GUICE_SRC_DESTINATION
+
 
 log "installing eclipse"
 sh eclipse-minimal.sh >> $LOG_FILE
