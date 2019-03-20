@@ -40,10 +40,7 @@ ant -f "$buildfile" -Dskip.test=true -Dskip.checkstyle=true -Dproject.name=antas
 echo "generating folder structure"
 for repo in $repos
 do
-	if [ "$repo" != "ant" -a "$repo" != "installer" ]
-	then
-		ant -f "$buildfile" -Dproject.name=$repo task-init >> /tmp/ant.log
-	fi
+	ant -f "$buildfile" -Dproject.name=$repo task-init >> /tmp/ant.log
 done
 
 echo "generating antastic metadata"
