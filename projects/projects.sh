@@ -6,6 +6,7 @@ set -e
 git_dir=~/Development/git
 dependency_file="$start_dir/dependencies.txt"
 buildfile=~/Development/git/ant/master.xml
+repos=$(curl -s https://api.github.com/users/eriklievaart/repos | jq '.[] | .name' | tr -d '"')
 
 
 if [ ! -d $git_dir ];then
@@ -13,7 +14,7 @@ if [ ! -d $git_dir ];then
 fi
 
 
-for repo in $(curl -s https://api.github.com/users/eriklievaart/repos | jq '.[] | .name' | tr -d '"')
+for repo in $repos
 do
 	repo_dir="$git_dir/$repo"
 	if [ -d $repo_dir ]
@@ -21,7 +22,7 @@ do
 		cd $repo_dir
 		echo "$repo_dir"
 		git pull
-		cd -
+		cd - > /dev/null
 	else
 		git clone "https://github.com/eriklievaart/$repo" $repo_dir
 	fi
@@ -35,6 +36,15 @@ ant -f "$buildfile" -Dskip.test=true -Dskip.checkstyle=true -Dproject.name=toolk
 
 echo "building antastic"
 ant -f "$buildfile" -Dskip.test=true -Dskip.checkstyle=true -Dproject.name=antastic master-jar-deploy >> /tmp/ant.log
+
+echo "generating folder structure"
+for repo in $repos
+do
+	if [ "$repo" != "ant" -a "$repo" != "installer" ]
+	then
+		ant -f "$buildfile" -Dproject.name=$repo task-init >> /tmp/ant.log
+	fi
+done
 
 echo "generating antastic metadata"
 ws antastic +
