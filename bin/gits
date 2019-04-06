@@ -2,7 +2,17 @@
 # script to run git commands on multiple git repos simultaneously
 
 YELLOW='\033[1;33m'
+RED='\033[1;31m'
 PLAIN='\033[0m'
+
+if [ "$1" = "-c" ]; then
+	message=$(echo "$@" | sed 's/^-c *//')
+	if [ -z "$message" ]; then
+		echo "$RED    git commit message required! $PLAIN"
+		exit 404
+	fi
+fi
+
 
 for dir in $(ls ~/Development/git)
 do
@@ -22,7 +32,16 @@ do
 	
 	echo "$color[$branch] $dir $untracked$changes$PLAIN"
 
-	if [ "$#" -gt 0 ]; then
+	
+	if [ "$1" = "-c" ]; then
+		if [  ! -z "$untracked$changes" ]; then
+			git add --all
+			git commit -m "$message"
+			git push
+			echo ''
+		fi
+
+	elif [ "$#" -gt 0 ]; then
 		git "$@"
 		echo
 	fi
