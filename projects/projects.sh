@@ -24,7 +24,7 @@ do
 		git pull
 		cd - > /dev/null
 	else
-		git clone "https://github.com/eriklievaart/$repo" $repo_dir
+		git clone "https://eriklievaart@github.com/eriklievaart/$repo" $repo_dir
 	fi
 done
 
@@ -40,7 +40,7 @@ ant -f "$buildfile" -Dskip.test=true -Dskip.checkstyle=true -Dproject.name=antas
 echo "generating folder structure"
 for repo in $repos
 do
-	ant -f "$buildfile" -Dproject.name=$repo task-init >> /tmp/ant.log
+	ant -f "$buildfile" -Dproject.name=$repo task-java-init>> /tmp/ant.log
 done
 
 echo "generating antastic metadata"
