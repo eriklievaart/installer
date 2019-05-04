@@ -1,4 +1,4 @@
 #!/bin/sh
 
-youtube-dl -x --audio-format mp3 $1
+youtube-dl -i -x --audio-format mp3 $1
 
