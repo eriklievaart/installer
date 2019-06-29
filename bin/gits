@@ -15,7 +15,7 @@ if [ "$1" = "-c" ]; then
 fi
 
 
-if [ $(echo "$1" | cut -c 1) = "@" ]; then
+if [ "$(echo "$1" | cut -c 1)" = "@" ]; then
 	repo=$(echo "$1" | sed 's/@//')
 	if [ -d ~/Development/git/$repo ]; then
 		cd ~/Development/git/$repo
