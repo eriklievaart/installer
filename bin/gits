@@ -16,17 +16,21 @@ fi
 
 
 if [ "$(echo "$1" | cut -c 1)" = "@" ]; then
-	repo=$(echo "$1" | sed 's/@//')
-	if [ -d ~/Development/git/$repo ]; then
-		cd ~/Development/git/$repo
-		echo $PWD
-		shift
-		git "$@"
-		exit 0
-	else
-		echo "$RED repo $repo does not exist $PLAIN"
+	project=$(echo "$1" | sed 's/@//')
+	repo=~/Development/git/$project
+	echo "$repo"
+	shift
+
+	if [ ! -d $repo ]; then
+		echo "$RED repo $project does not exist $PLAIN"
 		exit 404
 	fi
+
+	if [ "$1" != "" ]; then
+		cd $repo
+		git "$@"
+	fi
+	exit 0
 fi
 
 
