@@ -1,6 +1,8 @@
 #!/bin/sh
 # script to run git commands on multiple git repos simultaneously
 
+set -e
+
 YELLOW='\033[1;33m'
 RED='\033[1;31m'
 PLAIN='\033[0m'
@@ -24,6 +26,14 @@ if [ "$(echo "$1" | cut -c 1)" = "@" ]; then
 	if [ ! -d $repo ]; then
 		echo "$RED repo $project does not exist $PLAIN"
 		exit 404
+	fi
+
+	if [ "$1" = "acp" ]; then
+		cd $repo
+		git add --all
+		git commit
+		git push
+		exit 0
 	fi
 
 	if [ "$1" != "" ]; then
