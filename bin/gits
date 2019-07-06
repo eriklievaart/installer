@@ -1,7 +1,6 @@
 #!/bin/sh
 # script to run git commands on multiple git repos simultaneously
 
-set -e
 
 YELLOW='\033[1;33m'
 RED='\033[1;31m'
@@ -18,6 +17,7 @@ fi
 
 
 if [ "$(echo "$1" | cut -c 1)" = "@" ]; then
+	set -e
 	project=$(echo "$1" | sed 's/@//')
 	repo=~/Development/git/$project
 	echo "$repo"
