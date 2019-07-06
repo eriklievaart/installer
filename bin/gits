@@ -36,6 +36,21 @@ if [ "$(echo "$1" | cut -c 1)" = "@" ]; then
 		exit 0
 	fi
 
+	if [ "$1" = "untracked" ]; then
+		cd $repo
+		for file in $(git status | sed '0,/Untracked.*/d;/\t/!d')
+		do
+			if [ -f "$file" ]; then
+				echo gedit $file
+				gedit "$file" &
+			else
+				find "$file" -type f -exec echo "gedit {}" \;
+				find "$file" -type f -exec gedit {} \; &
+			fi
+		done
+		exit 0
+	fi
+
 	if [ "$1" != "" ]; then
 		cd $repo
 		git "$@"
