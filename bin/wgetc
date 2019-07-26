@@ -15,14 +15,14 @@ parents() {
 
 
 [ "$#" -ge 2 ] || die "2 arguments required: [CACHE_FILE] [URL] [FILE]..."
-cache=$1
-url=$2
+cache="$1"
+url="$2"
 
 
-if [ ! -f $cache ]
+if [ ! -f "$cache" ]
 then
-	parents $cache
-	wget $url -O $cache
+	parents "$cache"
+	wget "$url" -O "$cache"
 fi
 
 # delete cached file if it is empty
@@ -36,8 +36,8 @@ fi
 shift 2
 for file in "$@"
 do
-	parents $file
-	cp -v $cache $file
+	parents "$file"
+	cp -v "$cache" "$file"
 done
 
 
