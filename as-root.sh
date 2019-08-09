@@ -13,15 +13,13 @@ die() {
 }
 
 check_status() {
-	if [ $1 -ne 0 ]
-	then
+	if [ $1 -ne 0 ]; then
 		die "Installation aborted with status $1"
 	fi
 }
 
 update_once() {
-	if [ $UP_TO_DATE ]
-	then
+	if [ $UP_TO_DATE ]; then
 		set +e
 		sudo apt-get update
 		set -e
@@ -106,6 +104,25 @@ install synaptic
 install partimage
 install virtualbox-qt
 install android-tools-fastboot
+
+
+# convenience script for jumping to directories
+Z_PARENT="/opt"
+Z_DIR="$Z_PARENT/z"
+Z_SCRIPT="$Z_DIR/z.sh"
+
+if [ -d "$Z_DIR" ]; then
+	echo "shortcut(z) is already installed"
+else
+	echo "installing shortcut(z)"
+	cd "$Z_PARENT"
+	git clone https://github.com/rupa/z
+	chmod a+x "$Z_SCRIPT"
+
+	if ! cat ~/.bashrc | grep -q '/z/z.sh'; then
+		echo ". $Z_SCRIPT" >> ~/.bashrc
+	fi
+fi
 
 
 # smoke tests

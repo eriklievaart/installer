@@ -3,15 +3,6 @@ set -e                    # fail on errors
 sh -n install.sh          # check this file for syntax errors before executing it
 
 
-if [ "$HOME" = "/root" ]; then
-	die "do not run script as root!"
-fi
-
-if [ "$(id -u)" = "0" ]; then
-	die "do not run script as root!"
-fi
-
-
 STAMP_START=$(date +%s)
 HOME=~
 LOG_DIR=/tmp/installer
@@ -61,6 +52,15 @@ fetch_url() {
 		sh bin/wgetc $cache_file $url $destination
 	fi
 }
+
+
+if [ "$HOME" = "/root" ]; then
+	die "do not run script as root!"
+fi
+
+if [ "$(id -u)" = "0" ]; then
+	die "do not run script as root!"
+fi
 
 
 
