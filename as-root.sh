@@ -3,10 +3,6 @@ set -e                    # fail on errors
 sh -n as-root.sh          # check this file for syntax errors before executing it
 
 
-JAVA_PKG="openjdk-8-jdk"
-JAVA_VERSION="1.8"
-
-
 die() {
     echo >&2 "Error: $@"
     exit 1
@@ -43,19 +39,6 @@ install() {
 sudo ufw enable 
 echo ""
 
-if ! (dpkg -s $JAVA_PKG < /dev/null | grep "Status: install" )
-then
-	# remove older java versions
-	sudo apt-get remove -y openjdk* 
-	sudo apt-get autoremove
-	sudo apt-get autoclean
-	# add apt repository for openjdk
-	sudo add-apt-repository -y ppa:openjdk-r/ppa
-	update_once
-fi
-
-
-
 # allow users to invoke shutdown
 sudo chmod +s /sbin/shutdown
 
@@ -77,7 +60,6 @@ install kdiff3
 
 install git
 install git-gui
-install $JAVA_PKG
 install python3
 install ant
 
@@ -123,12 +105,4 @@ else
 		echo ". $Z_SCRIPT" >> ~/.bashrc
 	fi
 fi
-
-
-# smoke tests
-if (! java -version 2>&1 | grep "version" | grep $JAVA_VERSION)
-then
-	echo "expecting java $JAVA_VERSION"
-fi
-
 

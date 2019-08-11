@@ -1,6 +1,15 @@
 #!/bin/sh
-
 set -e
+
+die() {
+    echo >&2 "Error: $@"
+    exit 1
+}
+
+if [ "$(id -u)" = "0" ]; then
+        die "run this script as a normal user!"
+fi
+
 
 
 git_dir=~/Development/git
@@ -29,7 +38,7 @@ do
 done
 
 echo "building ws"
-ant -f "$buildfile" -Dskip.test=true -Dskip.checkstyle=true -Dskip.preprocess=true -Dproject.name=ws master-jar-deploy -Dskip.resolve=true > /tmp/ant.log
+ant -f "$buildfile" -Dskip.test=true -Dskip.checkstyle=true -Dskip.preprocess=true -Dproject.name=ws master-jar-deploy -Dskip.resolve=true -Dskip.test.compile=true > /tmp/ant.log
 
 echo "building toolkit"
 ant -f "$buildfile" -Dskip.test=true -Dskip.checkstyle=true -Dproject.name=toolkit master-install >> /tmp/ant.log

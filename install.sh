@@ -5,23 +5,25 @@ sh -n install.sh          # check this file for syntax errors before executing i
 
 STAMP_START=$(date +%s)
 HOME=~
+BIN_DIR=~/bin
 LOG_DIR=/tmp/installer
 LOG_FILE=$LOG_DIR/installer_$(date +%y-%m-%d_%T).log
 UP_TO_DATE=false
+CACHE_DIR=~/.cache
 
 CHECKSTYLE_VERSION=8.11
 CHECKSTYLE_DESTINATION=~/Applications/checkstyle/checkstyle.jar
-CHECKSTYLE_CACHE=~/.cache/checkstyle/checkstyle-$CHECKSTYLE_VERSION.jar
+CHECKSTYLE_CACHE=$CACHE_DIR/checkstyle/checkstyle-$CHECKSTYLE_VERSION.jar
 CHECKSTYLE_URL="https://github.com/checkstyle/checkstyle/releases/download/checkstyle-$CHECKSTYLE_VERSION/checkstyle-$CHECKSTYLE_VERSION-all.jar"
 
 ANT_JUNIT_VERSION=1.8.4
 ANT_JUNIT_DESTINATION=~/.ant/lib/ant-junit.jar
-ANT_JUNIT_CACHE=~/cache/ant-junit/ant-junit-$ANT_JUNIT_VERSION.jar
+ANT_JUNIT_CACHE=$CACHE_DIR/ant-junit/ant-junit-$ANT_JUNIT_VERSION.jar
 ANT_JUNIT_URL="https://repo1.maven.org/maven2/org/apache/ant/ant-junit/$ANT_JUNIT_VERSION/ant-junit-$ANT_JUNIT_VERSION.jar"
 
 GUICE_VERSION=1.0
 GUICE_SRC_JAR_NAME="guice-$GUICE_VERSION-src.jar"
-GUICE_SRC_CACHE=~/cache/guice/$GUICE_SRC_JAR_NAME
+GUICE_SRC_CACHE=$CACHE_DIR/guice/$GUICE_SRC_JAR_NAME
 GUICE_SRC_DESTINATION=~/Development/repo/remote/com/google/inject/guice/1.0/$GUICE_SRC_JAR_NAME
 GUICE_SRC_URL="http://eriklievaart.com/download?file=guice1src"
 
@@ -54,14 +56,10 @@ fetch_url() {
 }
 
 
+# user "root" cannot run this script, but sudo works
 if [ "$HOME" = "/root" ]; then
-	die "do not run script as root!"
+       die "do not run script as root!"
 fi
-
-if [ "$(id -u)" = "0" ]; then
-	die "do not run script as root!"
-fi
-
 
 
 
@@ -71,16 +69,13 @@ then
 	read git_user
 	echo "enter git email"
 	read git_email
-fi
-
-sudo sh as-root.sh
-
-if [ ! -f ~/.gitconfig ]
-then
 	git config --global user.name "$git_user"
 	git config --global user.email "$git_email"
 	git config --global credential.helper cache
 fi
+
+sudo sh as-root.sh
+
 
 
 
@@ -105,6 +100,7 @@ then
 	xfce_set '<Primary><Shift>KP_Right'     "tile_right_key"
 	xfce_set '<Primary><Shift>KP_Up'        "tile_up_key"
 	xfce_set '<Primary><Shift>KP_Down'      "tile_down_key"
+	xfce_set '<Primary><Shift>KP_Insert'    "${BIN_DIR?}/move-to-next-monitor"
 fi
 
 
@@ -135,6 +131,13 @@ if [ -d bin ]; then
 	chmod +x ~/bin/*
 fi
 
+if ! cat ~/.bashrc | grep --quiet 'dirs -v'; then
+    echo 'alias dirs="dirs -v"' >> ~/.bashrc
+fi
+
+
+
+# install java projects
 fetch_url $CHECKSTYLE_CACHE  $CHECKSTYLE_URL  $CHECKSTYLE_DESTINATION
 fetch_url $ANT_JUNIT_CACHE   $ANT_JUNIT_URL   $ANT_JUNIT_DESTINATION
 fetch_url $GUICE_SRC_CACHE   $GUICE_SRC_URL   $GUICE_SRC_DESTINATION

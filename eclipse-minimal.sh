@@ -9,7 +9,7 @@ ECLIPSE_VERSION=4.7.3a
 ECLIPSE_INSTALL=~/Applications/eclipse/$ECLIPSE_VERSION
 ECLIPSE_PLUGINS=$ECLIPSE_INSTALL/plugins
 
-ECLIPSE_PLATFORM_URL="http://mirror.csclub.uwaterloo.ca/eclipse/eclipse/downloads/drops4/R-4.7.3a-201803300640/eclipse-platform-4.7.3a-linux-gtk-x86_64.tar.gz"
+ECLIPSE_PLATFORM_URL="http://eriklievaart.com/download?file=eclipse"
 ECLIPSE_PLATFORM_CACHE=~/.cache/eclipse/platform/eclipse-platform-$ECLIPSE_VERSION.tar.gz
 
 ECLIPSEINIT_URL="http://www.eriklievaart.com/download?file=eclipseinit"
