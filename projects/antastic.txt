@@ -21,7 +21,6 @@ refactor      master-jar-deploy
 regex         master-jar-deploy
 src           master-jar-deploy
 
-
 q             master-osgi-deploy
 
 

@@ -138,6 +138,8 @@ fi
 
 
 # install java projects
+sudo update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
+
 fetch_url $CHECKSTYLE_CACHE  $CHECKSTYLE_URL  $CHECKSTYLE_DESTINATION
 fetch_url $ANT_JUNIT_CACHE   $ANT_JUNIT_URL   $ANT_JUNIT_DESTINATION
 fetch_url $GUICE_SRC_CACHE   $GUICE_SRC_URL   $GUICE_SRC_DESTINATION
@@ -148,7 +150,7 @@ sh eclipse-minimal.sh >> $LOG_FILE
 
 
 cd projects
-sh projects.sh
+sh projects.sh -a
 
 
 STAMP_END=$(date +%s)

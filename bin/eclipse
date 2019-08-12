@@ -8,6 +8,7 @@ then
 	workspace=~/Development/workspace/$1
 	if [ -d "$workspace" ]
 	then
+		echo "eclipse -data $workspace"
 		$executable -data $workspace &
 	else
 		echo "not a directory! $workspace"  

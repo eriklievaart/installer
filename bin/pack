@@ -1,17 +1,43 @@
 #!/bin/sh
-input=$1
-if [ "${input}" = "" ]; then
-	echo "No file specified"
-else
-	input=$1
-	length=${#input}
+set -e
 
-	if [ "${input:length-1}" = "/" ]; then
-		tar -cf "${input:0:length-1}"".tar" $1
-		gzip "${input:0:length-1}"".tar"
-	else
-		tar -cf $1".tar" $1
-		gzip $1".tar"	
-	fi
+die() {
+	echo >&2 "$@"
+	exit 1
+}
+
+execute() {
+	echo "$1"
+	eval "$1"
+}
+
+usage() {
+	echo "usage: `basename $0` [-ztg] [file]" 1>&2
+	echo "" 1>&2
+	echo "	-z zip    file or directory" 1>&2
+	echo "	-t tar    file or directory" 1>&2
+	echo "	-g tar.gz file or directory" 1>&2
+	exit 1
+}
+
+[ "$#" -eq 2 ] || usage
+
+sources_path="$2"
+sources_name=$(basename "$2")
+archive_base=$(basename "$2" | sed -r 's:/*$::;s/[.][^.]+//')
+
+[ ! -f "${sources_path}" -a ! -d "${sources_path}" ] && die "invalid file '$souces_path'"
+[ -z "${archive_base?}" ] && die "not a valid file name: '$2' -> $base"
+
+if expr "${sources_path}" : "/" > /dev/null; then
+	cd $(expr "${sources_path?}" : "\(.*\)/")
 fi
+
+case "$1" in
+	-z) execute "zip -r '${archive_base?}.zip' '${sources_name?}'"       ;;
+	-t) execute "tar -cvf '${archive_base?}.tar' '${sources_name?}'"     ;;
+	-g) execute "tar -czvf '${archive_base?}.tar.gz' '${sources_name?}'" ;;
+	*) usage; break;;
+esac
+
 
