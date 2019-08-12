@@ -56,7 +56,7 @@ fetch_url() {
 }
 
 
-# user "root" cannot run this script, but sudo works
+# user "root" cannot run this script
 if [ "$HOME" = "/root" ]; then
        die "do not run script as root!"
 fi

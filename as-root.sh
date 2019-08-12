@@ -35,6 +35,10 @@ install() {
 	fi
 }
 
+if [ "$(id -u)" != "0" ]; then
+        die "root privileges required!"
+fi
+
 # enable firewall
 sudo ufw enable 
 echo ""
@@ -88,7 +92,6 @@ install partimage
 install virtualbox-qt
 install android-tools-fastboot
 
-
 # convenience script for jumping to directories
 Z_PARENT="/opt"
 Z_DIR="$Z_PARENT/z"
@@ -105,5 +108,19 @@ else
 	if ! cat ~/.bashrc | grep -q '/z/z.sh'; then
 		echo ". $Z_SCRIPT" >> ~/.bashrc
 	fi
+fi
+
+# open media with vlc by default
+defaults=/usr/share/applications/defaults.list
+defaults_bak=$defaults.bak
+if [ -f "${defaults?}" -a ! -f "${defaults_bak?}" ]; then
+    echo "setting vlc as default media player in $defaults"
+    sed -i -r '/xplayer.desktop|Totem.desktop/s:=(.*):=vlc.desktop;\1:p' "$defaults"
+    cp -n "${defaults?}" "${defaults_bak?}"
+
+elif [ -f "${defaults_bak}" ]; then
+    echo "$defaults already modified"
+else
+    echo "cannot configure vlc, ${defaults?} not found."
 fi
 
