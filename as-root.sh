@@ -63,6 +63,7 @@ install git-gui
 install python3
 install ant
 
+install bats
 install pal
 install par2
 install unrar

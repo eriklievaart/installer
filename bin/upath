@@ -1,0 +1,57 @@
+#!/bin/sh
+
+
+
+die() {
+	echo >&2 "$@"
+	exit 255
+}
+
+usage() {
+	cat << EOF
+	usage: upath [-benp] [file]
+
+	-b return base name of file name (without extension)
+	-e return file extension
+	-n return file name (extension included)
+	-p return parent dir
+EOF
+        exit 1
+}
+
+base() {
+	base=$(basename "$1")
+	if expr "$base" : '[.][^.]*$' > /dev/null; then
+		echo "$base"
+	else
+		echo "$base" | sed -r 's/[.][^.]+$//'
+	fi
+}
+
+extension() {
+	basename "$1" | sed -r 's/^[^.]+$//;s/^[.][^.]*//;s/.*[.]//'
+}
+
+name() {
+	basename "$1"
+}
+
+parent() {
+	expr "$1" : "[^/]*$" > /dev/null && die "$1 does not have any parents"
+	[ "$1" = "/" ] && die "/ does not have any parents"
+	echo "$1" | sed -r 's:[^/]+/?$::'
+}
+
+
+
+
+[ $# -eq 2 ] || usage
+
+case "$1" in
+        -b) base      "$2";;
+       	-e) extension "$2";;
+       	-n) name      "$2";;
+       	-p) parent    "$2";;
+       	*) usage ;;
+esac
+
