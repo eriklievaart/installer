@@ -13,17 +13,18 @@ CACHE_DIR=~/.cache
 
 CHECKSTYLE_VERSION=8.11
 CHECKSTYLE_DESTINATION=~/Applications/checkstyle/checkstyle.jar
-CHECKSTYLE_CACHE=$CACHE_DIR/checkstyle/checkstyle-$CHECKSTYLE_VERSION.jar
 CHECKSTYLE_URL="https://github.com/checkstyle/checkstyle/releases/download/checkstyle-$CHECKSTYLE_VERSION/checkstyle-$CHECKSTYLE_VERSION-all.jar"
 
 ANT_JUNIT_VERSION=1.8.4
 ANT_JUNIT_DESTINATION=~/.ant/lib/ant-junit.jar
-ANT_JUNIT_CACHE=$CACHE_DIR/ant-junit/ant-junit-$ANT_JUNIT_VERSION.jar
 ANT_JUNIT_URL="https://repo1.maven.org/maven2/org/apache/ant/ant-junit/$ANT_JUNIT_VERSION/ant-junit-$ANT_JUNIT_VERSION.jar"
+
+JUNIT_VERSION=4.7
+JUNIT_DESTINATION=~/.ant/lib/junit-$JUNIT_VERSION.jar
+JUNIT_URL="https://repo1.maven.org/maven2/junit/junit/$JUNIT_VERSION/junit-$JUNIT_VERSION.jar"
 
 GUICE_VERSION=1.0
 GUICE_SRC_JAR_NAME="guice-$GUICE_VERSION-src.jar"
-GUICE_SRC_CACHE=$CACHE_DIR/guice/$GUICE_SRC_JAR_NAME
 GUICE_SRC_DESTINATION=~/Development/repo/remote/com/google/inject/guice/1.0/$GUICE_SRC_JAR_NAME
 GUICE_SRC_URL="http://eriklievaart.com/download?file=guice1src"
 
@@ -43,15 +44,14 @@ log() {
 }
 
 fetch_url() {
-	cache_file=$1
+	destination=$1
 	url=$2
-	destination=$3
 
-	if [ -f $destination ]
+	if [ -f ${destination?} ]
 	then
-		log "already downloaded: $destination"
+		log "already downloaded: ${destination?}"
 	else
-		sh bin/wgetc $cache_file $url $destination
+		sh bin/wgetc ${destination?} $url
 	fi
 }
 
@@ -106,11 +106,6 @@ fi
 
 
 
-
-
-
-
-
 # install my own scripts
 if [ ! -d ~/bin ]; then
 	mkdir ~/bin
@@ -135,18 +130,18 @@ if ! cat ~/.bashrc | grep --quiet 'dirs -v'; then
     echo 'alias dirs="dirs -v"' >> ~/.bashrc
 fi
 
-
-
 # install java projects
 sudo update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
 
-fetch_url $CHECKSTYLE_CACHE  $CHECKSTYLE_URL  $CHECKSTYLE_DESTINATION
-fetch_url $ANT_JUNIT_CACHE   $ANT_JUNIT_URL   $ANT_JUNIT_DESTINATION
-fetch_url $GUICE_SRC_CACHE   $GUICE_SRC_URL   $GUICE_SRC_DESTINATION
+fetch_url ${JUNIT_DESTINATION?} ${JUNIT_URL?}
+fetch_url ${ANT_JUNIT_DESTINATION?} ${ANT_JUNIT_URL?}
+fetch_url ${GUICE_SRC_DESTINATION?} ${GUICE_SRC_URL?}
+fetch_url ${CHECKSTYLE_DESTINATION?} ${CHECKSTYLE_URL?}
 
 
 log "installing eclipse"
-sh eclipse-minimal.sh >> $LOG_FILE
+tail -n 0 -f ${LOG_FILE?} &
+sh eclipse-minimal.sh >> ${LOG_FILE?}
 
 
 cd projects
@@ -156,4 +151,7 @@ sh projects.sh -a
 STAMP_END=$(date +%s)
 spent=$(expr "$STAMP_END" '-' "$STAMP_START")
 echo "total time spent = $spent seconds"
+
+
+
 

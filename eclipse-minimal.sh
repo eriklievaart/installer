@@ -20,7 +20,6 @@ ECLIPSEINIT_CACHE=~/.cache/eclipse/plugin/eclipseinit.jar
 
 bin/wgetc ${ECLIPSE_PLATFORM_CACHE?} ${ECLIPSE_PLATFORM_URL?}
 
-
 if [ -d "${ECLIPSE_INSTALL?}" ]
 then
 	echo "eclipse already installed"
