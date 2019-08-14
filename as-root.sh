@@ -92,6 +92,11 @@ install partimage
 install virtualbox-qt
 install android-tools-fastboot
 
+java_version=8
+install openjdk-${java_version?}-jdk
+sudo update-alternatives --set java /usr/lib/jvm/java-${java_version?}-openjdk-amd64/jre/bin/java
+
+
 # convenience script for jumping to directories
 Z_PARENT="/opt"
 Z_DIR="$Z_PARENT/z"

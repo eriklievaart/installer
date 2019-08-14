@@ -130,9 +130,6 @@ if ! cat ~/.bashrc | grep --quiet 'dirs -v'; then
     echo 'alias dirs="dirs -v"' >> ~/.bashrc
 fi
 
-# install java projects
-sudo update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
-
 fetch_url ${JUNIT_DESTINATION?} ${JUNIT_URL?}
 fetch_url ${ANT_JUNIT_DESTINATION?} ${ANT_JUNIT_URL?}
 fetch_url ${GUICE_SRC_DESTINATION?} ${GUICE_SRC_URL?}
