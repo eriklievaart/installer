@@ -1,0 +1,37 @@
+##################
+# customizations #
+##################
+
+key "Alt+Ctrl+t"			x-terminal-emulator
+key "Alt+Ctrl+b"			sensible-browser about:blank
+key "Alt+Ctrl+s"			sensible-browser http://www.duckduckgo.com
+key "Ctrl+Alt+BackSpace"		icewm -r
+
+key "Ctrl+Shift+KP_Insert"		snap -f
+key "Ctrl+Shift+KP_Begin"		snap
+key "Ctrl+Shift+KP_Left"		snap -l
+key "Ctrl+Shift+KP_Right"		snap -r
+key "Ctrl+Shift+KP_Up"			snap -t
+key "Ctrl+Shift+KP_Down"		snap -b
+key "Ctrl+Shift+KP_Home"		snap -t -l
+key "Ctrl+Shift+KP_End"			snap -b -l
+key "Ctrl+Shift+KP_Page_Up"		snap -t -r
+key "Ctrl+Shift+KP_Page_Down"		snap -b -r
+
+key "Super+KP_Subtract"			amixer sset Master 5%-
+key "Super+KP_Add"			amixer sset Master 5%+
+
+############
+# original #
+############
+
+key "XF86AudioLowerVolume"		amixer sset Master 5%-
+key "XF86AudioRaiseVolume"		amixer sset Master 5%+
+key "XF86AudioMute"			amixer sset Master toggle
+key "XF86HomePage"			sensible-browser about:blank
+key "XF86Search"			sensible-browser http://www.duckduckgo.com
+key "XF86Eject"				eject
+key "XF86Calculator"			/bin/sh -c "gnome-calculator || xcalc || ( type bc >/dev/null 2>&1 && xterm -e bc -l)"
+
+switchkey "Super+p"			icewm-menu-xrandr
+
