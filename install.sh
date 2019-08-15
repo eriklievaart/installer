@@ -126,6 +126,18 @@ if [ -d bin ]; then
 	chmod +x ~/bin/*
 fi
 
+link_dir=home/link
+for file in $(ls -a $link_dir | sed -n '/[.]*[^.].*/p')
+do
+	location=$PWD/$link_dir/$file
+	link=~/$file
+	if [ ! -e ${link?} ]; then
+		echo "linking ${location?}"
+		[ -e ${location?} ] || die "assertion failed $location"
+		ln -s "${location?}" "${link?}"
+	fi
+done
+
 if ! cat ~/.bashrc | grep --quiet 'dirs -v'; then
     echo 'alias dirs="dirs -v"' >> ~/.bashrc
 fi
@@ -142,7 +154,7 @@ sh eclipse-minimal.sh >> ${LOG_FILE?}
 
 
 cd projects
-sh projects.sh -a
+# sh projects.sh -a
 
 
 STAMP_END=$(date +%s)

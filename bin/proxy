@@ -18,6 +18,6 @@ fi
 
 if [ -f $config ]; then
 	proxy=$(cat $config)
-	gnome-terminal --window-with-profile=blue -x ssh $proxy -D 12345
+	gnome-terminal --title="proxy" -- ssh $proxy -D 12345 
 fi
 

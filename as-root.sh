@@ -92,6 +92,9 @@ install partimage
 install virtualbox-qt
 install android-tools-fastboot
 
+install icewm
+install icewm-common
+
 java_version=8
 install openjdk-${java_version?}-jdk
 sudo update-alternatives --set java /usr/lib/jvm/java-${java_version?}-openjdk-amd64/jre/bin/java

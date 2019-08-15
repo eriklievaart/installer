@@ -1,86 +1,75 @@
 #!/bin/sh
 set -e
 
+getdisplay() {
+	count=1
+	echo "$allbounds" | while read -r dw dh dx dy
+	do 
+		result=$(echo "${wmidx?} >= ${dx?} && ${wmidx?} < ${dx?} + ${dw?}" | bc)
+		if [ 1 -eq $result ]; then
+			echo "$count"
+			return 0;
+		fi
+		count=$(expr "${count?}" '+' '1')
+	done
+}
 id=$(xprop -root | sed -r -n '/ACTIVE_WINDOW\(/{s|[^#]*# ?0x||;p}')
 line=$(wmctrl -l -G | grep "$id")
-x=$(echo "$line" | awk '{print $3}')
-y=$(echo "$line" | awk '{print $4}')
-width=$(echo "$line" | awk '{print $5}')
-height=$(echo "$line" | awk '{print $6}')
-midx=$(expr $width "/" 2 + $x)
 
-for bounds in $(xrandr | grep " connected " | sed -n -r 's/.*connected ?([^ ]*).*/\1/;p')
+# current bounds of window
+wx=$(echo "$line" | awk '{print $3}')
+wy=$(echo "$line" | awk '{print $4}')
+ww=$(echo "$line" | awk '{print $5}')
+wh=$(echo "$line" | awk '{print $6}')
+allbounds=$(xrandr | grep " connected " | awk '{print $3}'  | tr '+x' '  ')
+wmidx=$(echo "$ww / 2 + $wx" | bc)
+display=$(getdisplay)
+displaymax=$(echo " $allbounds " | wc -l)
+echo "window x $wx midx $wmidx display $display max $displaymax"
+
+# scaling factor for x, y, width & height
+fx=0
+fy=0
+fw=1
+fh=1
+maximize=remove
+
+while true
 do
-	if expr "${bounds?}" : ".*+0+0" > /dev/null;
-	then
-		d1x=$(echo "${bounds?}" | cut -d + -f 2)
-		d1y=$(echo "${bounds?}" | cut -d + -f 3)
-		d1w=$(echo "${bounds?}" | cut -d x -f 1)
-		d1h=$(echo "${bounds?}" | tr '+' 'x' | cut -d x -f 2)
-	else
-		d2x=$(echo "${bounds?}" | cut -d + -f 2)
-		d2y=$(echo "${bounds?}" | cut -d + -f 3)
-		d2w=$(echo "${bounds?}" | cut -d x -f 1)
-		d2h=$(echo "${bounds?}" | tr '+' 'x' | cut -d x -f 2)
+        case "$1" in
+                -f) wmctrl -r :ACTIVE: -b toggle,fullscreen; exit 0;;
+                -m) maximize=add;;
+                -l) fw="0.5";;
+                -r) fw="0.5"; fx="0.5";;
+                -t) fh="0.5";;
+                -b) fh="0.5"; fy="0.5";;
+		-n) display=$(echo "(${display?} + 1) % ${displaymax?}" | bc);;
+		-p) display=$(echo "(${display?} - 1) % ${displaymax?}" | bc);;
+        esac
+	[ $display -eq 0 ] && display=$displaymax
+	if [ "$#" -eq 0 ]; then
+		
+		dw=$(echo "$allbounds" | sed "${display?}!d" | cut -d ' ' -f 1)
+		dh=$(echo "$allbounds" | sed "${display?}!d" | cut -d ' ' -f 2)
+		dx=$(echo "$allbounds" | sed "${display?}!d" | cut -d ' ' -f 3)
+		dy=$(echo "$allbounds" | sed "${display?}!d" | cut -d ' ' -f 4)
+		echo "destination display[$display] bounds ${dx?} ${dy?} ${dw?} ${dh?}"
+
+		x=$(echo "${fx?} * ${dw?} + ${dx?}" | bc | cut -d '.' -f 1)
+		y=$(echo "${fy?} * ${dh?} + ${dy?}" | bc | cut -d '.' -f 1)
+		w=$(echo "${fw?} * $dw" | bc | cut -d '.' -f 1)
+		h=$(echo "${fh?} * $dh" | bc | cut -d '.' -f 1)
+		echo "window destination bounds ${x?} ${y?} ${w?} ${h?}"
+
+		wmctrl -r :ACTIVE: -b remove,fullscreen
+		wmctrl -r :ACTIVE: -b remove,maximized_vert,maximized_horz;
+		wmctrl -r :ACTIVE: -e "0,$x,$y,$w,$h"
+		if [ "$maximize" = "add" ]; then
+			wmctrl -r :ACTIVE: -b add,maximized_vert,maximized_horz;
+		fi
+		stop=$(($(date +%s%N)/1000000))
+		exit 0
 	fi
+        shift
 done
-
-echo "id $id position $x $y $width $height"
-echo "midx = $midx"
-echo "display 1: $d1x    $d1y $d1w $d1h"
-echo "display 2: $d2x $d2y $d2w $d2h"
-
-if expr $midx '<=' $d1w > /dev/null; then
-	echo "we be on display 1"
-	dx=$d1x
-	dy=$d1y
-	dw=$d1w
-	dh=$d1h
-	display=1
-else
-	echo "we be on display 2"
-	dx=$d2x
-	dy=$d2y
-	dw=$d2w
-	dh=$d2h
-	display=2
-fi
-
-dw2=$(expr $dw "/" 2)
-dh2=$(expr $dh "/" 2)
-dx2=$(expr $dx + $dw2)
-dy2=$(expr $dy + $dh2)
-
-
-move() {
-	echo "snap $1 $2 $3 $4"
-	wmctrl -r :ACTIVE: -e "0,$1,$2,$3,$4"
-	echo ""
-}
-
-x=$dx
-y=$dy
-w=$dw
-h=$dh
-
-while expr "$#" '>' 0
-do
-	case "$1" in
-        	-f) wmctrl -r :ACTIVE: -b toggle,fullscreen; exit 0;;
-        	-l) w=$dw2;;
-	        -r) x=$dx2; w=$dw2;;
-	        -t) h=$dh2;;
-	        -b) y=$dy2; h=$dh2;;
-	esac
-	shift
-done
-
-wmctrl -r :ACTIVE: -b remove,maximized_vert,maximized_horz;
-wmctrl -r :ACTIVE: -b remove,fullscreen;
-echo "snap $x $y $w $h"
-wmctrl -r :ACTIVE: -e "0,$x,$y,$w,$h"
-
-
-
-
 

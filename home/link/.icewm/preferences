@@ -1,0 +1,19 @@
+TaskBarShowShowDesktopButton=0
+TaskBarShowWindowListMenu=0
+TaskBarShowCPUStatus=0
+TaskBarShowMEMStatus=0
+TaskBarShowNetStatus=0
+PagerShowNumbers=0
+KeySysAddressBar="Alt+F2"
+KeySysWorkspace1="Ctrl+F1"
+KeySysWorkspace2="Ctrl+F2"
+KeySysWorkspace3="Ctrl+F3"
+KeySysWorkspace4="Ctrl+F4"
+KeySysWorkspace5="Ctrl+F5"
+KeySysWorkspace6="Ctrl+F6"
+KeySysWorkspace7="Ctrl+F7"
+KeySysWorkspace8="Ctrl+F8"
+WorkspaceNames=" 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " 7 ", " 8 "
+KeySysWorkspacePrevTakeWin="Alt+Ctrl+Shift+Left", "Alt+Ctrl+Home"
+KeySysWorkspaceNextTakeWin="Alt+Ctrl+Shift+Right", "Alt+Ctrl+End"
+
