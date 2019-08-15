@@ -154,7 +154,7 @@ sh eclipse-minimal.sh >> ${LOG_FILE?}
 
 
 cd projects
-# sh projects.sh -a
+sh projects.sh -a
 
 
 STAMP_END=$(date +%s)

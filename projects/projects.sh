@@ -65,12 +65,12 @@ install() {
 	done
 
 	echo "generating antastic metadata"
-	ws antastic +
+	~/bin/ws antastic +
 
 	echo "building remaining projects using antastic"
-	antastic "$(pwd)/antastic.txt"
+	~/bin/antastic "$(pwd)/antastic.txt"
 
-	ws generate +
+	~/bin/ws generate +
 }
 
 
