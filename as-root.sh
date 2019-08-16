@@ -2,6 +2,7 @@
 set -e                    # fail on errors
 sh -n as-root.sh          # check this file for syntax errors before executing it
 
+. ./globals.sh
 
 die() {
     echo >&2 "Error: $@"
@@ -121,7 +122,7 @@ fi
 # install icewm theme
 themedir=/usr/share/icewm/themes/mytheme
 if [ ! -e ${themedir?} ]; then
-	sudo ln -s ~/Development/git/installer/link/mytheme "${themedir?}"
+	sudo ln -s ${GIT_DIR?}/installer/link/mytheme "${themedir?}"
 fi
 
 # open media with vlc by default

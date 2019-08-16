@@ -6,7 +6,6 @@ sh -n install.sh          # check this file for syntax errors before executing i
 . ./globals.sh
 
 STAMP_START=$(date +%s)
-IBIN_DIR=~/bin
 LOG_DIR=/tmp/installer
 LOG_FILE=$LOG_DIR/installer_$(date +%y-%m-%d_%T).log
 UP_TO_DATE=false
@@ -52,7 +51,7 @@ fetch_url() {
 	then
 		log "already downloaded: ${destination?}"
 	else
-		sh ${IBIN?}/wgetc ${destination?} $url
+		sh ${IBIN_DIR?}/wgetc ${destination?} $url
 	fi
 }
 
@@ -117,7 +116,7 @@ else
 	echo ""
 	echo "adding ibin (personal scripts) to path"
 	chmod +x ibin/*
-	append='PATH=$PATH':"${IBIN?}"
+	append='PATH=$PATH':"${IBIN_DIR?}"
 	eval "$append"
 	echo "$append" > ~/.profile
 	echo
@@ -129,11 +128,11 @@ if [ ! -d ~/bin ]; then
 fi
 
 link_dir=link/home
-for file in $(ls -a $link_dir | sed -n '/[.]*[^.].*/p')
+for file in $(ls -a "${link_dir?}" | sed -n '/[.]*[^.].*/p')
 do
 	location=$PWD/$link_dir/$file
 	link=~/$file
-	if [ ! -e ${link?} ]; then
+	if [ ! -e "${link?}" ]; then
 		echo "linking ${location?}"
 		[ -e ${location?} ] || die "assertion failed $location"
 		ln -s "${location?}" "${link?}"

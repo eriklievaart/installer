@@ -1,6 +1,8 @@
 #!/bin/sh
 set -e
 
+. ../globals.sh
+
 die() {
     echo >&2 "Error: $@"
     exit 1
@@ -12,9 +14,7 @@ fi
 
 
 
-git_dir=~/Development/git
-dependency_file="$start_dir/dependencies.txt"
-buildfile=~/Development/git/ant/master.xml
+buildfile=${GIT_DIR?}/ant/master.xml
 repos=$(curl -s https://api.github.com/users/eriklievaart/repos | jq '.[] | .name' | tr -d '"')
 
 
@@ -29,13 +29,13 @@ usage() {
 }
 
 sources() {
-	if [ ! -d $git_dir ];then
-		mkdir -p $git_dir
+	if [ ! -d ${GIT_DIR?} ];then
+		mkdir -p ${GIT_DIR?}
 	fi
 
 	for repo in $repos
 	do
-		repo_dir="$git_dir/$repo"
+		repo_dir="${GIT_DIR?}/$repo"
 		if [ -d $repo_dir ]
 		then
 			cd $repo_dir

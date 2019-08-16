@@ -1,8 +1,8 @@
 #!/bin/sh
 set -e
 
+. ../globals.sh
 
-git=~/Development/git
 gits @ws pull
 
 login() {
@@ -13,11 +13,10 @@ login() {
 	read user
 }
 
-cd "$git"
-for project in $(cat "$git/ws/main/static/workspaces.txt")
+cd "${GIT_DIR?}"
+for project in $(cat "${GIT_DIR?}/ws/main/static/workspaces.txt")
 do
-	dir="$git/$project"
-	if [ ! -d "$dir" ]; then 
+	if [ ! -d "${GIT_DIR?}/$project" ]; then 
 		login
 		echo "$project"
 		git clone https://$user@bitbucket.org/$user/$project
