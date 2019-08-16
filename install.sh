@@ -116,7 +116,7 @@ else
 	echo ""
 	echo "adding ibin (personal scripts) to path"
 	chmod +x ibin/*
-	append='PATH=$PATH':"${IBIN_DIR?}"
+	append='PATH=$PATH':~/bin:"${IBIN_DIR?}"
 	eval "$append"
 	echo "$append" > ~/.profile
 	echo
