@@ -1,8 +1,9 @@
 #!/bin/sh
-
+# This script creates a lightweight installation of Eclipse without bloat
 set -e
 
-# This script creates a lightweight installation of Eclipse without bloat
+. ./globals.sh
+
 
 ECLIPSE_LAUNCHER=~/bin/eclipse
 ECLIPSE_VERSION=4.12
@@ -18,12 +19,11 @@ ECLIPSEINIT_CACHE=~/.cache/eclipse/plugin/eclipseinit.jar
 
 
 
-bin/wgetc ${ECLIPSE_PLATFORM_CACHE?} ${ECLIPSE_PLATFORM_URL?}
+$IBIN/wgetc ${ECLIPSE_PLATFORM_CACHE?} ${ECLIPSE_PLATFORM_URL?}
 
 if [ -d "${ECLIPSE_INSTALL?}" ]
 then
 	echo "eclipse already installed"
-
 else
 	# install binaries
 	echo "unpacking ${ECLIPSE_PLATFORM_CACHE?} to ${ECLIPSE_INSTALL?}"
@@ -33,7 +33,7 @@ else
 	# install plugins
 	echo "installing jdt, this may take a while..."
 	$ECLIPSE_INSTALL/eclipse -noSplash -application org.eclipse.equinox.p2.director -repository http://download.eclipse.org/eclipse/updates/${ECLIPSE_VERSION?} -installIUs org.eclipse.jdt.feature.group
-	bin/wgetc ${ECLIPSEINIT_CACHE?} ${ECLIPSEINIT_URL?} ${ECLIPSE_PLUGINS?}
+	$IBIN/wgetc ${ECLIPSEINIT_CACHE?} ${ECLIPSEINIT_URL?} ${ECLIPSE_PLUGINS?}
 
 	# remove intro screen
 	rm ${ECLIPSE_PLUGINS?}/org.eclipse.ui.intro*.jar

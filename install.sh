@@ -2,10 +2,11 @@
 set -e                    # fail on errors
 sh -n install.sh          # check this file for syntax errors before executing it
 
+# load globals
+. ./globals.sh
 
 STAMP_START=$(date +%s)
-HOME=~
-BIN_DIR=~/bin
+IBIN_DIR=~/bin
 LOG_DIR=/tmp/installer
 LOG_FILE=$LOG_DIR/installer_$(date +%y-%m-%d_%T).log
 UP_TO_DATE=false
@@ -51,7 +52,7 @@ fetch_url() {
 	then
 		log "already downloaded: ${destination?}"
 	else
-		sh bin/wgetc ${destination?} $url
+		sh ${IBIN?}/wgetc ${destination?} $url
 	fi
 }
 
@@ -100,33 +101,34 @@ then
 	xfce_set '<Primary><Shift>KP_Right'     "tile_right_key"
 	xfce_set '<Primary><Shift>KP_Up'        "tile_up_key"
 	xfce_set '<Primary><Shift>KP_Down'      "tile_down_key"
-	xfce_set '<Primary><Shift>KP_Insert'    "${BIN_DIR?}/move-to-next-monitor"
+	xfce_set '<Primary><Shift>KP_Insert'    "${IBIN_DIR?}/snap -n"
 fi
-
 
 
 
 # install my own scripts
+if [ ! -f ~/.profile ]; then
+	touch ~/.profile
+	chmod +x ~/.profile
+fi
+if cat ~/.profile | grep -q "/ibin"; then
+	echo "ibin already installed"
+else
+	echo ""
+	echo "adding ibin (personal scripts) to path"
+	chmod +x ibin/*
+	append='PATH=$PATH':"${IBIN?}"
+	eval "$append"
+	echo "$append" > ~/.profile
+	echo
+fi
+
 if [ ! -d ~/bin ]; then
 	mkdir ~/bin
+	PATH=$PATH:~/bin
 fi
 
-if [ -d bin ]; then
-	echo ""
-	echo "linking scripts in bin"
-	for file in $(ls bin)
-	do
-		from=$PWD/bin/$file
-		to=~/bin/$file
-		if [ -e "$to" ]; then
-			rm -rf "$to"
-		fi
-		ln -s "$from" "$to"
-	done
-	chmod +x ~/bin/*
-fi
-
-link_dir=home/link
+link_dir=link/home
 for file in $(ls -a $link_dir | sed -n '/[.]*[^.].*/p')
 do
 	location=$PWD/$link_dir/$file
@@ -153,14 +155,17 @@ tail -n 0 -f ${LOG_FILE?} &
 sh eclipse-minimal.sh >> ${LOG_FILE?}
 
 
+# install my own hobby projects
 cd projects
-sh projects.sh -a
-
+if [ -z "$@" ]; then
+	sh projects.sh -a
+else
+	sh projects.sh "$@"
+fi
 
 STAMP_END=$(date +%s)
 spent=$(expr "$STAMP_END" '-' "$STAMP_START")
 echo "total time spent = $spent seconds"
-
 
 
 
