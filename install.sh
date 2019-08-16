@@ -2,10 +2,11 @@
 set -e                    # fail on errors
 sh -n install.sh          # check this file for syntax errors before executing it
 
+# load globals
+. ./globals.sh
 
 STAMP_START=$(date +%s)
-HOME=~
-BIN_DIR=~/bin
+IBIN_DIR=~/bin
 LOG_DIR=/tmp/installer
 LOG_FILE=$LOG_DIR/installer_$(date +%y-%m-%d_%T).log
 UP_TO_DATE=false
@@ -105,28 +106,29 @@ fi
 
 
 
-
 # install my own scripts
+if [ ! -f ~/.profile ]; then
+	touch ~/.profile
+	chmod +x ~/.profile
+fi
+if cat ~/.profile | grep -q "/ibin"; then
+	echo "ibin already installed"
+else
+	echo ""
+	echo "adding ibin (personal scripts) to path"
+	chmod +x ibin/*
+	append='PATH=$PATH':"${IBIN?}"
+	eval "$append"
+	echo "$append" > ~/.profile
+	echo
+fi
+
 if [ ! -d ~/bin ]; then
 	mkdir ~/bin
+	PATH=$PATH:~/bin
 fi
 
-if [ -d bin ]; then
-	echo ""
-	echo "linking scripts in bin"
-	for file in $(ls bin)
-	do
-		from=$PWD/bin/$file
-		to=~/bin/$file
-		if [ -e "$to" ]; then
-			rm -rf "$to"
-		fi
-		ln -s "$from" "$to"
-	done
-	chmod +x ~/bin/*
-fi
-
-link_dir=home/link
+link_dir=link/home
 for file in $(ls -a $link_dir | sed -n '/[.]*[^.].*/p')
 do
 	location=$PWD/$link_dir/$file
@@ -154,13 +156,13 @@ sh eclipse-minimal.sh >> ${LOG_FILE?}
 
 
 cd projects
-sh projects.sh -a
+args=$([ "$@" = "" ] && echo "-a" || echo "$@")
+sh projects.sh $args
 
 
 STAMP_END=$(date +%s)
 spent=$(expr "$STAMP_END" '-' "$STAMP_START")
 echo "total time spent = $spent seconds"
-
 
 
 

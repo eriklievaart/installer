@@ -48,12 +48,12 @@ sudo chmod +s /sbin/shutdown
 
 
 # enable ctrl alt f1-f6 terminals
-if [ ! -z "$(sudo grep '# *GRUB_TERMINAL' /etc/default/grub)" ]; then
-	# backup original grub config (only the first time run)
-	sudo cp -n /etc/default/grub /etc/default/grub.original
-	sudo sed -i s/#[[:space:]]*GRUB_TERMINAL/GRUB_TERMINAL/ /etc/default/grub
-	sudo update-grub
-fi
+# if [ ! -z "$(sudo grep '# *GRUB_TERMINAL' /etc/default/grub)" ]; then
+#	# backup original grub config (only the first time run)
+#	sudo cp -n /etc/default/grub /etc/default/grub.original
+#	sudo sed -i s/#[[:space:]]*GRUB_TERMINAL/GRUB_TERMINAL/ /etc/default/grub
+#	sudo update-grub
+#fi
 
 
 # install default software
@@ -116,6 +116,12 @@ else
 	if ! cat ~/.bashrc | grep -q '/z/z.sh'; then
 		echo ". $Z_SCRIPT" >> ~/.bashrc
 	fi
+fi
+
+# install icewm theme
+themedir=/usr/share/icewm/themes/mytheme
+if [ ! -e ${themedir?} ]; then
+	sudo ln -s ~/Development/git/installer/link/mytheme "${themedir?}"
 fi
 
 # open media with vlc by default
