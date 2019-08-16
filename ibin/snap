@@ -13,6 +13,17 @@ getdisplay() {
 		count=$(expr "${count?}" '+' '1')
 	done
 }
+
+getdisplays() {
+	cache_dir=/tmp/snap/cache
+	cache_file=${cache_dir?}/bounds.txt
+	if [ ! -f "${cache_file?}" ]; then
+		mkdir -p "${cache_dir?}"
+		xrandr | grep " connected " | sed -r 's/[^ ]*[^0-9]*([^ ]*).*/\1/'  | tr '+x' '  ' > ${cache_file?}
+	fi
+	cat $cache_file
+}
+
 id=$(xprop -root | sed -r -n '/ACTIVE_WINDOW\(/{s|[^#]*# ?0x||;p}')
 line=$(wmctrl -l -G | grep "$id")
 
@@ -21,7 +32,7 @@ wx=$(echo "$line" | awk '{print $3}')
 wy=$(echo "$line" | awk '{print $4}')
 ww=$(echo "$line" | awk '{print $5}')
 wh=$(echo "$line" | awk '{print $6}')
-allbounds=$(xrandr | grep " connected " | sed -r 's/[^ ]*[^0-9]*([^ ]*).*/\1/'  | tr '+x' '  ')
+allbounds=$(getdisplays)
 wmidx=$(echo "$ww / 2 + $wx" | bc)
 display=$(getdisplay)
 displaymax=$(echo " $allbounds " | wc -l)

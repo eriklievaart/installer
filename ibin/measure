@@ -2,7 +2,7 @@
 set -e
 
 start=$(millis)
-echo "invoking $@"
+echo "invoking '$@'"
 $@
 end=$(millis)
 spent=$(expr $end - $start)
