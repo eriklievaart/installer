@@ -2,7 +2,8 @@
 # customizations #
 ##################
 
-key "Alt+Ctrl+t"			    x-terminal-emulator
+key "Alt+Ctrl+t"                           x-terminal-emulator
+key "Scroll_Lock"			    felix q
 key "Alt+Ctrl+b"			    sensible-browser about:blank
 key "Alt+Ctrl+s"			    sensible-browser http://www.duckduckgo.com
 key "Ctrl+Alt+BackSpace"		icewm -r
