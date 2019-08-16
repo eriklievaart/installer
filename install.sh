@@ -52,7 +52,7 @@ fetch_url() {
 	then
 		log "already downloaded: ${destination?}"
 	else
-		sh bin/wgetc ${destination?} $url
+		sh ${IBIN?}/wgetc ${destination?} $url
 	fi
 }
 
@@ -101,7 +101,7 @@ then
 	xfce_set '<Primary><Shift>KP_Right'     "tile_right_key"
 	xfce_set '<Primary><Shift>KP_Up'        "tile_up_key"
 	xfce_set '<Primary><Shift>KP_Down'      "tile_down_key"
-	xfce_set '<Primary><Shift>KP_Insert'    "${BIN_DIR?}/move-to-next-monitor"
+	xfce_set '<Primary><Shift>KP_Insert'    "${IBIN_DIR?}/snap -n"
 fi
 
 
@@ -155,10 +155,13 @@ tail -n 0 -f ${LOG_FILE?} &
 sh eclipse-minimal.sh >> ${LOG_FILE?}
 
 
+# install my own hobby projects
 cd projects
-args=$([ "$@" = "" ] && echo "-a" || echo "$@")
-sh projects.sh $args
-
+if [ -z "$@" ]; then
+	sh projects.sh -a
+else
+	sh projects.sh "$@"
+fi
 
 STAMP_END=$(date +%s)
 spent=$(expr "$STAMP_END" '-' "$STAMP_START")
