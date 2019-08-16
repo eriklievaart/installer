@@ -1,0 +1,10 @@
+#!/bin/sh
+set -e
+
+start=$(millis)
+echo "invoking $@"
+$@
+end=$(millis)
+spent=$(expr $end - $start)
+echo "time spent; $spent ms"
+
