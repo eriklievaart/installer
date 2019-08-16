@@ -74,6 +74,7 @@ install par2
 install unrar
 install ssh
 install tree
+install fdupes
 install curl
 install jq
 
