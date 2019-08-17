@@ -1,86 +1,63 @@
 #!/bin/sh
-set -e
+cache=/tmp/snap/cache
+[ -d $cache ] || $IBIN/util/displays
 
-getdisplay() {
-	count=1
-	echo "$allbounds" | while read -r dw dh dx dy
-	do 
-		result=$(echo "${wmidx?} >= ${dx?} && ${wmidx?} < ${dx?} + ${dw?}" | bc)
-		if [ 1 -eq $result ]; then
-			echo "$count"
-			return 0;
-		fi
-		count=$(expr "${count?}" '+' '1')
-	done
-}
+wmctrl -r :ACTIVE: -b remove,fullscreen
+wmctrl -r :ACTIVE: -b remove,maximized_vert,maximized_horz;
 
-getdisplays() {
-	cache_dir=/tmp/snap/cache
-	cache_file=${cache_dir?}/bounds.txt
-	if [ ! -f "${cache_file?}" ]; then
-		mkdir -p "${cache_dir?}"
-		xrandr | grep " connected " | sed -r 's/[^ ]*[^0-9]*([^ ]*).*/\1/'  | tr '+x' '  ' > ${cache_file?}
+# current location of window
+id=$(xdotool getactivewindow)
+lines=$(xwininfo -id $id | grep 'Absolute\|Width\|Height')
+borders=$(xprop _NET_FRAME_EXTENTS -id $id | grep "NET_FRAME_EXTENTS" | sed 's/,//g;s/[^0-9]*//')
+x=$(( $(echo "$lines" | sed -r -n '/.*X:/{s/[^0-9]*//;p}') - $(echo "$borders" | cut -d " " -f 1) ))
+y=$(( $(echo "$lines" | sed -r -n '/.*Y:/{s/[^0-9]*//i;p}') - $(echo "$borders" | cut -d " " -f 3) ))
+w=$(( $(echo "$lines" | sed -r -n '/.*Width/{s/[^0-9]*//;p}') + $(echo "$borders" | cut -d " " -f 1) + $(echo "$borders" | cut -d " " -f 2) ))
+h=$(( $(echo "$lines" | sed -r -n '/.*Height/{s/[^0-9]*//;p}' ) + $(echo "$borders" | cut -d " " -f 3) + $(echo "$borders" | cut -d " " -f 4) ))
+midx=$(( $w / 2 + $x ))
+echo "window $x $y $w $h midx$midx"
+
+# determine current display of window
+display=1
+displaymax=$(ls $cache/display* | wc -w)
+while [ "${display?}" -lt $displaymax ]; do
+	. "$cache/display$display"
+	if [ $midx -ge $dx -a $midx -lt $(($dx + $dw)) ]; then
+		break
 	fi
-	cat $cache_file
-}
-
-id=$(xprop -root | sed -r -n '/ACTIVE_WINDOW\(/{s|[^#]*# ?0x||;p}')
-line=$(wmctrl -l -G | grep "$id")
-
-# current bounds of window
-wx=$(echo "$line" | awk '{print $3}')
-wy=$(echo "$line" | awk '{print $4}')
-ww=$(echo "$line" | awk '{print $5}')
-wh=$(echo "$line" | awk '{print $6}')
-allbounds=$(getdisplays)
-wmidx=$(echo "$ww / 2 + $wx" | bc)
-display=$(getdisplay)
-displaymax=$(echo " $allbounds " | wc -l)
-echo "window x $wx midx $wmidx display $display max $displaymax"
-
-# scaling factor for x, y, width & height
-fx=0
-fy=0
-fw=1
-fh=1
-maximize=remove
-
-while true
-do
-        case "$1" in
-                -f) wmctrl -r :ACTIVE: -b toggle,fullscreen; exit 0;;
-                -m) maximize=add;;
-                -l) fw="0.5";;
-                -r) fw="0.5"; fx="0.5";;
-                -t) fh="0.5";;
-                -b) fh="0.5"; fy="0.5";;
-		-n) display=$(echo "(${display?} + 1) % ${displaymax?}" | bc);;
-		-p) display=$(echo "(${display?} - 1) % ${displaymax?}" | bc);;
-        esac
-	[ $display -eq 0 ] && display=$displaymax
-	if [ "$#" -eq 0 ]; then
-		
-		dw=$(echo "$allbounds" | sed "${display?}!d" | cut -d ' ' -f 1)
-		dh=$(echo "$allbounds" | sed "${display?}!d" | cut -d ' ' -f 2)
-		dx=$(echo "$allbounds" | sed "${display?}!d" | cut -d ' ' -f 3)
-		dy=$(echo "$allbounds" | sed "${display?}!d" | cut -d ' ' -f 4)
-		echo "destination display[$display] bounds ${dx?} ${dy?} ${dw?} ${dh?}"
-
-		x=$(echo "${fx?} * ${dw?} + ${dx?}" | bc | cut -d '.' -f 1)
-		y=$(echo "${fy?} * ${dh?} + ${dy?}" | bc | cut -d '.' -f 1)
-		w=$(echo "${fw?} * $dw" | bc | cut -d '.' -f 1)
-		h=$(echo "${fh?} * $dh" | bc | cut -d '.' -f 1)
-		echo "window destination bounds ${x?} ${y?} ${w?} ${h?}"
-
-		wmctrl -r :ACTIVE: -b remove,fullscreen
-		wmctrl -r :ACTIVE: -b remove,maximized_vert,maximized_horz;
-		wmctrl -r :ACTIVE: -e "0,$x,$y,$w,$h"
-		if [ "$maximize" = "add" ]; then
-			wmctrl -r :ACTIVE: -b add,maximized_vert,maximized_horz;
-		fi
-		stop=$(($(date +%s%N)/1000000))
-		exit 0
-	fi
-        shift
+	display=$(( $display + 1 ))
 done
 
+# calculate new position
+property=""
+translate() {
+	echo "x=$x;y=$y;w=$w;h=$h;dx=$dx;dy=$dy;dw=$dw;dh=$dh;$1" | bc
+}
+set -- $(getopt "pnfm" "$@")
+while [ "$1" ]; do
+	case "$1" in
+		-n) display=$(echo "d=$display + 1; if(d > ${displaymax?}) 1 else d" | bc);;
+		-f) property=fullscreen;;
+		-m) property=maximized_vert,maximized_horz;;
+		--) . "$cache/display${display?}";;
+		x=*) x=$(translate $(echo "$1" | cut -c "3-"));;
+		y=*) y=$(translate $(echo "$1" | cut -c "3-"));;
+		w=*) w=$(translate $(echo "$1" | cut -c "3-"));;
+		h=*) h=$(translate $(echo "$1" | cut -c "3-"));;
+		*) echo "invalid input $1"; exit 255;;
+	esac
+	shift
+done
+
+# respect display bounds
+echo "moving $x $y $w $h @ display $display ($dx $dy $dw $dh)"
+x=$(echo "if($x < $dx) $dx else if($x >= $dx+$dw) $dx else $x" | bc)
+y=$(echo "if($y < $dy) $dy else if($y >= $dy+$dh) $dy else $y" | bc)
+w=$(echo "if($w > $dw) $dw else $w" | bc)
+h=$(echo "if($h > $dh) $dh else $h" | bc)
+echo "fixed: $x $y $w $h"
+
+# relocate window
+wmctrl -r :ACTIVE: -e "0,$x,$y,$w,$h"
+if [ "$property" ]; then
+	wmctrl -r :ACTIVE: -b add,"$property"
+fi

@@ -1,0 +1,41 @@
+#!/bin/sh
+set -e
+
+cache=/tmp/snap/cache
+
+# get display info
+bounds=$(xrandr | grep " connected " | sed -r 's/[^ ]*[^0-9]*([^ ]*).*/\1/'  | tr '+x' '  ')
+count=$(echo -e "$bounds" | sed -n "$=")
+echo "display count: $count"
+
+# store display count
+mkdir -p $cache
+
+tx=$(xwininfo -name TaskBar | sed '/.*Absolute.*X:/!d;s/[^0-9]*//g')
+ty=$(xwininfo -name TaskBar | sed '/.*Absolute.*Y:/!d;s/[^0-9]*//g')
+echo "taskbar $tx $ty"
+
+display=1
+echo "$bounds" | while read -r dw dh dx dy
+do
+	echo "display $display $dx $dy $dw $dh"
+
+	# don't use 
+	if [ ! -z "$tx" -a ! -z "$ty" ]; then
+		taskbar=$(echo "if ($tx >= $dx && $tx < $dx + $dh) 0 else 1" | bc)
+		if [ "$taskbar" -eq 0 ]; then
+			dh=$ty
+			echo "taskbar : $dx $dy $dw $dh"
+		fi
+	fi
+
+	file="$cache/display$display"
+	echo "#!/bin/sh" > $file
+	echo "dx=$dx" >> $file
+	echo "dy=$dy" >> $file
+	echo "dw=$dw" >> $file
+	echo "dh=$dh" >> $file
+	chmod a+x $file
+	display=$(( $display + 1 ))
+done
+

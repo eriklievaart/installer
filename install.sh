@@ -113,13 +113,10 @@ fi
 if cat ~/.profile | grep -q "/ibin"; then
 	echo "ibin already installed"
 else
-	echo ""
 	echo "adding ibin (personal scripts) to path"
 	chmod +x ibin/*
-	append='PATH=$PATH':~/bin:"${IBIN_DIR?}"
-	eval "$append"
-	echo "$append" > ~/.profile
-	echo
+	echo "IBIN=${IBIN_DIR?}" >> ~/.profile
+	echo 'PATH=$PATH:~/bin:$IBIN' >> ~/.profile
 fi
 
 if [ ! -d ~/bin ]; then

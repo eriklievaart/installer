@@ -11,9 +11,9 @@ map <S-Insert> <MiddleMouse>
 map! <S-Insert> <MiddleMouse>
 
 " + to copy register 0 to clipboard
-map + :let @+ = @0<CR>
-
-
+nmap + :let @+ = @0<CR>
+" ctrl-n to toggle line numbers
+nmap <C-N> :set invnumber<CR>
 
 
 

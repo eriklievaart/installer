@@ -2,28 +2,29 @@
 # customizations #
 ##################
 
-key "Alt+Ctrl+t"                           x-terminal-emulator
-key "Scroll_Lock"			    felix q
-key "Alt+Ctrl+b"			    sensible-browser about:blank
-key "Alt+Ctrl+s"			    sensible-browser http://www.duckduckgo.com
+key "Alt+Ctrl+t"			x-terminal-emulator
+key "Scroll_Lock"			felix q
+key "Alt+Ctrl+b"			sensible-browser about:blank
+key "Alt+Ctrl+s"			sensible-browser http://www.duckduckgo.com
 key "Ctrl+Alt+BackSpace"		icewm -r
 
-key "Ctrl+Shift+KP_Add"         snap
-key "Ctrl+Shift+KP_Enter"		snap -n -m
-key "Ctrl+Shift+KP_Insert"		snap -f
-key "Ctrl+Shift+KP_Begin"		snap -m
-key "Ctrl+Shift+KP_Left"		snap -l
-key "Ctrl+Shift+KP_Right"		snap -r
-key "Ctrl+Shift+KP_Up"			snap -t
-key "Ctrl+Shift+KP_Down"		snap -b
-key "Ctrl+Shift+KP_Home"		snap -t -l
-key "Ctrl+Shift+KP_End"			snap -b -l
-key "Ctrl+Shift+KP_Page_Up"		snap -t -r
-key "Ctrl+Shift+KP_Page_Down"	snap -b -r
+key "Super+KP_Add"		 	snap -m
+key "Super+KP_Insert"			snap -f
+key "Super+KP_Enter"			snap -n    x=dx        y=dy        w=dw   h=dh
+key "Super+KP_Begin"			snap       x=dx        y=dy        w=dw   h=dh
+key "Super+KP_Left"			snap       x=dx        y=dy        w=dw/2 h=dh
+key "Super+KP_Right"			snap       x=dx+dw/2   y=dy        w=dw/2 h=dh
+key "Super+KP_Up"			snap       x=dx        y=dy        w=dw   h=dh/2
+key "Super+KP_Down"			snap       x=dx        y=dy+dh/2   w=dw   h=dh/2
+key "Super+KP_Home"			snap       x=dx        y=dy        w=dw/2 h=dh/2
+key "Super+KP_End"			snap       x=dx        y=dy+dh/2   w=dw/2 h=dh/2
+key "Super+KP_Page_Up"			snap       x=dx+dw/2   y=dy        w=dw/2 h=dh/2
+key "Super+KP_Page_Down"		snap       x=dx+dw/2   y=dy+dh/2   w=dw/2 h=dh/2
+key "Super+KP_Divide"	 		snap       x=dx        y=dy        w=dw/3 h=dh
+key "Super+KP_Multiply"	 		snap       x=dx+dw/3   y=dy        w=dw/3 h=dh
+key "Super+KP_Subtract"	 		snap       x=dx+2*dw/3 y=dy        w=dw/3 h=dh
 
-key "Super+KP_Subtract"			amixer sset Master 5%-
-key "Super+KP_Add"			amixer sset Master 5%+
-
+if(1906 > 1920) then 1920 else 1906
 ############
 # original #
 ############
