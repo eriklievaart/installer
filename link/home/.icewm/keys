@@ -7,6 +7,7 @@ key "Scroll_Lock"			felix q
 key "Alt+Ctrl+b"			sensible-browser about:blank
 key "Alt+Ctrl+f"			sensible-browser http://www.duckduckgo.com
 key "Ctrl+Alt+BackSpace"		icewm -r
+key "Alt+F2"				gmrun
 
 key "Super+KP_Add"		 	snap -m
 key "Super+KP_Insert"			snap -f

@@ -58,11 +58,6 @@ sudo chmod +s /sbin/shutdown
 
 
 # install default software
-install gedit
-install vim-gnome
-install jedit
-install kdiff3
-
 install git
 install git-gui
 install python3
@@ -78,24 +73,29 @@ install fdupes
 install curl
 install jq
 
-install mplayer
-install xine-ui
-install vlc
-install kaffeine
-
+install gmrun
 install gnome-terminal
 install numlockx
 install gparted
 install filelight
 install filezilla
-install sabnzbdplus
 install synaptic
 install partimage
 install virtualbox-qt
-install android-tools-fastboot
-
 install icewm
 install icewm-common
+
+install gedit
+install vim-gnome
+install jedit
+install kdiff3
+
+install mplayer
+install xine-ui
+install vlc
+install kaffeine
+install sabnzbdplus
+
 
 java_version=8
 install openjdk-${java_version?}-jdk

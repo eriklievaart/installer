@@ -4,7 +4,6 @@ TaskBarShowCPUStatus=0
 TaskBarShowMEMStatus=0
 TaskBarShowNetStatus=0
 PagerShowNumbers=0
-KeySysAddressBar="Alt+F2"
 KeySysWorkspace1="Ctrl+F1"
 KeySysWorkspace2="Ctrl+F2"
 KeySysWorkspace3="Ctrl+F3"

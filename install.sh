@@ -115,7 +115,7 @@ if cat ~/.profile | grep -q "/ibin"; then
 else
 	echo "adding ibin (personal scripts) to path"
 	chmod +x ibin/*
-	echo "IBIN=${IBIN_DIR?}" >> ~/.profile
+	echo "export IBIN=${IBIN_DIR?}" >> ~/.profile
 	echo 'PATH=$PATH:~/bin:$IBIN' >> ~/.profile
 fi
 

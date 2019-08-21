@@ -15,6 +15,10 @@ nmap + :let @+ = @0<CR>
 " ctrl-n to toggle line numbers
 nmap <C-N> :set invnumber<CR>
 
+" on F5 store last executed command in register 'r'
+nmap <F5> :let @r = @:<CR>
+" on F6 execute the command stored in register 'r'
+nmap <F6> :@r<CR>
 
 
 
