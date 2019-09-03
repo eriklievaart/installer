@@ -16,9 +16,9 @@ nmap + :let @+ = @0<CR>
 nmap <C-N> :set invnumber<CR>
 
 " on F5 store last executed command in register 'r'
-nmap <F5> :let @r = @:<CR>
+map <F5> :let @r = @:<CR>
 " on F6 execute the command stored in register 'r'
-nmap <F6> :@r<CR>
+map <F6> :@r<CR>
 
 
 

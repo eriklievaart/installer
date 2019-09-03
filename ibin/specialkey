@@ -1,0 +1,35 @@
+#!/bin/sh
+
+value=$(zenity --entry)
+
+if [ "$value" = "" ]; then
+	exit 0
+fi
+
+case "$value" in
+	aa) xdotool key Aacute;;
+	"'a") xdotool key Aacute;;
+	"a'") xdotool key Aacute;;
+	ee) xdotool key Eacute;;
+	"e'") xdotool key Eacute;;
+	"'e") xdotool key Eacute;;
+	ii) xdotool key Iacute;;
+	"i'") xdotool key Iacute;;
+	"'i") xdotool key Iacute;;
+	oo) xdotool key Oacute;;
+	"'o") xdotool key Oacute;;
+	"o'") xdotool key Oacute;;
+	'o"') xdotool key Odiaeresis;;
+	'"o') xdotool key Odiaeresis;;
+	"o''") xdotool key odoubleacute;;
+	"''o") xdotool key odoubleacute;;
+	uu) xdotool key Uacute;;
+	"'u") xdotool key Uacute;;
+	"u'") xdotool key Uacute;;
+	'u"') xdotool key udiaeresis;;
+	'"u') xdotool key udiaeresis;;
+	"u''") xdotool key udoubleacute;;
+	"''u") xdotool key udoubleacute;;
+	*) zenity zenity --info --text="unknown key code";;
+esac
+
