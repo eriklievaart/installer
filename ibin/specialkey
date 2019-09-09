@@ -6,30 +6,25 @@ if [ "$value" = "" ]; then
 	exit 0
 fi
 
+store() {
+	xdotool key $1
+	echo -n "$2" | xclip -selection clipboard
+	while [ "$2" = $(xclip -o -selection clipboard) ]
+	do
+		sleep 1
+	done
+}
+
 case "$value" in
-	aa) xdotool key Aacute;;
-	"'a") xdotool key Aacute;;
-	"a'") xdotool key Aacute;;
-	ee) xdotool key Eacute;;
-	"e'") xdotool key Eacute;;
-	"'e") xdotool key Eacute;;
-	ii) xdotool key Iacute;;
-	"i'") xdotool key Iacute;;
-	"'i") xdotool key Iacute;;
-	oo) xdotool key Oacute;;
-	"'o") xdotool key Oacute;;
-	"o'") xdotool key Oacute;;
-	'o"') xdotool key Odiaeresis;;
-	'"o') xdotool key Odiaeresis;;
-	"o''") xdotool key odoubleacute;;
-	"''o") xdotool key odoubleacute;;
-	uu) xdotool key Uacute;;
-	"'u") xdotool key Uacute;;
-	"u'") xdotool key Uacute;;
-	'u"') xdotool key udiaeresis;;
-	'"u') xdotool key udiaeresis;;
-	"u''") xdotool key udoubleacute;;
-	"''u") xdotool key udoubleacute;;
+	"'a"|"a'") store Aacute 'á';;
+	"'e"|"e'") store Eacute 'é';;
+	"'i"|"i'") store Iacute 'í';;
+	"'o"|"o'") store Oacute 'ó';;
+	'"o'|'o"') store Odiaeresis 'ö';;
+	"''o"|"o''") store odoubleacute 'ő';;
+	"'u"|"u'") store Uacute 'ú';;
+	'"u'|'u"') store Udiaeresis 'ü';;
+	"''u"|"u''") store udoubleacute 'ű';;
 	*) zenity zenity --info --text="unknown key code";;
 esac
 
