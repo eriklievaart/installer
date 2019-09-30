@@ -1,0 +1,13 @@
+#!/bin/sh
+
+ps ax | grep steam | while read -r line
+do 
+	pid=$(echo "$line" | cut -d ' ' -f 1)
+	cmd=$(echo "$line" | awk '{print $5}')
+	if expr "$cmd" : "/home/eazy/.local/share/Steam" > /dev/null
+	then
+		kill -9 $pid
+	fi
+done
+
+

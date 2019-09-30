@@ -17,8 +17,10 @@ nmap <C-N> :set invnumber<CR>
 
 " on F5 store last executed command in register 'r'
 map <F5> :let @r = @:<CR>
-" on F6 execute the command stored in register 'r'
+map! <F5> <ESC>:let @r = @:<CR>
+" on . execute the command stored in register 'r'
 map <F6> :@r<CR>
+map! <F6> <ESC>:@r<CR>
 
 
 
