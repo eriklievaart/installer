@@ -10,7 +10,7 @@ key "Alt+F3"				specialkey
 
 key "Super+KP_Add"		 	snap -m
 key "Super+KP_Insert"			snap -f
-key "Super+KP_Enter"			snap -n    x=dx        y=dy        w=dw   h=dh
+key "Super+KP_Enter"			snap -n -m
 key "Super+KP_Begin"			snap       x=dx        y=dy        w=dw   h=dh
 key "Super+KP_Left"			snap       x=dx        y=dy        w=dw/2 h=dh
 key "Super+KP_Right"			snap       x=dx+dw/2   y=dy        w=dw/2 h=dh
