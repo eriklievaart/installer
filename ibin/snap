@@ -14,7 +14,7 @@ y=$(( $(echo "$lines" | sed -r -n '/.*Y:/{s/[^0-9]*//i;p}') - $(echo "$borders" 
 w=$(( $(echo "$lines" | sed -r -n '/.*Width/{s/[^0-9]*//;p}') + $(echo "$borders" | cut -d " " -f 1) + $(echo "$borders" | cut -d " " -f 2) ))
 h=$(( $(echo "$lines" | sed -r -n '/.*Height/{s/[^0-9]*//;p}' ) + $(echo "$borders" | cut -d " " -f 3) + $(echo "$borders" | cut -d " " -f 4) ))
 midx=$(( $w / 2 + $x ))
-echo "window $x $y $w $h midx$midx"
+echo "window $x $y $w $h midx $midx" >> /var/log/snap.log
 
 # determine current display of window
 display=1
@@ -49,12 +49,12 @@ while [ "$1" ]; do
 done
 
 # respect display bounds
-echo "moving $x $y $w $h @ display $display ($dx $dy $dw $dh)"
-x=$(echo "if($x < $dx) $dx else if($x >= $dx+$dw) $dx else $x" | bc)
-y=$(echo "if($y < $dy) $dy else if($y >= $dy+$dh) $dy else $y" | bc)
+echo "moving $x $y $w $h to display $display ($dx $dy $dw $dh)" >> /var/log/snap.log
+x=$(echo "if($x < $dx) $dx else if($x + $w/2 >= $dx+$dw) $dx else $x" | bc)
+y=$(echo "if($y < $dy) $dy else if($y + $h/2 >= $dy+$dh) $dy else $y" | bc)
 w=$(echo "if($w > $dw) $dw else $w" | bc)
 h=$(echo "if($h > $dh) $dh else $h" | bc)
-echo "fixed: $x $y $w $h"
+echo "fixed: $x $y $w $h" >> /var/log/snap.log
 
 # relocate window
 wmctrl -r :ACTIVE: -e "0,$x,$y,$w,$h"
