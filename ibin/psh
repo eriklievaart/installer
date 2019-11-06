@@ -1,0 +1,34 @@
+#!/usr/bin/perl
+use 5.26.1;
+use Cwd;
+
+sub cd {
+	my $moveto = shift;
+	$moveto =~ s/\\s*$//;
+	if ($moveto eq '') {
+		chdir $ENV{"HOME"};
+	} else {
+		chdir "$moveto";
+	}
+}
+
+sub ll {
+	system 'ls -l';
+}
+
+say "welcome to psh";
+while (<STDIN>) {
+	chomp;
+	$_ =~ s/^\s+//;
+	my $cmd = $_ =~ s/\s.*//r;
+	my $tail = $_ =~ s/^\S*\s*//r;
+	cd $tail if $cmd eq "cd";
+	ll if "$_" =~ /^ll?$/;
+	my $exit = system "$_";
+	say "error: $!" if $exit ne 0;
+	say "";
+
+	my $cwd = getcwd();
+	print "$cwd:";
+}
+
