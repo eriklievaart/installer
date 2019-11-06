@@ -1,9 +1,0 @@
-208 = spellbook of magic missile
-206 = spellbook of lightning
-229 = spellbook of healing
-222 = spellbook of remove curse
-219 = spellbook of light
-225 = spellbook of jumping
-228 = spellbook of cure sickness
-
-
