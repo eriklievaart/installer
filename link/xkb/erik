@@ -1,0 +1,31 @@
+partial default alphanumeric_keys
+xkb_symbols "basic" {
+  include "us"
+  include "eurosign(5)"
+
+    key <AE07> { [         7,  ampersand,    udiaeresis,       Udiaeresis ] };
+    key <AE08> { [         8,   asterisk,  udoubleacute,     Udoubleacute ] };
+    key <AE09> { [         9,  parenleft,    odiaeresis,       Odiaeresis ] };
+    key <AE10> { [         0, parenright,  odoubleacute,     Odoubleacute ] };
+
+    key <AC01> { [         a,          A,        aacute,           Aacute ] };
+    key <AD03> { [         e,          E,        eacute,           Eacute ] };
+    key <AD08> { [         i,          I,        iacute,           Iacute ] };
+    key <AD09> { [         o,          O,        oacute,           Oacute ] };
+    key <AD07> { [         u,          U,        uacute,           Uacute ] };
+
+    key <KP0>  { [      KP_0,      KP_0     ] }; 
+    key <KP1>  { [      KP_1,      KP_1     ] }; 
+    key <KP2>  { [      KP_2,      KP_2     ] }; 
+    key <KP3>  { [      KP_3,      KP_3     ] }; 
+    key <KP4>  { [      KP_4,      KP_4     ] }; 
+    key <KP5>  { [      KP_5,      KP_5     ] }; 
+    key <KP6>  { [      KP_6,      KP_6     ] }; 
+    key <KP7>  { [      KP_7,      KP_7     ] }; 
+    key <KP8>  { [      KP_8,      KP_8     ] }; 
+    key <KP9>  { [      KP_9,      KP_9     ] }; 
+
+    key <RALT>  { type[Group1]="TWO_LEVEL", [ ISO_Level3_Shift, Multi_key ]   };
+
+    modifier_map Mod5   { <RALT> };
+};

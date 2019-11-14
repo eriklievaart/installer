@@ -1,4 +1,4 @@
 #!/bin/sh
 automount
-numlockx on
+setxkbmap -layout erik
 
