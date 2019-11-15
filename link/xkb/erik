@@ -24,6 +24,7 @@ xkb_symbols "basic" {
     key <KP7>  { [      KP_7,      KP_7     ] }; 
     key <KP8>  { [      KP_8,      KP_8     ] }; 
     key <KP9>  { [      KP_9,      KP_9     ] }; 
+    key <KPDL>  { [   period,    period     ] }; 
 
     key <RALT>  { type[Group1]="TWO_LEVEL", [ ISO_Level3_Shift, Multi_key ]   };
 

@@ -28,8 +28,8 @@ if [ "$(echo "$1" | cut -c 1)" = "@" ]; then
 		exit 404
 	fi
 
+	cd $repo
 	if [ "$1" = "acp" ]; then
-		cd $repo
 		git add --all
 		if [ -z "$2" ]; then
 			git commit
@@ -41,7 +41,6 @@ if [ "$(echo "$1" | cut -c 1)" = "@" ]; then
 	fi
 
 	if [ "$1" = "untracked" ]; then
-		cd $repo
 		for file in $(git status | sed '0,/Untracked.*/d;/\t/!d')
 		do
 			if [ -f "$file" ]; then
@@ -55,8 +54,9 @@ if [ "$(echo "$1" | cut -c 1)" = "@" ]; then
 		exit 0
 	fi
 
-	if [ "$1" != "" ]; then
-		cd $repo
+	if [ "$1" = "" ]; then
+		git status
+	else
 		git "$@"
 	fi
 	exit 0
