@@ -83,6 +83,7 @@ install synaptic
 install partimage
 install pcmanfm
 install virtualbox-qt
+install xdotool
 install icewm
 install icewm-common
 
