@@ -1,3 +1,6 @@
-Theme="custom/default.theme"
+Theme="win95/default.theme"
+#Theme="CrystalBlue/default.theme"
+#Theme="default/default.theme"
+#Theme="custom/default.theme"
 #Theme="CrystalBlue/default.theme"
 #Theme="custom/mytheme.theme"

@@ -81,6 +81,7 @@ install filelight
 install filezilla
 install synaptic
 install partimage
+install pcmanfm
 install virtualbox-qt
 install icewm
 install icewm-common
@@ -124,6 +125,11 @@ fi
 themedir=/usr/share/icewm/themes/mytheme
 if [ ! -e ${themedir?} ]; then
 	sudo ln -s ${GIT_DIR?}/installer/link/mytheme "${themedir?}"
+fi
+
+keyboard=/usr/share/X11/xkb/symbols/erik
+if [ ! -e ${keyboard?} ]; then
+	sudo ln -s ${GIT_DIR?}/installer/link/xkb/erik "${keyboard?}"
 fi
 
 # open media with vlc by default
