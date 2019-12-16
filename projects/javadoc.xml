@@ -1,0 +1,11 @@
+<project default="javadoc">
+
+	<property name="spool" value="/tmp/spool"/>
+	<property name="src" value="${spool}/src/${lib}"/>
+	<property name="api" value="${user.home}/Applications/doclauncher/api/${lib}"/>
+
+	<target name="javadoc">
+		<javadoc sourcepath="${src}" destdir="${api}" defaultexcludes="yes" version="true" use="true" />
+	</target>
+
+</project>

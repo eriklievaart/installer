@@ -92,6 +92,7 @@ install vim-gnome
 install jedit
 install kdiff3
 
+install ffmpeg
 install mplayer
 install xine-ui
 install vlc
