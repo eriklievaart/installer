@@ -1,6 +1,6 @@
 #!/bin/sh
 set -e
-
+set -u
 
 die() {
     echo >&2 "$@"
@@ -14,30 +14,38 @@ parents() {
 
 
 
-[ "$#" -ge 2 ] || die "2 arguments required: [CACHE_FILE] [URL] [FILE]..."
-cache="$1"
-url="$2"
+[ "$#" -ge 2 ] || die "2 arguments required: [URL] [FILE]..."
+errors=true
+if [ "$1" = "-i" ]; then
+	errors=false
+	shift
+fi
+url="$1"
 
-
-if [ ! -f "$cache" ]
+if [ ! -f "$2" ]
 then
-	parents "$cache"
-	wget "$url" -O "$cache"
+	parents "$2"
+	wget "$url" -O "$2" || [ $errors = false ] || die "wget error on '$url'"
 fi
 
 # delete cached file if it is empty
-size=$(wc -c < "$cache")
+size=$(wc -c < "$2")
 if [ $size -le 0 ]
 then
-	rm $cache
-	die "downloaded file is empty: '$url'"
+	rm "$2"
+	if [ "$errors" = "true" ]; then
+		die "downloaded file is empty: '$url'"
+	else
+		return 0
+	fi
 fi
 
+downloaded=$2
 shift 2
 for file in "$@"
 do
 	parents "$file"
-	cp -v "$cache" "$file"
+	cp -v "$downloaded" "$file"
 done
 
 
