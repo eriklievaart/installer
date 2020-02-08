@@ -12,8 +12,6 @@ parents() {
 }
 
 
-
-
 [ "$#" -ge 2 ] || die "2 arguments required: [CACHE_FILE] [URL] [FILE]..."
 cache="$1"
 url="$2"

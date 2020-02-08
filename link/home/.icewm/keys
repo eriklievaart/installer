@@ -26,7 +26,6 @@ key "Super+KP_Subtract"	 		snap       x=dx+2*dw/3 y=dy        w=dw/3 h=dh
 key "Super+KP_Delete"	 		snap       x=dx+dw/4   y=dy        w=dw/2 h=dh
 
 key "Print"				xfce4-screenshooter
-# key "Print"				zenity --info --text="System is going down in 10 minutes"
 
 
 ############
