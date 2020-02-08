@@ -2,3 +2,8 @@
 automount
 setxkbmap -layout erik
 
+# disable touchpad
+for id in $(xinput list | grep -i touchpad | sed -r 's/.*id=([0-9]*).*/\1/')
+do
+	xinput --disable $id
+done

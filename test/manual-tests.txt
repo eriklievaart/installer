@@ -11,7 +11,3 @@ Q works
 icewm
 + window snap
 + theme
-
-
-
-

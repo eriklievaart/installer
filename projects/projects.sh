@@ -71,6 +71,7 @@ install() {
 	~/bin/antastic "$(pwd)/antastic.txt"
 
 	~/bin/ws generate +
+	sh docgen.sh
 }
 
 

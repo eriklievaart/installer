@@ -51,7 +51,7 @@ fetch_url() {
 	then
 		log "already downloaded: ${destination?}"
 	else
-		sh ${IBIN_DIR?}/wgetc ${destination?} $url
+		sh ${IBIN_DIR?}/wgetc $url ${destination?}
 	fi
 }
 
