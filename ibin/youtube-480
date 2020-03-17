@@ -1,0 +1,4 @@
+#!/bin/sh
+
+youtube-dl -i -f '[height <= 720][tbr<=500]' $@
+

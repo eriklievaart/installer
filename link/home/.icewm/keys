@@ -4,11 +4,14 @@
 
 key "Alt+Ctrl+t"			x-terminal-emulator
 key "Alt+Ctrl+b"			sensible-browser about:blank
+key "Alt+Ctrl+y"			youtube-play
 key "Ctrl+Alt+BackSpace"		icewm -r
 key "Alt+F2"				gmrun
 key "Alt+F3"				specialkey
 
-key "Super+KP_Add"		 	snap -m
+key "Super+bracketleft"			rotate left
+key "Super+bracketright"		rotate right
+key "Super+KP_Add"  	 		snap -m
 key "Super+KP_0"			snap -f
 key "Super+KP_Enter"			snap -n -m
 key "Super+KP_5"			snap       x=dx        y=dy        w=dw   h=dh
@@ -20,7 +23,7 @@ key "Super+KP_7"			snap       x=dx        y=dy        w=dw/2 h=dh/2
 key "Super+KP_1"			snap       x=dx        y=dy+dh/2   w=dw/2 h=dh/2
 key "Super+KP_9"			snap       x=dx+dw/2   y=dy        w=dw/2 h=dh/2
 key "Super+KP_3"			snap       x=dx+dw/2   y=dy+dh/2   w=dw/2 h=dh/2
-key "Super+KP_Divide"	 		snap       x=dx        y=dy        w=dw/3 h=dh
+key "Super+KP_Divide"			snap       x=dx        y=dy        w=dw/3 h=dh
 key "Super+KP_Multiply"	 		snap       x=dx+dw/3   y=dy        w=dw/3 h=dh
 key "Super+KP_Subtract"	 		snap       x=dx+2*dw/3 y=dy        w=dw/3 h=dh
 key "Super+KP_Delete"	 		snap       x=dx+dw/4   y=dy        w=dw/2 h=dh

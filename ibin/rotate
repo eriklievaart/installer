@@ -1,0 +1,23 @@
+#!/bin/sh
+set -e
+set -u
+
+output=$(xrandr | grep HDMI | grep -v disconnected)
+port=$(echo "$output" | sed 's: .*::')
+resolution=$(echo "$output" | sed 's:.*connected ::;s:+.*::')
+width=$(echo "$resolution" | sed 's:x.*::')
+height=$(echo "$resolution" | sed 's:.*x::')
+
+if [ $width -lt $height ]; then
+	xrandr --output $port  --rotate normal
+else
+	xrandr --output $port  --rotate ${1-left}
+fi
+
+cache=/tmp/snap
+if [ -d $cache ]; then
+	chmod -R +w $cache
+	rm -rf $cache
+fi
+$IBIN/util/displays
+

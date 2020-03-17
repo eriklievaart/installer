@@ -1,0 +1,13 @@
+#!/bin/sh
+
+id=$(date +%T+%N | tr -d '+:')
+url=$(xclip -o -selection clipboard)
+dir=/tmp/youtube/$id
+
+mkdir -p $dir
+cd $dir
+
+zenity --info --text="downloading $url" &
+youtube-dl -i $url
+vlc .
+
