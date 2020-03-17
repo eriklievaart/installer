@@ -2,6 +2,28 @@
 use 5.26.1;
 use Cwd;
 
+sub cache {
+	if(lc("$^O") eq 'mswin32') {
+		return "c:/tmp/dircache.txt";
+	} else {
+		return "/tmp/dircache.txt";
+	}
+}
+
+sub store_location {
+	my $cache = cache();
+	my @lines = -f $cache ? `cat $cache` : () ;
+	my $location = getcwd();
+	
+	open CACHE, '>', $cache;
+	say CACHE $location;
+	for (@lines) {
+		chomp;
+		say CACHE $_ if "$_" ne "$location";
+	}
+	close CACHE;
+}
+
 sub cd {
 	my $moveto = shift;
 	$moveto =~ s/\\s*$//;
@@ -9,6 +31,21 @@ sub cd {
 		chdir $ENV{"HOME"};
 	} else {
 		chdir "$moveto";
+		store_location();
+	}
+}
+
+sub z {
+	my $cache = cache();
+	my $location = shift;
+	for(`cat $cache`) {
+		chomp;
+		my $tail = $_ =~ s:.*/::r; #/
+		if ($location eq $tail) {
+			chdir $_;
+			store_location $_;
+			last;
+		}
 	}
 }
 
@@ -16,19 +53,47 @@ sub ll {
 	system 'ls -l';
 }
 
-say "welcome to psh";
+sub prompt {
+	print getcwd() . "> ";
+}
+
+sub native {
+	my $cmd = shift;	
+	$cmd += "start " if $cmd eq "notepad";
+	system "$cmd";
+}
+
+
+my $cache = cache();
+if (-f $cache) {
+	my $last = `head -n 1 $cache`;
+	chomp $last;
+	chdir $last;
+}
+
+say "welcome to psh\n";
+prompt();
+
 while (<STDIN>) {
 	chomp;
 	$_ =~ s/^\s+//;
 	my $cmd = $_ =~ s/\s.*//r;
 	my $tail = $_ =~ s/^\S*\s*//r;
-	cd $tail if $cmd eq "cd";
-	ll if "$_" =~ /^ll?$/;
-	my $exit = system "$_";
-	say "error: $!" if $exit ne 0;
-	say "";
+	last if $cmd =~ /e(xit)?|q(uit)?/i;
 
-	my $cwd = getcwd();
-	print "$cwd:";
+	if ($cmd eq "cd") {
+		cd $tail;
+
+	} elsif ($cmd =~ /^ll?$/) {
+		ll();
+
+	} elsif ($cmd eq "z") {
+		z($tail);
+
+	} else {
+		native($_);
+	}
+	say "";
+	prompt();
 }
 
