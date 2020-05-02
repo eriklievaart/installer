@@ -86,6 +86,7 @@ install virtualbox-qt
 install xdotool
 install icewm
 install icewm-common
+install qtile
 
 install gedit
 install vim-gnome

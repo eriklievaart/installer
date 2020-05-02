@@ -136,6 +136,9 @@ do
 	fi
 done
 
+[ ! -d ~/.config/qtile ] && mkdir -p ~/.config/qtile
+[ ! -e ~/.config/qtile/config.py ] && ln -s link/qtile/config/py ~/.config/qtile/config.py
+
 if ! cat ~/.bashrc | grep --quiet 'dirs -v'; then
     echo 'alias dirs="dirs -v"' >> ~/.bashrc
 fi
