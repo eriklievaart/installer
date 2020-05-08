@@ -1,14 +1,10 @@
 #!/bin/sh
+
 # usage: ./install    = git pull & install projects
 # usage: ./install -a = git pull & install projects
 # usage: ./install -i = install projects
 # usage: ./install -g = git pull projects
 # usage: ./install -s = skip projects
-
--i install
--g git
--a git pull and install
--n skip projects
 
 set -e                    # fail on errors
 sh -n install.sh          # check this file for syntax errors before executing it
