@@ -1,4 +1,15 @@
 #!/bin/sh
+# usage: ./install    = git pull & install projects
+# usage: ./install -a = git pull & install projects
+# usage: ./install -i = install projects
+# usage: ./install -g = git pull projects
+# usage: ./install -s = skip projects
+
+-i install
+-g git
+-a git pull and install
+-n skip projects
+
 set -e                    # fail on errors
 sh -n install.sh          # check this file for syntax errors before executing it
 
@@ -124,6 +135,7 @@ if [ ! -d ~/bin ]; then
 	PATH=$PATH:~/bin
 fi
 
+[ -e ~/.config/i3 ] || ln -s $PWD/link/i3 ~/.config/i3
 link_dir=link/home
 for file in $(ls -a "${link_dir?}" | sed -n '/[.]*[^.].*/p')
 do
@@ -136,8 +148,6 @@ do
 	fi
 done
 
-[ ! -d ~/.config/qtile ] && mkdir -p ~/.config/qtile
-[ ! -e ~/.config/qtile/config.py ] && ln -s link/qtile/config/py ~/.config/qtile/config.py
 
 if ! cat ~/.bashrc | grep --quiet 'dirs -v'; then
     echo 'alias dirs="dirs -v"' >> ~/.bashrc

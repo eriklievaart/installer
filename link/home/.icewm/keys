@@ -7,10 +7,10 @@ key "Alt+Ctrl+b"			sensible-browser about:blank
 key "Alt+Ctrl+y"			youtube-play
 key "Ctrl+Alt+BackSpace"		icewm -r
 key "Alt+F2"				gmrun
-key "Alt+F3"				specialkey
 
 key "Super+bracketleft"			rotate left
 key "Super+bracketright"		rotate right
+key "Super+equal"			rotate normal
 key "Super+KP_Add"  	 		snap -m
 key "Super+KP_0"			snap -f
 key "Super+KP_Enter"			snap -n -m

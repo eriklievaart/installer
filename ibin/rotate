@@ -8,11 +8,7 @@ resolution=$(echo "$output" | sed 's:.*connected ::;s:+.*::')
 width=$(echo "$resolution" | sed 's:x.*::')
 height=$(echo "$resolution" | sed 's:.*x::')
 
-if [ $width -lt $height ]; then
-	xrandr --output $port  --rotate normal
-else
-	xrandr --output $port  --rotate ${1-left}
-fi
+xrandr --output $port  --rotate ${1-left}
 
 cache=/tmp/snap
 if [ -d $cache ]; then

@@ -1,0 +1,21 @@
+#!/bin/sh
+
+workspace=$(i3-msg -t get_workspaces | jq '.[] | select(.focused).num')
+output=$(i3-msg -t get_workspaces | jq '.[] | select(.focused).output')
+windows=$(i3-msg -t get_tree | jq ".nodes[] | select(.name == $output) | .nodes[] | select(.name == \"content\") | .nodes[] | select(.num == $workspace) | .nodes[0].nodes")
+ids=$(echo "$windows" | jq '.[] | .id')
+focused=$(echo "$windows" | jq '.[] | select(.focused == true) | .id')
+target=$(echo "$ids" | sed "0,/$focused/d" | head -n 1)
+
+if [ "$target" = "" ]; then
+	target=$(echo "$ids" | head -n 1)
+fi
+
+echo "$ids"
+echo
+echo "focused: $focused"
+echo "target: $target"
+echo 
+
+i3-msg "[con_id=\"$target\"] focus"
+

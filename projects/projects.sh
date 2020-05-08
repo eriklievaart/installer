@@ -80,6 +80,7 @@ case "$1" in
 	-i) install ;;
 	-g) sources ;;
 	-a) sources; install ;;
+	-s) echo "skipping projects" ;;
 	*) usage;;
 esac
 
