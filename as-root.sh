@@ -48,15 +48,6 @@ echo ""
 sudo chmod +s /sbin/shutdown
 
 
-# enable ctrl alt f1-f6 terminals
-# if [ ! -z "$(sudo grep '# *GRUB_TERMINAL' /etc/default/grub)" ]; then
-#	# backup original grub config (only the first time run)
-#	sudo cp -n /etc/default/grub /etc/default/grub.original
-#	sudo sed -i s/#[[:space:]]*GRUB_TERMINAL/GRUB_TERMINAL/ /etc/default/grub
-#	sudo update-grub
-#fi
-
-
 # install default software
 install git
 install git-gui
@@ -64,14 +55,16 @@ install python3
 install ant
 
 install bats
+install curl
+install fdupes
+install jq
 install pal
 install par2
-install unrar
+install screen
 install ssh
 install tree
-install fdupes
-install curl
-install jq
+install unrar
+install xdotool
 
 install gmrun
 install gnome-terminal
@@ -82,23 +75,23 @@ install filezilla
 install synaptic
 install partimage
 install pcmanfm
+install sabnzbdplus
 install virtualbox-qt
-install xdotool
+
 install icewm
 install icewm-common
 install i3
+install i3status
 
-install gedit
-install vim-gnome
-install jedit
 install kdiff3
+install sublime-text
+install vim-gnome
 
+install audacious
 install ffmpeg
-install mplayer
 install xine-ui
 install vlc
 install kaffeine
-install sabnzbdplus
 
 
 java_version=8
