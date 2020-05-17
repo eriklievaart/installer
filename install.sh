@@ -62,15 +62,6 @@ fetch_url() {
 	fi
 }
 
-alias() {
-	if cat ~/.bashrc | grep --quiet "alias $1"; then
-		echo "alias $1 exists"
-	else
-		echo "alias $1='$2'" >> ~/.bashrc
-		echo "alias $1 created"
-	fi
-}
-
 
 # user "root" cannot run this script
 if [ "$HOME" = "/root" ]; then
@@ -154,12 +145,8 @@ do
 done
 
 
-echo
-alias dirs "dirs -v"
-alias dl "youtube-dl -i"
-alias dl480 'youtube-dl -i -f "[height <= 720][tbr<=500]"'
-alias dlmp3 'youtube-dl -i -x --audio-format mp3 '
-echo
+sed -i 's/HISTSIZE=.*/HISTSIZE=10000/' ~/.bashrc
+sed -i 's/HISTFILESIZE=.*/HISTFILESIZE=20000/' ~/.bashrc
 
 fetch_url ${JUNIT_DESTINATION?} ${JUNIT_URL?}
 fetch_url ${ANT_JUNIT_DESTINATION?} ${ANT_JUNIT_URL?}

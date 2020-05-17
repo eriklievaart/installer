@@ -1,12 +1,13 @@
 #!/bin/sh
 set -e
 
-config=~/.ssh/bin_proxy
-echo "proxy config file: $config"
+dir=~/.ssh
+config=$dir/bin_proxy
+echo "proxy config file: $dir"
 
-if [ ! -d ~/.ssh ]; then
-	echo "creating dir ~/.ssh"
-	mkdir ~/.ssh
+if [ ! -d $dir ]; then
+	echo "creating dir $dir"
+	mkdir $dir
 fi
 
 

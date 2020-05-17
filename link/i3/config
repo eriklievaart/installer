@@ -4,7 +4,7 @@ hide_edge_borders both
 floating_modifier $sup
 
 workspace_layout tabbed
-workspace 8 output eDP-1
+workspace 10 output eDP-1
 workspace 1 output HDMI-2
 
 # class                 border  backgr. text    indicator child_border
@@ -50,6 +50,7 @@ bindsym $sup+7 workspace 7
 bindsym $sup+8 workspace 8
 bindsym $sup+9 workspace 9
 bindsym $sup+0 workspace 10
+bindsym $sup+grave workspace 10
 bindsym $sup+KP_1 workspace 1
 bindsym $sup+KP_2 workspace 2
 bindsym $sup+KP_3 workspace 3
@@ -60,27 +61,27 @@ bindsym $sup+KP_7 workspace 7
 bindsym $sup+KP_8 workspace 8
 bindsym $sup+KP_9 workspace 9
 bindsym $sup+KP_0 workspace 10
-bindsym $sup+KP_Enter exec gnome-calculator
-bindsym $sup+F2 exec gmrun
-bindsym $sup+F11 fullscreen toggle
-bindsym $sup+slash exec felix q
-bindsym $sup+Return exec i3-sensible-terminal
-bindsym $sup+space focus mode_toggle
-bindsym $sup+Left focus left
-bindsym $sup+Down focus down
-bindsym $sup+Up focus up
-bindsym $sup+Right focus right
-bindsym $sup+Tab exec i3cycle
+bindsym $sup+KP_Enter exec speedcrunch
 bindsym $sup+bracketleft exec rotate left
 bindsym $sup+bracketright exec rotate right
+bindsym $sup+Down focus down
 bindsym $sup+equal exec rotate normal
+bindsym $sup+Left focus left
+bindsym $sup+Return exec i3-sensible-terminal
+bindsym $sup+Right focus right
+bindsym $sup+slash exec felix q
+bindsym $sup+space workspace back_and_forth
+bindsym $sup+Tab exec i3cycle
+bindsym $sup+Up focus up
+bindsym $sup+F2 exec gmrun
+bindsym $sup+F11 fullscreen toggle
 
 bindsym $sup+$shift+c reload
 bindsym $sup+$shift+e exec i3-msg exit
 bindsym $sup+$shift+h layout splitv
-bindsym $sup+$shift+v layout splith
-bindsym $sup+$shift+t layout tabbed
 bindsym $sup+$shift+r restart
+bindsym $sup+$shift+t layout tabbed
+bindsym $sup+$shift+v layout splith
 bindsym $sup+$shift+1 move container to workspace 1;  workspace 1
 bindsym $sup+$shift+2 move container to workspace 2;  workspace 2
 bindsym $sup+$shift+3 move container to workspace 3;  workspace 3
@@ -97,13 +98,25 @@ bindsym $sup+$shift+Down move down
 bindsym $sup+$shift+Up move up
 bindsym $sup+$shift+Right move right
 
-bindsym $sup+$ctrl+a exec pkill audacious
+bindsym $sup+$ctrl+q exec audtool --shutdown
+bindsym $sup+$ctrl+a exec audtool --playlist-auto-advance-toggle; exec notify-send "advance: $(audtool --playlist-auto-advance-status)"
+bindsym $sup+$ctrl+i exec notify-send "$(audtool --current-song-filename | sed 's:.*/::')"
 bindsym $sup+$ctrl+m exec pkill audacious; exec pkill vlc
+bindsym $sup+$ctrl+p exec audtool --playback-pause
+bindsym $sup+$ctrl+r exec audtool --playlist-repeat-toggle; exec notify-send "repeat: $(audtool --playlist-repeat-status)"
+bindsym $sup+$ctrl+s exec audtool --playlist-shuffle-toggle; exec notify-send "shuffle: $(audtool --playlist-shuffle-status)"
 bindsym $sup+$ctrl+v exec pkill vlc
+bindsym $sup+$ctrl+KP_1 exec audtool --playback-seek-relative -10 
+bindsym $sup+$ctrl+KP_3 exec audtool --playback-seek-relative +10
 bindsym $sup+$ctrl+KP_4 exec audtool --playlist-reverse
 bindsym $sup+$ctrl+KP_5 exec audtool --playback-play
 bindsym $sup+$ctrl+KP_6 exec audtool --playlist-advance
-bindsym $sup+$ctrl+s exec audtool --playlist-shuffle-toggle; exec notify-send "shuffle: $(audtool --playlist-shuffle-status)"
+bindsym $sup+$ctrl+KP_Multiply exec audacious-queue
+bindsym $sup+$ctrl+equal scratchpad show
+
+bindsym $sup+$ctrl+$shift+r exec shutdown -r now
+bindsym $sup+$ctrl+$shift+s exec systemctl suspend
+bindsym $sup+$ctrl+$shift+F12 exec shutdown -h now
 
 bindsym $alt+F2 exec gmrun
 bindsym $alt+F4 kill
@@ -128,8 +141,8 @@ bindsym $ctrl+$alt+t exec xfce4-terminal
 # application window rules
 for_window [class="(?i)firefox"]          move workspace 1; workspace 1
 for_window [class="(?i)xed"]              move workspace 2; workspace 2
+for_window [class="(?i)vlc"]              move workspace 9; workspace 9
 for_window [class="(?i)xfce4-terminal"]   move workspace 3; workspace 3
-for_window [class="(?i)gnome-calculator"] floating enable
 for_window [class="(?i)audacious"]        move scratchpad
 
 
