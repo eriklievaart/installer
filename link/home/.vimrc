@@ -5,6 +5,9 @@ set nobackup
 set noswapfile
 set nowrap
 set number
+set splitbelow
+set splitright
+
 
 " copy and paste (shift+insert)
 map <S-Insert> <MiddleMouse>

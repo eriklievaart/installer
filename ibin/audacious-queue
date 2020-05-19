@@ -1,0 +1,29 @@
+#!/bin/sh
+set -e
+
+dir=~/.config/audacious
+config=$dir/mp3-home-dir
+echo "audacious root dir config file: $config"
+
+if [ ! -d ~/$dir ]; then
+	echo "creating dir $dir"
+	mkdir -p $dir
+fi
+
+
+if [ ! -f $config ]; then
+	echo "mp3 root dir not configured"
+	root=$(zenity --entry --text="mp3 root dir not configured in $config, where to load mp3 from?")
+	if [ "$root" != "" ]; then
+		echo "$root" > $config
+	fi
+fi
+
+if [ -f $config ]; then
+	root=$(head -n 1 $config)
+	selection=$(find $root | dmenu -i -l 40)
+	if [ "$selection" != "" ]; then
+		audacious "$selection"
+	fi
+fi
+
