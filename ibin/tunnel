@@ -36,6 +36,7 @@ init() {
 	echo "gateway=$gateway" > $config
 	echo "target=$target" >> $config
 	echo "user=$user" >> $config
+	chmod +x $config
 }
 
 scp_host() {
