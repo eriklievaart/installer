@@ -33,12 +33,14 @@ bindsym Print exec xfce4-screenshooter
 
 bindsym $sup+a focus parent
 bindsym $sup+c exec firefox http://eriklievaart.com/cheat; workspace 1
-bindsym $sup+d exec dmenu_run
 bindsym $sup+f exec firefox
 bindsym $sup+o move workspace to output left
 bindsym $sup+p move workspace to output right
 bindsym $sup+q kill
+bindsym $sup+r exec rofi -show run
+bindsym $sup+s exec rofi -show ssh
 bindsym $sup+t exec xfce4-terminal
+bindsym $sup+w exec rofi -show window
 bindsym $sup+y exec youtube-play
 bindsym $sup+1 workspace 1
 bindsym $sup+2 workspace 2
@@ -112,6 +114,8 @@ bindsym $sup+$ctrl+KP_4 exec audtool --playlist-reverse
 bindsym $sup+$ctrl+KP_5 exec audtool --playback-play
 bindsym $sup+$ctrl+KP_6 exec audtool --playlist-advance
 bindsym $sup+$ctrl+KP_Multiply exec audacious-queue
+bindsym $sup+$ctrl+KP_Add      exec amixer -D pulse sset Master 5%+
+bindsym $sup+$ctrl+KP_Subtract exec amixer -D pulse sset Master 5%-
 bindsym $sup+$ctrl+equal scratchpad show
 
 bindsym $sup+$ctrl+$shift+r exec shutdown -r now
@@ -141,8 +145,9 @@ bindsym $ctrl+$alt+t exec xfce4-terminal
 # application window rules
 for_window [class="(?i)firefox"]          move workspace 1; workspace 1
 for_window [class="(?i)xed"]              move workspace 2; workspace 2
-for_window [class="(?i)vlc"]              move workspace 9; workspace 9
 for_window [class="(?i)xfce4-terminal"]   move workspace 3; workspace 3
+for_window [class="(?i)xviewer"]          move workspace 4; workspace 4
+for_window [class="(?i)vlc"]              move workspace 9; workspace 9
 for_window [class="(?i)audacious"]        move scratchpad
 
 
