@@ -1,0 +1,27 @@
+#!/bin/sh
+
+displays=$(xrandr | grep ' connected' | sed 's/ .*//')
+display=$(echo "$displays" | rofi -i -dmenu)
+
+[ "$display" = "" ] && exit
+
+actions() {
+	echo "$display --off"
+	for other in $displays
+	do
+		[ $display = $other ] && continue
+		echo "$display --above $other"
+		echo "$display --below $other"
+		echo "$display --left-of $other"
+		echo "$display --right-of $other"
+		echo "$display --same-as $other"
+	done
+}
+
+action="xrandr --output $(actions | rofi -i -dmenu)"
+if ! echo "$action" | grep -q 'off'; then
+	action="$action --auto"
+fi
+echo $action
+$action
+

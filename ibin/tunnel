@@ -1,0 +1,67 @@
+#!/bin/sh
+set -e
+
+port=8765
+config="/tmp/scp-tunnel"
+
+die() {
+	echo >&2 "$@"
+	exit 1
+}
+
+usage() {
+	echo "tunnel -i [gateway] [target]    # init tunnel to target through gateway"
+	echo "tunnel -d [path]                # download file from target to ."
+	echo "tunnel -u [path]                # upload file from . to target:/tmp"
+}
+
+init() {
+	[ "$#" -eq 2 ] || die "tunnel -i requires 2 arguments: [gateway] [target]"
+	nc -z -w1 localhost $port && die "port $port not available! Is the tunnel already open?"
+
+	gateway=${1?:}
+	target=${2?:}
+	
+	# translate remote target using ~/.ssh/config
+	if grep -q "Host ${target?:}" ~/.ssh/config; then
+		host=$(cat ~/.ssh/config | sed -nr "/Host $target/,/^Host|^$/ p")
+		user=$(echo "$host" | grep User | sed 's:.*User\s\+::')
+		target=$(echo "$host" | grep HostName | sed 's:.*HostName\s\+::')
+	fi
+
+	set -x
+	ssh -L ${port?:}:${target?:}:22 ${gateway?:}
+	set +x
+
+	echo "gateway=$gateway" > $config
+	echo "target=$target" >> $config
+	echo "user=$user" >> $config
+	chmod +x $config
+}
+
+scp_host() {
+	. $config
+	[ "$user" = "" ] && echo "127.0.0.1" || echo "$user@127.0.0.1"
+}
+
+download() {
+	[ "$#" -eq 1 ] || die "tunnel -d requires 1 argument: /path/to/file(s)"
+	scp -P ${port?:} $(scp_host):$1 .
+}
+
+upload() {
+	[ "$#" -eq 1 ] || die "tunnel -u requires 1 argument: /path/to/file(s)"
+	scp -P ${port?:} $1 $(scp_host):/tmp
+}
+
+case "$1" in
+	-i) init $2 $3;;
+	-d) download $2;;
+	-u) upload $2;;
+	*) usage;;
+esac
+
+
+
+
+
