@@ -73,6 +73,7 @@ install numlockx
 install gparted
 install filelight
 install filezilla
+install speedcrunch
 install synaptic
 install partimage
 install pcmanfm

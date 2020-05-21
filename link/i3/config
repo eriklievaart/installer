@@ -34,8 +34,7 @@ bindsym Print exec xfce4-screenshooter
 bindsym $sup+a focus parent
 bindsym $sup+c exec firefox http://eriklievaart.com/cheat; workspace 1
 bindsym $sup+f exec firefox
-bindsym $sup+o move workspace to output left
-bindsym $sup+p move workspace to output right
+bindsym $sup+m exec speedcrunch
 bindsym $sup+q kill
 bindsym $sup+r exec rofi -show run
 bindsym $sup+s exec rofi -show ssh
@@ -63,7 +62,6 @@ bindsym $sup+KP_7 workspace 7
 bindsym $sup+KP_8 workspace 8
 bindsym $sup+KP_9 workspace 9
 bindsym $sup+KP_0 workspace 10
-bindsym $sup+KP_Enter exec speedcrunch
 bindsym $sup+bracketleft exec rotate left
 bindsym $sup+bracketright exec rotate right
 bindsym $sup+Down focus down
@@ -81,6 +79,8 @@ bindsym $sup+F11 fullscreen toggle
 bindsym $sup+$shift+c reload
 bindsym $sup+$shift+e exec i3-msg exit
 bindsym $sup+$shift+h layout splitv
+bindsym $sup+$shift+o move workspace to output left
+bindsym $sup+$shift+p move workspace to output right
 bindsym $sup+$shift+r restart
 bindsym $sup+$shift+t layout tabbed
 bindsym $sup+$shift+v layout splith
@@ -122,6 +122,10 @@ bindsym $sup+$ctrl+$shift+r exec shutdown -r now
 bindsym $sup+$ctrl+$shift+s exec systemctl suspend
 bindsym $sup+$ctrl+$shift+F12 exec shutdown -h now
 
+bindsym $sup+$ctrl+$alt+0 exec preset 0
+bindsym $sup+$ctrl+$alt+1 exec preset 1
+bindsym $sup+$ctrl+$alt+2 exec preset 2
+
 bindsym $alt+F2 exec gmrun
 bindsym $alt+F4 kill
 bindsym $alt+Tab exec i3cycle
@@ -149,6 +153,7 @@ for_window [class="(?i)xfce4-terminal"]   move workspace 3; workspace 3
 for_window [class="(?i)xviewer"]          move workspace 4; workspace 4
 for_window [class="(?i)vlc"]              move workspace 9; workspace 9
 for_window [class="(?i)audacious"]        move scratchpad
+for_window [class="(?i)speedcrunch"]      floating enable
 
 
 
@@ -157,6 +162,7 @@ for_window [class="(?i)audacious"]        move scratchpad
 exec --no-startup-id setxkbmap -layout erik
 exec --no-startup-id automount
 exec --no-startup-id for id in $(xinput list | grep -i touchpad | sed -r 's/.*id=([0-9]*).*/\1/'); do xinput --disable $id; done
+exec --no-startup-id xsetroot -solid "#181818"
 
 
 
