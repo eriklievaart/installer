@@ -21,7 +21,7 @@ fi
 
 if [ -f $config ]; then
 	root=$(head -n 1 $config)
-	selection=$(find $root | rofi -i -l 40 -dmenu)
+	selection=$(find $root -type d | rofi -i -l 40 -dmenu)
 	if [ "$selection" != "" ]; then
 		audacious "$selection"
 	fi

@@ -60,6 +60,7 @@ install fdupes
 install jq
 install pal
 install par2
+install rofi
 install screen
 install ssh
 install tree
