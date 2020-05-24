@@ -86,29 +86,17 @@ sudo sh as-root.sh
 
 
 
-# register shortcuts for window snapping
-XFCE_SHORTCUTS_FILE=~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
-XFCE_SHORTCUTS_BACKUP="$XFCE_SHORTCUTS_FILE.bak"
-xfce_set() {
-        key="/xfwm4/custom/$1"
-        action="$2"
-        xfconf-query --create -c xfce4-keyboard-shortcuts -t string -p "$key" -s "$action" # and set the new binding
-}
-if [ ! -f "$XFCE_SHORTCUTS_BACKUP" -a -f $XFCE_SHORTCUTS_FILE ]
-then
-	cp -n "$XFCE_SHORTCUTS_FILE" "$XFCE_SHORTCUTS_BACKUP"
-	xfconf-query -c xfce4-keyboard-shortcuts -p "/xfwm4/custom/<Primary><Alt>F10" -r -R # delete maximize binding, it will be relaced
-	xfce_set '<Primary><Shift>KP_Begin'     "maximize_window_key"
-	xfce_set '<Primary><Shift>KP_Home'      "tile_up_left_key"
-	xfce_set '<Primary><Shift>KP_Page_Up'   "tile_up_right_key"
-	xfce_set '<Primary><Shift>KP_End'       "tile_down_left_key"
-	xfce_set '<Primary><Shift>KP_Page_Down' "tile_down_right_key"
-	xfce_set '<Primary><Shift>KP_Left'      "tile_left_key"
-	xfce_set '<Primary><Shift>KP_Right'     "tile_right_key"
-	xfce_set '<Primary><Shift>KP_Up'        "tile_up_key"
-	xfce_set '<Primary><Shift>KP_Down'      "tile_down_key"
-	xfce_set '<Primary><Shift>KP_Insert'    "${IBIN_DIR?}/snap -n"
+# firefox settings
+file=$(find ~/.mozilla -name prefs.js)
+echo "firefox config: $file"
+if [ "$file" != "" ]; then
+        sed -ir '/restore_on_demand/d' $file
+        sed -ir '/dom.webnotifications/d' $file
+        echo 'user_pref("dom.webnotifications.enabled", false);' >> $file
+        echo 'user_pref("browser.sessionstore.restore_on_demand", false);' >>$file
+        echo 'user_pref("services.sync.prefs.sync.browser.sessionstore.restore_on_demand", false);' >> $file
 fi
+
 
 
 
