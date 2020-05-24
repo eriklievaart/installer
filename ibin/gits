@@ -82,7 +82,7 @@ do
 	echo "$color[$branch] $dir $untracked$changes$PLAIN"
 
 	
-	if [ "$1" = "-c" ]; then
+	if [ "$1" = "acp" ]; then
 		if [  ! -z "$untracked$changes" ]; then
 			git add --all
 			git commit -m "$message"
