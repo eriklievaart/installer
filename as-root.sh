@@ -64,6 +64,7 @@ install rofi
 install screen
 install ssh
 install tree
+install unclutter
 install unrar
 install xdotool
 
@@ -98,6 +99,7 @@ install kaffeine
 
 java_version=8
 install openjdk-${java_version?}-jdk
+install openjdk-${java_version?}-doc
 sudo update-alternatives --set java /usr/lib/jvm/java-${java_version?}-openjdk-amd64/jre/bin/java
 
 

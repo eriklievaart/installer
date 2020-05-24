@@ -32,7 +32,7 @@ set $shift Shift
 bindsym Print exec xfce4-screenshooter
 
 bindsym $sup+a focus parent
-bindsym $sup+c exec firefox http://eriklievaart.com/cheat; workspace 1
+bindsym $sup+c workspace 1; exec firefox "http://eriklievaart.com/cheat?q=$(zenity --entry)"
 bindsym $sup+f exec firefox
 bindsym $sup+m exec speedcrunch
 bindsym $sup+q kill
@@ -75,6 +75,13 @@ bindsym $sup+Tab exec i3cycle
 bindsym $sup+Up focus up
 bindsym $sup+F2 exec gmrun
 bindsym $sup+F11 fullscreen toggle
+
+bindsym $sup+$alt+1 workspace 6
+bindsym $sup+$alt+2 workspace 7
+bindsym $sup+$alt+3 workspace 8
+bindsym $sup+$alt+4 workspace 9
+bindsym $sup+$alt+5 workspace 10
+bindsym $sup+$alt+grave workspace 5
 
 bindsym $sup+$shift+c reload
 bindsym $sup+$shift+e exec i3-msg exit
@@ -159,11 +166,11 @@ for_window [class="(?i)speedcrunch"]      floating enable
 
 
 # startup commands
-exec --no-startup-id setxkbmap -layout erik
 exec --no-startup-id automount
-exec --no-startup-id for id in $(xinput list | grep -i touchpad | sed -r 's/.*id=([0-9]*).*/\1/'); do xinput --disable $id; done
+exec --no-startup-id unclutter -idle 0.4 -root
+exec --no-startup-id setxkbmap -layout erik
 exec --no-startup-id xsetroot -solid "#181818"
-
+exec --no-startup-id for id in $(xinput list | grep -i touchpad | sed -r 's/.*id=([0-9]*).*/\1/'); do xinput --disable $id; done
 
 
 
