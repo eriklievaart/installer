@@ -87,14 +87,16 @@ sudo sh as-root.sh
 
 
 # firefox settings
-file=$(find ~/.mozilla -name prefs.js)
-echo "firefox config: $file"
-if [ "$file" != "" ]; then
-        sed -ir '/restore_on_demand/d' $file
-        sed -ir '/dom.webnotifications/d' $file
-        echo 'user_pref("dom.webnotifications.enabled", false);' >> $file
-        echo 'user_pref("browser.sessionstore.restore_on_demand", false);' >>$file
-        echo 'user_pref("services.sync.prefs.sync.browser.sessionstore.restore_on_demand", false);' >> $file
+if [ -d ~/.mozilla ]; then
+	file=$(find ~/.mozilla -name prefs.js)
+	append=""
+	while read key value
+	do 
+		[ "$key" = "" ] && continue
+		sed -ir "/$key/d" $file
+		append="user_pref(\"$key\", $value);\n$append"
+	done < config/firefox.txt
+	echo -n "$append" >> $file
 fi
 
 

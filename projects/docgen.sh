@@ -5,6 +5,7 @@ preinstalled=/usr/share/doc
 target=~/Applications/doclauncher/api
 
 # link java api from preinstalled location
+[ -e $target ] || mkdir -p $target
 for dir in $(ls ${preinstalled-} | grep jdk | grep doc)
 do
 	for api in $(find ${preinstalled-}/$dir -name api)

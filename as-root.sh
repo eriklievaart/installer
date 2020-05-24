@@ -47,55 +47,10 @@ echo ""
 # allow users to invoke shutdown
 sudo chmod +s /sbin/shutdown
 
-
-# install default software
-install git
-install git-gui
-install python3
-install ant
-
-install bats
-install curl
-install fdupes
-install jq
-install pal
-install par2
-install rofi
-install screen
-install ssh
-install tree
-install unclutter
-install unrar
-install xdotool
-
-install gmrun
-install gnome-terminal
-install numlockx
-install gparted
-install filelight
-install filezilla
-install speedcrunch
-install synaptic
-install partimage
-install pcmanfm
-install sabnzbdplus
-install virtualbox-qt
-
-install icewm
-install icewm-common
-install i3
-install i3status
-
-install kdiff3
-install sublime-text
-install vim-gnome
-
-install audacious
-install ffmpeg
-install xine-ui
-install vlc
-install kaffeine
-
+for package in $(cat config/packages.txt)
+do
+	install $package
+done
 
 java_version=8
 install openjdk-${java_version?}-jdk

@@ -1,0 +1,7 @@
+
+dom.webnotifications.enabled                                    false
+browser.sessionstore.restore_on_demand                          false
+services.sync.prefs.sync.browser.sessionstore.restore_on_demand false
+browser.newtabpage.enabled                                      false
+browser.startup.homepage                                        about:blank
+
