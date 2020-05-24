@@ -7,7 +7,7 @@ RED='\033[1;31m'
 PLAIN='\033[0m'
 
 
-if [ "$1" = "-c" ]; then
+if [ "$1" = "acp" ]; then
 	message=$(echo "$@" | sed 's/^-c *//')
 	if [ -z "$message" ]; then
 		echo "$RED    git commit message required! $PLAIN"
