@@ -29,14 +29,15 @@ init() {
 		target=$(echo "$host" | grep HostName | sed 's:.*HostName\s\+::')
 	fi
 
-	set -x
-	ssh -L ${port?:}:${target?:}:22 ${gateway?:}
-	set +x
-
 	echo "gateway=$gateway" > $config
 	echo "target=$target" >> $config
 	echo "user=$user" >> $config
 	chmod +x $config
+	cat $config
+
+	set -x
+	ssh -L ${port?:}:${target?:}:22 ${gateway?:}
+	set +x
 }
 
 scp_host() {
