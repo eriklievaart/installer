@@ -4,9 +4,9 @@ git-gui
 python3
 ant 
 
-bats
 curl
 fdupes
+htop
 jq
 pal 
 par2
@@ -42,7 +42,7 @@ vim-gnome
 
 audacious
 ffmpeg
-xine-ui
-vlc 
 kaffeine
-
+obs-studio
+xine-ui
+vlc
