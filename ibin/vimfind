@@ -1,0 +1,4 @@
+#!/bin/sh
+
+vim $(find -type f | grep "$1")
+
