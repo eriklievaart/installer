@@ -1,7 +1,6 @@
 #!/bin/sh
 
 
-
 die() {
 	echo >&2 "$@"
 	exit 255
