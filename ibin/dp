@@ -1,0 +1,80 @@
+#!/bin/sh
+set -e
+sh -n $0
+
+config=~/.config/dp
+presets=$config/presets
+ports=$config/ports
+
+die() {
+	echo >&2 "$@"
+	exit 1
+}
+
+apply() {
+	xrandr='xrandr'
+	previous=""
+	for index in $(seq 5)
+	do
+		setting=$(echo "$1" | cut -c $index)
+		port=$(sed -n "${index}p" $ports)
+
+		[ "$port" = "" ] && break
+		[ "$setting" = "" ] && break
+		[ "$setting" = "." ] && continue
+		
+		xrandr="$xrandr --output $port"
+		[ "$previous" != "" ] && xrandr="$xrandr --right-of $previous"
+
+		case $setting in
+			a)   xrandr="$xrandr --auto";;
+			n)   xrandr="$xrandr --auto --rotate normal";;
+			l)   xrandr="$xrandr --auto --rotate left";;
+			r)   xrandr="$xrandr --auto --rotate right";;
+			0)   xrandr="$xrandr --off";;
+			o)   xrandr="$xrandr --off";;
+			=)   xrandr="$xrandr --rotate normal";;
+			'[') xrandr="$xrandr --rotate left";;
+			']') xrandr="$xrandr --rotate right";;
+			*)   die "unknown setting: $setting"
+		esac
+		previous="$port"
+	done
+	echo "$xrandr" | tee /tmp/dp.log
+	$xrandr
+	exit 0
+}
+
+load() {
+	# find matching preset
+	while read id settings
+	do
+		if [ "$1" = "$id" ]; then
+			apply $settings
+		fi
+	done < $presets
+}
+
+if [ ! -d $config ]; then
+	mkdir $config
+	info=$(xrandr)
+	echo "$info" | sed -n '/ connected /{s/ .*//;p}' > $ports
+	echo "$info" | sed -n '/disconnected/{s/ .*//;p}' >> $ports
+	echo "0 ooooo" >> $presets
+	echo "1 noooo" >> $presets
+	echo "2 nnooo" >> $presets
+	echo "3 nnnoo" >> $presets
+	echo "4 nnnno" >> $presets
+	echo "5 nnnnn" >> $presets
+	echo "h =====" >> $presets
+fi
+
+[ "$#" -gt 0 ] || die "either call $0 -p [preset] or $0 [settings]"
+
+if [ "$1" = "-p" ]; then
+	load $2
+else
+	apply $1
+fi
+
+notify-send "preset $1 not found"

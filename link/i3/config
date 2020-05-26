@@ -32,7 +32,7 @@ set $shift Shift
 bindsym Print exec xfce4-screenshooter
 
 bindsym $sup+a focus parent
-bindsym $sup+c workspace 1; exec firefox "http://eriklievaart.com/cheat?q=$(zenity --entry)"
+bindsym $sup+c workspace 1; exec firefox "http://eriklievaart.com/cheat?q=$(zenity --entry --text="lookup")"
 bindsym $sup+f exec firefox
 bindsym $sup+m exec speedcrunch
 bindsym $sup+q kill
@@ -125,9 +125,13 @@ bindsym $sup+$ctrl+$shift+r exec shutdown -r now
 bindsym $sup+$ctrl+$shift+s exec systemctl suspend
 bindsym $sup+$ctrl+$shift+F12 exec shutdown -h now
 
-bindsym $sup+$ctrl+$alt+0 exec preset 0
-bindsym $sup+$ctrl+$alt+1 exec preset 1
-bindsym $sup+$ctrl+$alt+2 exec preset 2
+bindsym $sup+$ctrl+$alt+0 exec dp -p 0
+bindsym $sup+$ctrl+$alt+1 exec dp -p 1
+bindsym $sup+$ctrl+$alt+2 exec dp -p 2
+bindsym $sup+$ctrl+$alt+2 exec dp -p 3
+bindsym $sup+$ctrl+$alt+2 exec dp -p 4
+bindsym $sup+$ctrl+$alt+2 exec dp -p 5
+bindsym $sup+$ctrl+$alt+h exec dp -p h
 
 bindsym $alt+F2 exec gmrun
 bindsym $alt+F4 kill

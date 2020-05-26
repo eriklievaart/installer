@@ -16,7 +16,9 @@ ssh
 tree
 unclutter
 unrar
+xclip
 xdotool
+youtube-dl
 
 gmrun
 gnome-terminal
