@@ -1,7 +1,21 @@
 
-dom.webnotifications.enabled                                    false
-browser.sessionstore.restore_on_demand                          false
-services.sync.prefs.sync.browser.sessionstore.restore_on_demand false
 browser.newtabpage.enabled                                      false
+browser.sessionstore.restore_on_demand                          false
 browser.startup.homepage                                        "about:blank"
+browser.contentblocking.category                                custom
+browser.search.hiddenOneOffs                                    Yahoo!,Startpage,DuckDuckGo,Twitter
+browser.search.widget.inNavBar                                  true
+browser.urlbar.placeholderName                                  DuckDuckGo
+
+datareporting.healthreport.uploadEnabled                        false
+
+dom.webnotifications.enabled                                    false
+
+privacy.donottrackheader.enabled                                true
+privacy.trackingprotection.cryptomining.enabled                 true
+privacy.trackingprotection.fingerprinting.enabled               true
+
+services.sync.prefs.sync.browser.sessionstore.restore_on_demand false
+
+signon.rememberSignons                                          false
 

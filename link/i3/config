@@ -86,8 +86,6 @@ bindsym $sup+$alt+grave workspace 5
 bindsym $sup+$shift+c reload
 bindsym $sup+$shift+e exec i3-msg exit
 bindsym $sup+$shift+h layout splitv
-bindsym $sup+$shift+o move workspace to output left
-bindsym $sup+$shift+p move workspace to output right
 bindsym $sup+$shift+r restart
 bindsym $sup+$shift+t layout tabbed
 bindsym $sup+$shift+v layout splith
@@ -102,10 +100,8 @@ bindsym $sup+$shift+8 move container to workspace 8;  workspace 8
 bindsym $sup+$shift+9 move container to workspace 9;  workspace 9
 bindsym $sup+$shift+0 move container to workspace 10; workspace 10
 bindsym $sup+$shift+space floating toggle
-bindsym $sup+$shift+Left move left
-bindsym $sup+$shift+Down move down
-bindsym $sup+$shift+Up move up
-bindsym $sup+$shift+Right move right
+bindsym $sup+$shift+Left  move workspace to output left
+bindsym $sup+$shift+Right move workspace to output right
 
 bindsym $sup+$ctrl+q exec audtool --shutdown
 bindsym $sup+$ctrl+a exec audtool --playlist-auto-advance-toggle; exec notify-send "advance: $(audtool --playlist-auto-advance-status)"

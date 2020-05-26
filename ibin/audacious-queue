@@ -19,9 +19,20 @@ if [ ! -f $config ]; then
 	fi
 fi
 
+# remove empty directories from list
+not_empty () {
+	while read directory
+	do
+		if [ "$(ls -A "$directory" )" != "" ]; then
+			echo "$directory"
+		fi
+	done
+}
+
 if [ -f $config ]; then
 	root=$(head -n 1 $config)
-	selection=$(find $root -type d | rofi -i -l 40 -dmenu)
+	cd $root
+	selection=$(find $root -type d | not_empty | rofi -i -l 40 -dmenu)
 	if [ "$selection" != "" ]; then
 		audacious "$selection"
 	fi
