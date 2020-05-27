@@ -128,9 +128,9 @@ bindsym $sup+$ctrl+$shift+F12 exec shutdown -h now
 bindsym $sup+$ctrl+$alt+0 exec dp -p 0
 bindsym $sup+$ctrl+$alt+1 exec dp -p 1
 bindsym $sup+$ctrl+$alt+2 exec dp -p 2
-bindsym $sup+$ctrl+$alt+2 exec dp -p 3
-bindsym $sup+$ctrl+$alt+2 exec dp -p 4
-bindsym $sup+$ctrl+$alt+2 exec dp -p 5
+bindsym $sup+$ctrl+$alt+3 exec dp -p 3
+bindsym $sup+$ctrl+$alt+4 exec dp -p 4
+bindsym $sup+$ctrl+$alt+5 exec dp -p 5
 bindsym $sup+$ctrl+$alt+h exec dp -p h
 
 bindsym $alt+F2 exec gmrun
@@ -154,12 +154,13 @@ bindsym $ctrl+$alt+t exec xfce4-terminal
 
 
 # application window rules
-for_window [class="(?i)firefox"]          move workspace 1; workspace 1
-for_window [class="(?i)xed"]              move workspace 2; workspace 2
-for_window [class="(?i)xfce4-terminal"]   move workspace 3; workspace 3
-for_window [class="(?i)vlc"]              move workspace 5; workspace 5
-for_window [class="(?i)audacious"]        move scratchpad
-for_window [class="(?i)speedcrunch"]      floating enable
+for_window [class="(?i)firefox"]                                    move workspace 1; workspace 1
+for_window [class="(?i)xed"]                                        move workspace 2; workspace 2
+for_window [class="(?i)xfce4-terminal"]                             move workspace 3; workspace 3
+for_window [class="(?i)vlc"]                                        move workspace 5; workspace 5
+for_window [class="(?i)java-lang-thread" title="(?i)q filebrowser"] move workspace 10; workspace 10
+for_window [class="(?i)audacious"]                                  move scratchpad
+for_window [class="(?i)speedcrunch"]                                floating enable
 
 
 
