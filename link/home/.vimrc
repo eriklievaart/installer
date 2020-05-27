@@ -5,8 +5,11 @@ set nobackup
 set noswapfile
 set nowrap
 set number
+set hlsearch
+set incsearch
 set splitbelow
 set splitright
+
 
 
 " copy and paste (shift+insert)
