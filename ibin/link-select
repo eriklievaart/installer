@@ -1,0 +1,11 @@
+#!/bin/sh
+
+file=~/Applications/links/links.ini
+selected=$(cat $file | grep name | sed 's/.*=//' | rofi -i -l 40 -dmenu)
+
+if [ "$selected" != "" ]; then
+	links "$selected"
+fi
+
+
+

@@ -1,6 +1,9 @@
 
 syntax on
 
+" don't highlight matching parenthesis
+let loaded_matchparen = 0
+
 set nobackup
 set noswapfile
 set nowrap
