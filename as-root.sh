@@ -72,6 +72,8 @@ else
 	chmod a+x "$Z_SCRIPT"
 
 	if ! cat ~/.bashrc | grep -q '/z/z.sh'; then
+		echo "" >> .bashrc
+		echo "_Z_DATA=~/.cache/z" >> .bashrc
 		echo ". $Z_SCRIPT" >> ~/.bashrc
 	fi
 fi
