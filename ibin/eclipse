@@ -1,18 +1,27 @@
+#!/bin/sh
 
 installer=~/Development/git/installer/eclipse-minimal.sh
 version=$(sed '/^ECLIPSE_VERSION/!d; s/.*=//' $installer)
 executable=~/Applications/eclipse/$version/eclipse
+workspaces=~/Development/workspace
 
-if [ "$1" ]
-then
-	workspace=~/Development/workspace/$1
-	if [ -d "$workspace" ]
-	then
+open() {
+	workspace=$workspaces/$1
+
+	if [ -d "$workspace" ]; then
 		echo "eclipse -data $workspace"
 		$executable -data $workspace &
 	else
 		echo "not a directory! $workspace"  
 	fi
+}
+
+if [ "$1" = "-w" ]; then
+	workspace=$(ls ~/Development/workspace | rofi -dmenu)
+	[ $? ] && open "$workspace"
+
+elif [ "$1" ]; then
+	open "$1"
 else
 	$executable &
 fi

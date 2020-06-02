@@ -52,6 +52,10 @@ do
 	install $package
 done
 
+# only swap if absolutely necessary
+swapconfig=/etc/sysctl.d/99-swappiness.conf
+[ -f $swapconfig ] || echo "vm.swappiness=10" > swapconfig
+
 java_version=8
 install openjdk-${java_version?}-jdk
 install openjdk-${java_version?}-doc

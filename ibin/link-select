@@ -1,11 +1,50 @@
-#!/bin/sh
+#!/usr/bin/perl
+use 5.26.1;
 
-file=~/Applications/links/links.ini
-selected=$(cat $file | grep name | sed 's/.*=//' | rofi -i -l 40 -dmenu)
+my $file = '~/Applications/links/links.ini';
+my $selected = `cat $file | grep name | sed 's/.*=//' | rofi -i -l 40 -dmenu`;
+my @lines = `cat $file`;
+my $index = 0;
 
-if [ "$selected" != "" ]; then
-	links "$selected"
-fi
+sub read_link() {
+	say;
+	my %link = {};
 
+	while ( $index <= $#lines ) {
+		my $line = $lines[$index];
+		chomp $line;
+
+		if ($line =~ /\s++([^=]++)=(.*+)/) {
+			say "regex match: '$1' = '$2'";
+			$link{$1} = $2;
+
+		} elsif ($link{'name'} eq $selected) {
+			last; # open link
+
+		} else {
+			return; # next link
+		}
+		$index ++;
+	}
+	say;
+	say "match:", $link{'name'};
+	say "user:", $link{'user'};
+	system "echo '$link{'user'}' | xclip";
+	system "firefox $link{'url'} &";
+	exit 0;
+}
+
+sub goto_next_link() {
+	while ( $index < $#lines and index($lines[$index], '=') < 0 ) {
+		$index++;
+	}
+}
+
+chomp $selected;
+say "selection: '$selected'";
+while ( $index < $#lines ) {
+	goto_next_link();
+	my $found = read_link();
+}
 
 
