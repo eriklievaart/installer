@@ -107,3 +107,10 @@ else
     echo "cannot configure vlc, ${defaults?} not found."
 fi
 
+# set default sample rate to 48KHz, so that Audioengine HD3 USB connection works
+pulse=/etc/pulse/daemon.conf
+sed -i '/default-sample-rate/d' $pulse
+sed -i '$ s/$/\ndefault-sample-rate = 48000/' $pulse
+
+
+

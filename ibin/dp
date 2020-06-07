@@ -67,6 +67,8 @@ if [ ! -d $config ]; then
 	echo "4 nnnno" >> $presets
 	echo "5 nnnnn" >> $presets
 	echo "h =====" >> $presets
+	echo "- noooo" >> $presets
+	echo "= nnooo" >> $presets
 fi
 
 [ "$#" -gt 0 ] || die "either call $0 -p [preset] or $0 [settings]"

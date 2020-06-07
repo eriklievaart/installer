@@ -6,6 +6,8 @@ my $selected = `cat $file | grep name | sed 's/.*=//' | rofi -i -l 40 -dmenu`;
 my @lines = `cat $file`;
 my $index = 0;
 
+exit 1 if ! $selected;
+
 sub read_link() {
 	say;
 	my %link = {};
