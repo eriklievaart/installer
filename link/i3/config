@@ -72,7 +72,10 @@ bindsym $sup+slash exec felix q
 bindsym $sup+space workspace back_and_forth
 bindsym $sup+Tab exec i3cycle
 bindsym $sup+Up focus up
-bindsym $sup+F2 exec gmrun
+bindsym $sup+F1 exec sakura
+bindsym $sup+F2 exec gnome-terminal
+bindsym $sup+F3 exec xterm -fa "Ubuntu Mono" -fs 14 sh
+bindsym $sup+F4 exec alacritty
 bindsym $sup+F11 fullscreen toggle
 
 bindsym $sup+$alt+1 workspace 6
@@ -139,10 +142,6 @@ bindsym $sup+$ctrl+$alt+h exec dp -p h
 bindsym $sup+$ctrl+$alt+minus exec dp -p '-'
 bindsym $sup+$ctrl+$alt+equal exec dp -p '='
 
-bindsym $alt+F2 exec gmrun
-bindsym $alt+F4 kill
-bindsym $alt+Tab exec i3cycle
-
 bindsym $ctrl+F1 workspace 1
 bindsym $ctrl+F2 workspace 2
 bindsym $ctrl+F3 workspace 3
@@ -153,8 +152,6 @@ bindsym $ctrl+F7 workspace 7
 bindsym $ctrl+F8 workspace 8
 bindsym $ctrl+F9 workspace 9
 bindsym $ctrl+F10 workspace 10
-
-bindsym $ctrl+$alt+t exec xfce4-terminal
 
 
 
