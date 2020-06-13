@@ -26,13 +26,14 @@ set $shift Shift
 
 bindsym Print exec xfce4-screenshooter
 
-bindsym $sup+a alacritty
+bindsym $sup+a exec alacritty
 bindsym $sup+c workspace 1; exec firefox "http://eriklievaart.com/cheat?q=$(zenity --entry --text="lookup")"
 bindsym $sup+e exec eclipse -w
 bindsym $sup+f exec firefox
 bindsym $sup+g exec link-select
 bindsym $sup+i exec gvim ~/.config/i3/config
 bindsym $sup+m exec speedcrunch
+bindsym $sup+p exec scrot -u ~/Pictures/$(date +%s).png
 bindsym $sup+q kill
 bindsym $sup+r exec rofi -show run
 bindsym $sup+s exec rofi -show ssh
@@ -118,7 +119,8 @@ bindsym $sup+$ctrl+KP_3 exec audtool --playback-seek-relative +10
 bindsym $sup+$ctrl+KP_4 exec audtool --playlist-reverse
 bindsym $sup+$ctrl+KP_5 exec audtool --playback-play
 bindsym $sup+$ctrl+KP_6 exec audtool --playlist-advance
-bindsym $sup+$ctrl+KP_Multiply exec audacious-queue
+bindsym $sup+$ctrl+KP_Multiply exec audacious-queue -d
+bindsym $sup+$ctrl+KP_Divide   exec audacious-queue -f
 bindsym $sup+$ctrl+KP_Add      exec amixer -D pulse sset Master 5%+
 bindsym $sup+$ctrl+KP_Subtract exec amixer -D pulse sset Master 5%-
 bindsym $sup+$ctrl+equal scratchpad show

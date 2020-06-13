@@ -12,6 +12,7 @@ pal
 par2
 rofi
 screen
+scrot
 ssh 
 tree
 unclutter

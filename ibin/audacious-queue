@@ -3,6 +3,7 @@ set -e
 
 dir=~/.config/audacious
 config=$dir/mp3-home-dir
+type=$([ "$1" = "-f" ] && echo "f" || echo "d")
 echo "audacious root dir config file: $config"
 
 if [ ! -d ~/$dir ]; then
@@ -32,7 +33,7 @@ not_empty () {
 if [ -f $config ]; then
 	root=$(head -n 1 $config)
 	cd $root
-	selection=$(find $root -type d | not_empty | rofi -i -l 40 -dmenu)
+	selection=$(find $root -type $type | not_empty | rofi -i -l 40 -dmenu)
 	if [ "$selection" != "" ]; then
 		audacious "$selection"
 	fi
