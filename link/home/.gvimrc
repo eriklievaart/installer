@@ -3,5 +3,5 @@
 set guioptions-=T
 colorscheme torte
 
-set guifont=Ubuntu\ Mono\ 12
+set guifont=Ubuntu\ Mono\ 13
 
