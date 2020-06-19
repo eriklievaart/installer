@@ -121,6 +121,9 @@ if [ ! -d ~/bin ]; then
 	PATH=$PATH:~/bin
 fi
 
+sed -i 's/HISTSIZE=.*/HISTSIZE=10000/' ~/.bashrc
+sed -i 's/HISTFILESIZE=.*/HISTFILESIZE=20000/' ~/.bashrc
+
 [ -e ~/.config/i3 ] || ln -s $PWD/link/i3 ~/.config/i3
 link_dir=link/home
 for file in $(ls -a "${link_dir?}" | sed -n '/[.]*[^.].*/p')
@@ -134,9 +137,14 @@ do
 	fi
 done
 
-
-sed -i 's/HISTSIZE=.*/HISTSIZE=10000/' ~/.bashrc
-sed -i 's/HISTFILESIZE=.*/HISTFILESIZE=20000/' ~/.bashrc
+# vim plugins
+mkdir -p ~/.vim/autoload ~/.vim/bundle && curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+cd ~/.vim/bundle
+[ -d nerdtree ] || git clone https://github.com/preservim/nerdtree.git
+[ -d colorizer ] || git clone https://github.com/lilydjwg/colorizer
+[ -d vim-airline ] || git clone https://github.com/vim-airline/vim-airline
+[ -d vim-airline-themes ] || git clone https://github.com/vim-airline/vim-airline-themes
+cd -
 
 fetch_url ${JUNIT_DESTINATION?} ${JUNIT_URL?}
 fetch_url ${ANT_JUNIT_DESTINATION?} ${ANT_JUNIT_URL?}

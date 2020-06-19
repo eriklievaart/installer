@@ -33,9 +33,10 @@ not_empty () {
 if [ -f $config ]; then
 	root=$(head -n 1 $config)
 	cd $root
-	selection=$(find $root -type $type | not_empty | rofi -i -l 40 -dmenu)
+	echo "root: $root"
+	selection=$(find $root -type $type | not_empty | cut -c $(($(echo "$root" | wc -m)+1))- | rofi -i -l 40 -dmenu)
 	if [ "$selection" != "" ]; then
-		audacious "$selection"
+		audacious "$root/$selection"
 	fi
 fi
 
