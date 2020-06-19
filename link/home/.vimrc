@@ -1,5 +1,8 @@
 
 execute pathogen#infect()
+
+let NERDTreeQuitOnOpen=1
+
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_statusline_ontop=0
 let g:airline_theme='powerlineish'
@@ -44,6 +47,9 @@ map! <F6> <ESC>:@r<CR>
 map <F8> :w <bar> !clear; ./% <CR>
 map! <F8> <ESC>:w <bar> !clear; ./% <CR>
 
+map <F9> :NERDTreeToggle <CR>
+map! <F9> <ESC>:NERDTreeToggle <CR>
+
 " ctrl-alt arrow to move line
 nnoremap <C-A-Up> :m .-2<CR>==
 nnoremap <C-A-Down> :m .+1<CR>==
@@ -62,6 +68,11 @@ nnoremap ;9 :b 9<CR>
 nnoremap ;0 :b 0<CR>
 nnoremap ;] :bn<CR>
 nnoremap ;[ :bp<CR>
+
+nnoremap ;a :quit!<CR>
+nnoremap ;q :quit<CR>
+nnoremap ;w :w<CR>
+nnoremap ;x :x<CR>
 
 
 
