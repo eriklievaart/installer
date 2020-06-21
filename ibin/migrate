@@ -1,0 +1,18 @@
+#!/bin/sh
+
+backupdir=storage
+links=~/Applications/links/links.ini
+qvisited=~/Applications/q/data/ui/visited.txt
+qworkspaces=~/Applications/q/data/workspaces.txt
+z=~/.cache/z
+
+[ -d $backupdir ] || mkdir $backupdir
+
+# firefox history
+cp $(find ~/.mozilla/firefox -name places.sqlite) $backupdir/places.sqlite
+[ -f $links ] && cp $links $backupdir
+[ -f $qvisited ] && cp $qvisited $backupdir
+[ -f $qworkspaces ] && cp $qworkspaces $backupdir
+[ -f $z ] && cp $z $backupdir
+
+
