@@ -5,8 +5,8 @@ my $file = '~/Applications/links/links.ini';
 my $selected = `cat $file | grep name | sed 's/.*=//' | rofi -i -l 40 -dmenu`;
 my @lines = `cat $file`;
 my $index = 0;
+my $browser = @ARGV ? $ARGV[0] : 'firefox';
 
-exit 1 if ! $selected;
 
 sub read_link() {
 	say;
@@ -32,7 +32,7 @@ sub read_link() {
 	say "match:", $link{'name'};
 	say "user:", $link{'user'};
 	system "echo '$link{'user'}' | xclip";
-	system "firefox $link{'url'} &";
+	system "$browser $link{'url'} &";
 	exit 0;
 }
 
@@ -42,8 +42,11 @@ sub goto_next_link() {
 	}
 }
 
+
 chomp $selected;
 say "selection: '$selected'";
+exit 1 if ! $selected;
+
 while ( $index < $#lines ) {
 	goto_next_link();
 	my $found = read_link();

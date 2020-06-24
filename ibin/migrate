@@ -1,4 +1,5 @@
 #!/bin/sh
+set -e
 
 backupdir=storage
 links=~/Applications/links/links.ini
@@ -6,13 +7,29 @@ qvisited=~/Applications/q/data/ui/visited.txt
 qworkspaces=~/Applications/q/data/workspaces.txt
 z=~/.cache/z
 
-[ -d $backupdir ] || mkdir $backupdir
 
-# firefox history
-cp $(find ~/.mozilla/firefox -name places.sqlite) $backupdir/places.sqlite
-[ -f $links ] && cp $links $backupdir
-[ -f $qvisited ] && cp $qvisited $backupdir
-[ -f $qworkspaces ] && cp $qworkspaces $backupdir
-[ -f $z ] && cp $z $backupdir
+backup() {
+	cp $(find ~/.mozilla/firefox -name places.sqlite | grep default) .
+	[ -f $links ] && cp $links .
+	[ -f $qvisited ] && cp $qvisited .
+	[ -f $qworkspaces ] && cp $qworkspaces .
+	[ -f $z ] && cp $z .
+}
+
+restore() {
+	places=$(find ~/.mozilla/firefox -name places.sqlite | grep default)
+	echo "firefox places: $places"
+	if [ -f "$places" ]; then
+		mv -n $places $places.orig
+		cp places.sqlite $places
+	fi
+}
+
+case "$1" in
+	-b) backup;;
+	-r) restore;;
+	*) echo "usage 'migrate -b' for backup and 'migrate -r' for restore" ;;
+esac
+
 
 

@@ -28,6 +28,7 @@ bindsym Print exec xfce4-screenshooter
 
 bindsym $sup+a exec alacritty
 bindsym $sup+c workspace 1; exec firefox "http://eriklievaart.com/cheat?q=$(zenity --entry --text="lookup")"
+bindsym $sup+d exec notify-send "$(date '+%H:%M:%S %a %d-%m-%Y' )"
 bindsym $sup+e exec eclipse -w
 bindsym $sup+f exec firefox
 bindsym $sup+g exec link-select
@@ -72,10 +73,12 @@ bindsym $sup+slash exec felix q
 bindsym $sup+space workspace back_and_forth
 bindsym $sup+Tab exec i3cycle
 bindsym $sup+Up focus up
-bindsym $sup+F1 exec sakura
-bindsym $sup+F2 exec gnome-terminal
-bindsym $sup+F3 exec xterm -fa "Ubuntu Mono" -fs 14 sh
-bindsym $sup+F4 exec alacritty
+bindsym $sup+F1  exec sakura
+bindsym $sup+F2  exec gnome-terminal
+bindsym $sup+F3  exec xterm -fa "Ubuntu Mono" -fs 14 sh
+bindsym $sup+F4  exec alacritty
+bindsym $sup+F9  exec link-select surf
+bindsym $sup+F10 exec link-select chromium-browser
 bindsym $sup+F11 fullscreen toggle
 
 bindsym $sup+$alt+1 workspace 6
@@ -176,8 +179,9 @@ exec --no-startup-id setxkbmap -layout erik
 exec --no-startup-id xsetroot -solid "#181818"
 exec --no-startup-id for id in $(xinput list | grep -i touchpad | sed -r 's/.*id=([0-9]*).*/\1/'); do xinput --disable $id; done
 exec --no-startup-id rm -rf ~/.lesshst ~/.swt ~/.wget-hsts ~/.xsession-errors.old ~/.sudo_as_admin_successful
-
-
+exec --no-startup-id redshift -O 4500
+exec --no-startup-id xset -dpms
+exec --no-startup-id xset s off
 
 
 
