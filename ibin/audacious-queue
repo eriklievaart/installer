@@ -11,8 +11,7 @@ if [ ! -d ~/$dir ]; then
 	mkdir -p $dir
 fi
 
-
-root=$([ -f $config ] && head -n 1 $config)
+root=$([ -f $config ] && head -n 1 $config || echo "")
 if [ ! -d "$root" ]; then
 	echo "mp3 root dir not configured"
 	root=$(zenity --entry --text="mp3 root dir not configured in $config, where to load mp3 from?")
