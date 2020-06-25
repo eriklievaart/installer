@@ -69,6 +69,9 @@ nnoremap ;0 :b 0<CR>
 nnoremap ;] :bn<CR>
 nnoremap ;[ :bp<CR>
 
+nnoremap ;h :split<CR>
+nnoremap ;v :vsplit<CR>
+
 nnoremap ;a :quit!<CR>
 nnoremap ;q :quit<CR>
 nnoremap ;w :w<CR>
