@@ -8,3 +8,7 @@ alias dl='youtube-dl -i'
 alias dl480='youtube-dl -i -f "[height <= 720][tbr<=500]"'
 alias dlmp3='youtube-dl -i -x --audio-format mp3 '
 
+alias l='ls'
+alias ll='ls -l'
+alias la='ls -al'
+

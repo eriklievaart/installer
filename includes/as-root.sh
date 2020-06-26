@@ -2,7 +2,7 @@
 set -e                    # fail on errors
 sh -n as-root.sh          # check this file for syntax errors before executing it
 
-. ./globals.sh
+. ../globals.sh
 
 die() {
     echo >&2 "Error: $@"
@@ -15,24 +15,12 @@ check_status() {
 	fi
 }
 
-update_once() {
-	if [ $UP_TO_DATE ]; then
-		set +e
-		sudo apt-get update
-		set -e
-		UP_TO_DATE=true
-	fi
-}
 
-install() {
-	if (!(dpkg -s $1 | grep "Status: install" )) > /dev/null
-	then
-		update_once
-		echo "Installing $1."
-		sudo apt-get -y install $1
-		check_status $?
-	else
-		echo "$1 is already installed"
+relink() {
+	[ ${#2} -gt 10 ] || die "link to short '$2'"
+	if [ ! -e "${2:?}" ]; then
+		rm -f "${2:?}"
+		sudo ln -s "${1:?}" "${2:?}"
 	fi
 }
 
@@ -47,26 +35,31 @@ echo ""
 # allow users to invoke shutdown
 sudo chmod +s /sbin/shutdown
 
-for package in $(cat config/packages.txt)
-do
-	install $package
-done
+if [ -f /usr/bin/pacman ]; then
+	./arch.sh
+else
+	./debian.sh
+fi
+
 
 # only swap if absolutely necessary
 swapconfig=/etc/sysctl.d/99-swappiness.conf
-[ -f $swapconfig ] || echo "vm.swappiness=10" > swapconfig
-
-java_version=8
-install openjdk-${java_version?}-jdk
-install openjdk-${java_version?}-doc
-sudo update-alternatives --set java /usr/lib/jvm/java-${java_version?}-openjdk-amd64/jre/bin/java
+[ -f $swapconfig ] || echo "vm.swappiness=10" > $swapconfig
 
 
 # convenience script for jumping to directories
+zbashrc() {
+	home=${1:?}
+	bashrc=${home:?}/.bashrc
+	if ! cat $bashrc | grep -q '/z/z.sh'; then
+		echo "" >> $bashrc
+		echo "_Z_DATA=${home:?}/.cache/z" >> $bashrc
+		echo ". $Z_SCRIPT" >> $bashrc
+	fi
+}
 Z_PARENT="/opt"
 Z_DIR="$Z_PARENT/z"
 Z_SCRIPT="$Z_DIR/z.sh"
-
 if [ -d "$Z_DIR" ]; then
 	echo "shortcut(z) is already installed"
 else
@@ -74,24 +67,16 @@ else
 	cd "$Z_PARENT"
 	git clone https://github.com/rupa/z
 	chmod a+x "$Z_SCRIPT"
-
-	if ! cat ~/.bashrc | grep -q '/z/z.sh'; then
-		echo "" >> .bashrc
-		echo "_Z_DATA=~/.cache/z" >> .bashrc
-		echo ". $Z_SCRIPT" >> ~/.bashrc
-	fi
+	zbashrc /root
+	zbashrc "$HOME"
 fi
 
-# install icewm theme
-themedir=/usr/share/icewm/themes/mytheme
-if [ ! -e ${themedir?} ]; then
-	sudo ln -s ${GIT_DIR?}/installer/link/mytheme "${themedir?}"
-fi
 
-keyboard=/usr/share/X11/xkb/symbols/erik
-if [ ! -e ${keyboard?} ]; then
-	sudo ln -s ${GIT_DIR?}/installer/link/xkb/erik "${keyboard?}"
-fi
+# link icewm theme
+relink ${GIT_DIR?}/installer/link/mytheme /usr/share/icewm/themes/mytheme
+# link custom keyboard mapping
+relink ${GIT_DIR?}/installer/link/xkb/erik /usr/share/X11/xkb/symbols/erik
+
 
 # open media with vlc by default
 defaults=/usr/share/applications/defaults.list
@@ -111,6 +96,4 @@ fi
 pulse=/etc/pulse/daemon.conf
 sed -i '/default-sample-rate/d' $pulse
 sed -i '$ s/$/\ndefault-sample-rate = 48000/' $pulse
-
-
 

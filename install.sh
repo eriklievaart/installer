@@ -7,7 +7,7 @@
 # usage: ./install -s = skip projects
 
 set -e                    # fail on errors
-sh -n install.sh          # check this file for syntax errors before executing it
+sh -n "$0"                # check this file for syntax errors before executing it
 
 # load globals
 . ./globals.sh
@@ -79,10 +79,12 @@ then
 	git config --global user.name "$git_user"
 	git config --global user.email "$git_email"
 	git config --global credential.helper cache
+	git config pull.rebase true
 fi
 
-sudo sh as-root.sh
-
+cd includes
+sudo ./as-root.sh
+cd -
 
 
 
@@ -154,7 +156,7 @@ fetch_url ${CHECKSTYLE_DESTINATION?} ${CHECKSTYLE_URL?}
 
 log "installing eclipse"
 tail -n 0 -f ${LOG_FILE?} &
-sh eclipse-minimal.sh >> ${LOG_FILE?}
+sh includes/eclipse-minimal.sh >> ${LOG_FILE?}
 
 
 # install my own hobby projects

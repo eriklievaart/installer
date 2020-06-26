@@ -40,7 +40,7 @@ sources() {
 		then
 			cd $repo_dir
 			echo "$repo_dir"
-			git pull
+			git pull --rebase
 			cd - > /dev/null
 		else
 			git clone "https://eriklievaart@github.com/eriklievaart/$repo" $repo_dir

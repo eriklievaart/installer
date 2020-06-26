@@ -1,0 +1,15 @@
+
+pal 
+par2
+ssh 
+git-gui
+
+synaptic
+virtualbox-qt
+
+icewm
+icewm-common
+i3
+
+vim-gtk
+

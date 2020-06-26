@@ -1,6 +1,5 @@
 
 git 
-git-gui
 python3
 ant 
 
@@ -8,12 +7,9 @@ curl
 fdupes
 htop
 jq
-pal 
-par2
 rofi
 screen
 scrot
-ssh 
 tree
 unclutter
 unrar
@@ -28,19 +24,11 @@ gparted
 filelight
 filezilla
 speedcrunch
-synaptic
 partimage
 pcmanfm
-sabnzbdplus
-virtualbox-qt
+kdiff3
 
 icewm
-icewm-common
-i3
-i3status
-
-kdiff3
-vim-gtk
 
 audacious
 ffmpeg
