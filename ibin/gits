@@ -10,7 +10,7 @@ PLAIN='\033[0m'
 if [ "$1" = "acp" ]; then
 	message=$(echo "$@" | sed 's/^-c *//')
 	if [ -z "$message" ]; then
-		echo "$RED    git commit message required! $PLAIN"
+		echo -e "$RED    git commit message required! $PLAIN"
 		exit 500
 	fi
 fi
@@ -24,7 +24,7 @@ if [ "$(echo "$1" | cut -c 1)" = "@" ]; then
 	shift
 
 	if [ ! -d $repo ]; then
-		echo "$RED repo $project does not exist $PLAIN"
+		echo -e "$RED repo $project does not exist $PLAIN"
 		exit 404
 	fi
 
@@ -80,7 +80,7 @@ do
 		color=$YELLOW
 	fi
 	
-	echo "$color[$branch] $dir $untracked$changes$PLAIN"
+	echo -e "$color[$branch] $dir $untracked$changes$PLAIN"
 
 	
 	if [ "$1" = "acp" ]; then
