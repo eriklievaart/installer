@@ -148,6 +148,12 @@ cd ~/.vim/bundle
 [ -d vim-airline-themes ] || git clone https://github.com/vim-airline/vim-airline-themes
 cd -
 
+# configure xed text editor
+dconf write /org/x/editor/preferences/editor/scheme "'cobalt'"
+sed -i 's/mousepad.desktop/xed.desktop/g' ~/.config/mimeapps.list
+sed -i '/^text\/plain=/d;$s|$|\ntext/plain=xed.desktop|' ~/.config/mimeapps.list
+
+
 fetch_url ${JUNIT_DESTINATION?} ${JUNIT_URL?}
 fetch_url ${ANT_JUNIT_DESTINATION?} ${ANT_JUNIT_URL?}
 fetch_url ${GUICE_SRC_DESTINATION?} ${GUICE_SRC_URL?}

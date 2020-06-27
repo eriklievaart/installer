@@ -42,6 +42,7 @@ apply() {
 	done
 	echo "$xrandr" | tee /tmp/dp.log
 	$xrandr
+	feh --randomize --bg-fill ~/Pictures/backgrounds
 	exit 0
 }
 
@@ -80,3 +81,4 @@ else
 fi
 
 notify-send "preset $1 not found"
+

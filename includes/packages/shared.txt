@@ -5,6 +5,7 @@ ant
 
 curl
 fdupes
+feh
 htop
 jq
 rofi
