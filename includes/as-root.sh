@@ -9,13 +9,6 @@ die() {
     exit 1
 }
 
-check_status() {
-	if [ $1 -ne 0 ]; then
-		die "Installation aborted with status $1"
-	fi
-}
-
-
 relink() {
 	[ ${#2} -gt 10 ] || die "link to short '$2'"
 	if [ ! -e "${2:?}" ]; then

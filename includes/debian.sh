@@ -1,4 +1,5 @@
 #!/bin/sh
+set -e
 
 install() {
 	if (!(dpkg -s $1 | grep "Status: install" )) > /dev/null
@@ -12,6 +13,12 @@ install() {
 	fi
 }
 
+check_status() {
+	if [ $1 -ne 0 ]; then
+		die "Installation aborted with status $1"
+	fi
+}
+
 update_once() {
 	if [ $UP_TO_DATE ]; then
 		set +e
@@ -21,7 +28,7 @@ update_once() {
 	fi
 }
 
-for package in $(cat config/packages.txt)
+for package in $(cat packages/shared.txt packages/debian.txt)
 do
 	install $package
 done
