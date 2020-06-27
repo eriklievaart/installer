@@ -150,6 +150,7 @@ cd -
 
 # configure xed text editor
 dconf write /org/x/editor/preferences/editor/scheme "'cobalt'"
+touch ~/.config/mimeapps.list
 sed -i 's/mousepad.desktop/xed.desktop/g' ~/.config/mimeapps.list
 sed -i '/^text\/plain=/d;$s|$|\ntext/plain=xed.desktop|' ~/.config/mimeapps.list
 
