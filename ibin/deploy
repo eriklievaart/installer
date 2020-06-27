@@ -1,6 +1,0 @@
-
-war_file="/tmp/ROOT.war"
-echo "war = $war_file"
-
-scp $war_file nospam@eriklievaart.com:/opt/tomcat/current/webapps
-

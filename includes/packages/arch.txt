@@ -1,6 +1,10 @@
 
+alacritty
+qemu
+
 gvim
 xed
 
 i3-wm
+
 

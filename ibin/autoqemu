@@ -1,0 +1,5 @@
+#!/bin/sh
+
+set -x
+qemu-system-x86_64 -m 4G -enable-kvm -hda $(ls *.img | head)
+

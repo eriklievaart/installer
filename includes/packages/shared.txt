@@ -10,23 +10,26 @@ jq
 rofi
 screen
 scrot
+tldr
 tree
 unclutter
 unrar
 xclip
 xdotool
+xterm
 youtube-dl
 
 gmrun
 gnome-terminal
-numlockx
-gparted
 filelight
 filezilla
-speedcrunch
-partimage
-pcmanfm
+gparted
 kdiff3
+numlockx
+pcmanfm
+partimage
+sakura
+speedcrunch
 
 icewm
 

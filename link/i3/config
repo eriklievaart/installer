@@ -62,10 +62,9 @@ bindsym $sup+KP_7 workspace 7
 bindsym $sup+KP_8 workspace 8
 bindsym $sup+KP_9 workspace 9
 bindsym $sup+KP_0 workspace 10
-bindsym $sup+bracketleft exec rotate left
-bindsym $sup+bracketright exec rotate right
+bindsym $sup+bracketleft move left
+bindsym $sup+bracketright move right
 bindsym $sup+Down focus down
-bindsym $sup+equal exec rotate normal
 bindsym $sup+Left focus left
 bindsym $sup+Return exec i3-sensible-terminal
 bindsym $sup+Right focus right
@@ -93,7 +92,6 @@ bindsym $sup+$alt+Up move up
 bindsym $sup+$alt+Right move right
 
 bindsym $sup+$shift+c reload
-bindsym $sup+$shift+e exec i3-msg exit
 bindsym $sup+$shift+h layout splitv
 bindsym $sup+$shift+r restart
 bindsym $sup+$shift+t layout tabbed
@@ -131,6 +129,7 @@ bindsym $sup+$ctrl+KP_Add      exec amixer -D pulse sset Master 5%+
 bindsym $sup+$ctrl+KP_Subtract exec amixer -D pulse sset Master 5%-
 bindsym $sup+$ctrl+equal scratchpad show
 
+bindsym $sup+$ctrl+$shift+l exec i3-msg exit
 bindsym $sup+$ctrl+$shift+r exec shutdown -r now
 bindsym $sup+$ctrl+$shift+s exec systemctl suspend
 bindsym $sup+$ctrl+$shift+F12 exec shutdown -h now
@@ -144,17 +143,6 @@ bindsym $sup+$ctrl+$alt+5 exec dp -p 5
 bindsym $sup+$ctrl+$alt+h exec dp -p h
 bindsym $sup+$ctrl+$alt+minus exec dp -p '-'
 bindsym $sup+$ctrl+$alt+equal exec dp -p '='
-
-bindsym $ctrl+F1 workspace 1
-bindsym $ctrl+F2 workspace 2
-bindsym $ctrl+F3 workspace 3
-bindsym $ctrl+F4 workspace 4
-bindsym $ctrl+F5 workspace 5
-bindsym $ctrl+F6 workspace 6
-bindsym $ctrl+F7 workspace 7
-bindsym $ctrl+F8 workspace 8
-bindsym $ctrl+F9 workspace 9
-bindsym $ctrl+F10 workspace 10
 
 
 
