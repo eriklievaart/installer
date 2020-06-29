@@ -4,6 +4,7 @@ python3
 ant 
 
 curl
+dash
 fdupes
 feh
 htop
