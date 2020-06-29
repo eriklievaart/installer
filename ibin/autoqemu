@@ -1,5 +1,20 @@
 #!/bin/sh
 
-set -x
-qemu-system-x86_64 -m 4G -enable-kvm -hda $(ls *.img | head)
+params="-m 4G -enable-kvm"
+
+for image in *.img
+do
+	params="$params -drive file=$image,format=raw"
+done
+
+for iso in $(ls | grep '[.]iso$')
+do
+	params="$params -cdrom $iso"
+done
+
+[ "$1" ] && params="$params -boot d"
+
+echo "qemu-system-x86_64 $params"
+qemu-system-x86_64 $params
+
 
