@@ -123,8 +123,15 @@ if [ ! -d ~/bin ]; then
 	PATH=$PATH:~/bin
 fi
 
-sed -i 's/HISTSIZE=.*/HISTSIZE=10000/' ~/.bashrc
-sed -i 's/HISTFILESIZE=.*/HISTFILESIZE=20000/' ~/.bashrc
+if grep -q 'HISTSIZE' ~/.bashrc; then
+	sed -i 's/HISTSIZE=.*/HISTSIZE=10000/' ~/.bashrc
+	sed -i 's/HISTFILESIZE=.*/HISTFILESIZE=20000/' ~/.bashrc
+else
+	echo >> ~/.bashrc
+	echo "HISTSIZE=10000" >> ~/.bashrc
+	echo "HISTFILESIZE=20000" >> ~/.bashrc
+fi
+
 
 [ -e ~/.config/i3 ] || ln -s $PWD/link/i3 ~/.config/i3
 link_dir=link/home
