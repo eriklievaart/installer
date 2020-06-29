@@ -151,6 +151,7 @@ bindsym $sup+$ctrl+$alt+equal exec dp -p '='
 for_window [class="(?i)firefox"]                                    move workspace 1; workspace 1
 for_window [class="(?i)xed"]                                        move workspace 2; workspace 2
 for_window [class="(?i)xfce4-terminal"]                             move workspace 3; workspace 3
+for_window [class="(?i)gvim"]                                       move workspace 4; workspace 4
 for_window [class="(?i)vlc"]                                        move workspace 5; workspace 5
 for_window [class="(?i)xviewer"]                                    move workspace 6; workspace 6
 for_window [class="(?i)java-lang-thread" title="(?i)q filebrowser"] move workspace 10; workspace 10
