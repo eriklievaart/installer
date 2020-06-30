@@ -18,6 +18,7 @@ unclutter
 unrar
 xclip
 xdotool
+xfce4-terminal
 xterm
 youtube-dl
 
