@@ -1,10 +1,11 @@
 
 alacritty
-qemu
-
+chromium
 gvim
+i3-wm
+qemu
 xed
 
-i3-wm
+
 
 

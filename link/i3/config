@@ -27,7 +27,7 @@ set $shift Shift
 bindsym Print exec xfce4-screenshooter
 
 bindsym $sup+a exec alacritty
-bindsym $sup+c workspace 1; exec firefox "http://eriklievaart.com/cheat?q=$(zenity --entry --text="lookup")"
+bindsym $sup+c workspace 1; exec chromium "http://eriklievaart.com/cheat?q=$(zenity --entry --text="lookup")"
 bindsym $sup+d exec notify-send "$(date '+%H:%M:%S %a %d-%m-%Y' )"
 bindsym $sup+e exec eclipse -w
 bindsym $sup+f exec firefox
@@ -140,6 +140,10 @@ bindsym $sup+$ctrl+$alt+2 exec dp -p 2
 bindsym $sup+$ctrl+$alt+3 exec dp -p 3
 bindsym $sup+$ctrl+$alt+4 exec dp -p 4
 bindsym $sup+$ctrl+$alt+5 exec dp -p 5
+bindsym $sup+$ctrl+$alt+6 exec dp -p 6
+bindsym $sup+$ctrl+$alt+7 exec dp -p 7
+bindsym $sup+$ctrl+$alt+8 exec dp -p 8
+bindsym $sup+$ctrl+$alt+9 exec dp -p 9
 bindsym $sup+$ctrl+$alt+h exec dp -p h
 bindsym $sup+$ctrl+$alt+minus exec dp -p '-'
 bindsym $sup+$ctrl+$alt+equal exec dp -p '='
@@ -165,7 +169,7 @@ for_window [class="(?i)speedcrunch"]                                floating ena
 exec --no-startup-id history-cleanup
 exec --no-startup-id unclutter -idle 1 -root
 exec --no-startup-id setxkbmap -layout erik
-exec --no-startup-id xsetroot -solid "#181818"
+exec --no-startup-id xsetroot -solid "#888888"
 exec --no-startup-id for id in $(xinput list | grep -i touchpad | sed -r 's/.*id=([0-9]*).*/\1/'); do xinput --disable $id; done
 exec --no-startup-id rm -rf ~/.lesshst ~/.swt ~/.wget-hsts ~/.xsession-errors.old ~/.sudo_as_admin_successful
 exec --no-startup-id redshift -O 4500

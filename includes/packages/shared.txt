@@ -9,6 +9,7 @@ fdupes
 feh
 htop
 jq
+redshift
 rofi
 screen
 scrot
