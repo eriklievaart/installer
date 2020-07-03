@@ -21,6 +21,8 @@ set incsearch
 set splitbelow
 set splitright
 set showcmd
+set shiftwidth=4
+set tabstop=4
 
 
 " copy and paste (shift+insert)
@@ -71,6 +73,7 @@ nnoremap ;[ :bp<CR>
 
 nnoremap ;h :split<CR>
 nnoremap ;v :vsplit<CR>
+nnoremap ;; :nohlsearch<CR>
 
 nnoremap ;q :quitall<CR>
 nnoremap ;w :w<CR>
