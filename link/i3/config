@@ -158,33 +158,10 @@ for_window [class="(?i)xfce4-terminal"]                             move workspa
 for_window [class="(?i)gvim"]                                       move workspace 4; workspace 4
 for_window [class="(?i)vlc"]                                        move workspace 5; workspace 5
 for_window [class="(?i)xviewer"]                                    move workspace 6; workspace 6
+for_window [class="(?i)steam"]                                      move workspace 9; workspace 9
 for_window [class="(?i)java-lang-thread" title="(?i)q filebrowser"] move workspace 10; workspace 10
 for_window [class="(?i)audacious"]                                  move scratchpad
 for_window [class="(?i)speedcrunch"]                                floating enable
-
-
-
-
-# startup commands
-exec --no-startup-id history-cleanup
-exec --no-startup-id unclutter -idle 1 -root
-exec --no-startup-id setxkbmap -layout erik
-exec --no-startup-id xsetroot -solid "#888888"
-exec --no-startup-id for id in $(xinput list | grep -i touchpad | sed -r 's/.*id=([0-9]*).*/\1/'); do xinput --disable $id; done
-exec --no-startup-id rm -rf ~/.lesshst ~/.swt ~/.wget-hsts ~/.xsession-errors.old ~/.sudo_as_admin_successful
-exec --no-startup-id redshift -O 4500
-exec --no-startup-id xset -dpms
-exec --no-startup-id xset s off
-exec --no-startup-id automount
-
-
-
-
-
-
-
-
-
 
 
 

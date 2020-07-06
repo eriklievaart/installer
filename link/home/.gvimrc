@@ -3,7 +3,7 @@
 set guioptions-=T
 colorscheme torte
 
-set guifont=Inconsolata\ Semi-Condensed\ 13
+set guifont=Inconsolata\ Semi-Condensed\ 15
 function ChangeFontSize(delta) abort
     let l:repl = printf('\=eval(submatch(0)+%d)', a:delta)
     let &guifont = substitute(&guifont, '\d\+', l:repl, '')

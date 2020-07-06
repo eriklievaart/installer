@@ -42,6 +42,7 @@ apply() {
 	done
 	echo "$xrandr" | tee /tmp/dp.log
 	$xrandr
+	redshift -P -O 4500
 	feh --randomize --bg-fill ~/Pictures/backgrounds
 	exit 0
 }
