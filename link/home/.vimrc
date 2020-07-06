@@ -58,6 +58,13 @@ nnoremap <C-A-Down> :m .+1<CR>==
 inoremap <C-A-Up> <Esc>:m .-2<CR>==gi
 inoremap <C-A-Down> <Esc>:m .+1<CR>==gi
 
+nnoremap ;d :bd<CR>
+nnoremap ;h :split<CR>
+nnoremap ;q :quitall<CR>
+nnoremap ;v :vsplit<CR>
+nnoremap ;w :w<CR>
+nnoremap ;x :x<CR>
+
 nnoremap ;1 :b 1<CR>
 nnoremap ;2 :b 2<CR>
 nnoremap ;3 :b 3<CR>
@@ -71,13 +78,9 @@ nnoremap ;0 :b 0<CR>
 nnoremap ;] :bn<CR>
 nnoremap ;[ :bp<CR>
 
-nnoremap ;h :split<CR>
-nnoremap ;v :vsplit<CR>
+nnoremap ;$ :%s/$\(\w\+\)/${\1:?}/gc<CR>
 nnoremap ;; :nohlsearch<CR>
 
-nnoremap ;q :quitall<CR>
-nnoremap ;w :w<CR>
-nnoremap ;x :x<CR>
 
 
 
