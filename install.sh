@@ -132,6 +132,10 @@ else
 	echo "HISTFILESIZE=20000" >> ~/.bashrc
 fi
 
+if ! grep -q '.bash_aliases' ~/.bashrc; then
+	echo >> ~/.bashrc
+	echo ". ~/.bash_aliases" >> ~/.bashrc
+fi
 
 [ -e ~/.config/i3 ] || ln -s $PWD/link/i3 ~/.config/i3
 link_dir=link/home
