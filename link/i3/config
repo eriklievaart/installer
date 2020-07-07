@@ -166,6 +166,7 @@ for_window [class="(?i)speedcrunch"]                                floating ena
 
 
 
+exec --no-startup-id startup
 
 
 

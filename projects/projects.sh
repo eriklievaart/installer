@@ -1,7 +1,11 @@
-#!/bin/sh
+#!/bin/dash
 set -e
 
 . ../globals.sh
+
+YELLOW='\033[1;33m'
+RED='\033[1;31m'
+PLAIN='\033[0m'
 
 die() {
     echo >&2 "Error: $@"
@@ -40,7 +44,13 @@ sources() {
 		then
 			cd $repo_dir
 			echo "$repo_dir"
-			git pull --rebase
+			
+			if git diff-index --quiet HEAD --; then
+				git pull --rebase
+			else
+				echo "${YELLOW}outgoing changes! not pulling '$repo_dir'${PLAIN}"
+			fi
+
 			cd - > /dev/null
 		else
 			git clone "https://eriklievaart@github.com/eriklievaart/$repo" $repo_dir

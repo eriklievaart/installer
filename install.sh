@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/dash
 
 # usage: ./install    = git pull & install projects
 # usage: ./install -a = git pull & install projects
@@ -72,12 +72,8 @@ fi
 
 if [ ! -f ~/.gitconfig ]
 then
-	echo "enter git username"
-	read git_user
-	echo "enter git email"
-	read git_email
-	git config --global user.name "$git_user"
-	git config --global user.email "$git_email"
+	git config --global user.name "nospam"
+	git config --global user.email "nospam"
 	git config --global credential.helper cache
 	git config pull.rebase true
 fi
@@ -165,6 +161,11 @@ touch ~/.config/mimeapps.list
 sed -i 's/mousepad.desktop/xed.desktop/g' ~/.config/mimeapps.list
 sed -i '/^text\/plain=/d;$s|$|\ntext/plain=xed.desktop|' ~/.config/mimeapps.list
 
+# configure xfce terminal
+[ ! -d ~/.config/xfce4/terminal ] && mkdir -p ~/.config/xfce4/terminal
+[ ! -f ~/.config/xfce4/terminal/terminalrc ] && echo '[Configuration]' > ~/.config/xfce4/terminal/terminalrc
+sed -i '/MiscShowUnsafePasteDialog/d' ~/.config/xfce4/terminal/terminalrc
+echo 'MiscShowUnsafePasteDialog=FALSE' >> ~/.config/xfce4/terminal/terminalrc
 
 fetch_url ${JUNIT_DESTINATION?} ${JUNIT_URL?}
 fetch_url ${ANT_JUNIT_DESTINATION?} ${ANT_JUNIT_URL?}
@@ -180,9 +181,9 @@ sh includes/eclipse-minimal.sh >> ${LOG_FILE?}
 # install my own hobby projects
 cd projects
 if [ -z "$@" ]; then
-	sh projects.sh -a
+	./projects.sh -a
 else
-	sh projects.sh "$@"
+	./projects.sh "$@"
 fi
 
 STAMP_END=$(date +%s)
