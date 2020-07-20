@@ -62,6 +62,10 @@ echo ""
 
 [ -d $config ] || mkdir $config
 
+if [ "$1" = "-r" ]; then
+	rm "${ports:?}"
+	shift
+fi
 if [ ! -f "$ports" ]; then
 	info=$(xrandr)
 	echo "$info" | sed -n '/ connected /{s/ .*//;p}' > $ports
@@ -75,8 +79,12 @@ if [ ! -f $presets ]; then
 	echo "3 nnnoo" >> $presets
 	echo "4 nnnno" >> $presets
 	echo "5 nnnnn" >> $presets
+	echo "6 loooo" >> $presets
+	echo "7 lnooo" >> $presets
+	echo "8 lnnoo" >> $presets
+	echo "9 lnnno" >> $presets
 	echo "h =====" >> $presets
-	echo "- noooo" >> $presets
+	echo "- onooo" >> $presets
 	echo "= nnooo" >> $presets
 fi
 
