@@ -57,11 +57,18 @@ load() {
 	done < $presets
 }
 
-if [ ! -d $config ]; then
-	mkdir $config
+xrandr | grep ' connected '
+echo ""
+
+[ -d $config ] || mkdir $config
+
+if [ ! -f "$ports" ]; then
 	info=$(xrandr)
 	echo "$info" | sed -n '/ connected /{s/ .*//;p}' > $ports
 	echo "$info" | sed -n '/disconnected/{s/ .*//;p}' >> $ports
+fi
+
+if [ ! -f $presets ]; then
 	echo "0 ooooo" >> $presets
 	echo "1 noooo" >> $presets
 	echo "2 nnooo" >> $presets
