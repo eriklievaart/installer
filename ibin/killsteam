@@ -1,7 +1,8 @@
 #!/bin/sh
 
-pkill -f steam
-pkill -f -9 steam
+pkill -f Steam
+sleep 1
+pkill -f -9 Steam
 
 
 
