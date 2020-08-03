@@ -58,6 +58,7 @@ nnoremap <C-A-Down> :m .+1<CR>==
 inoremap <C-A-Up> <Esc>:m .-2<CR>==gi
 inoremap <C-A-Down> <Esc>:m .+1<CR>==gi
 
+nnoremap ;c :close<CR>
 nnoremap ;d :bd<CR>
 nnoremap ;h :split<CR>
 nnoremap ;q :quitall<CR>
@@ -80,6 +81,9 @@ nnoremap ;[ :bp<CR>
 
 nnoremap ;$ :%s/$\(\w\+\)/${\1:?}/gc<CR>
 nnoremap ;; :nohlsearch<CR>
+nnoremap ;. :cnext<CR>
+nnoremap ;, :clast<CR>
+nnoremap ;/ :cope<CR>
 
 
 
