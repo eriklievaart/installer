@@ -158,6 +158,7 @@ for_window [class="(?i)xfce4-terminal"]                             move workspa
 for_window [class="(?i)gvim"]                                       move workspace 4; workspace 4
 for_window [class="(?i)vlc"]                                        move workspace 5; workspace 5
 for_window [class="(?i)xviewer"]                                    move workspace 6; workspace 6
+for_window [class="(?i)viewnior"]                                   move workspace 6; workspace 6
 for_window [class="(?i)steam"]                                      move workspace 9; workspace 9
 for_window [class="(?i)java-lang-thread" title="(?i)q filebrowser"] move workspace 10; workspace 10
 for_window [class="(?i)audacious"]                                  move scratchpad
