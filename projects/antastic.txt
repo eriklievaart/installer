@@ -1,6 +1,5 @@
 
 
-skip.preprocess=true
 skip.test=true
 skip.checkstyle=true
 skip.generate=true

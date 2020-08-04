@@ -57,6 +57,8 @@ nnoremap <C-A-Up> :m .-2<CR>==
 nnoremap <C-A-Down> :m .+1<CR>==
 inoremap <C-A-Up> <Esc>:m .-2<CR>==gi
 inoremap <C-A-Down> <Esc>:m .+1<CR>==gi
+vnoremap <C-A-Up> :m '<-2<CR>gv=gv
+vnoremap <C-A-Down> :m '>+1<CR>gv=gv
 
 nnoremap ;c :close<CR>
 nnoremap ;d :bd<CR>
