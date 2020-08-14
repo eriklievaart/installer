@@ -12,6 +12,11 @@ syntax on
 " don't highlight matching parenthesis
 let loaded_matchparen = 0
 
+set noautoindent
+set nocindent
+set nosmartindent
+set indentexpr=
+
 set nobackup
 set noswapfile
 set nowrap
@@ -29,8 +34,6 @@ set tabstop=4
 map <S-Insert> <MiddleMouse>
 map! <S-Insert> <MiddleMouse>
 
-" + to copy register 0 to clipboard
-nmap + :let @+ = @0<CR>
 " ctrl-n to toggle line numbers
 nmap <C-N> :set invnumber<CR>
 
@@ -57,12 +60,12 @@ map <F9> :NERDTreeToggle <CR>
 map! <F9> <ESC>:NERDTreeToggle <CR>
 
 " ctrl-alt arrow to move line
-nnoremap <C-A-Up>         :m .-2  <CR> ==
-nnoremap <C-A-Down>       :m .+1  <CR> ==
-inoremap <C-A-Up>   <Esc> :m .-2  <CR> ==gi
-inoremap <C-A-Down> <Esc> :m .+1  <CR> ==gi
-vnoremap <C-A-Up>         :m '<-2 <CR> gv=gv
-vnoremap <C-A-Down>       :m '>+1 <CR> gv=gv
+nnoremap <C-A-Up>         :m .-2  <CR>
+nnoremap <C-A-Down>       :m .+1  <CR>
+inoremap <C-A-Up>   <Esc> :m .-2  <CR>i
+inoremap <C-A-Down> <Esc> :m .+1  <CR>i
+vnoremap <C-A-Up>         :m '<-2 <CR>gv
+vnoremap <C-A-Down>       :m '>+1 <CR>gv
 
 " resize window
 nnoremap <C-H> :wincmd h <CR>:vertical resize -1 <CR>
@@ -71,7 +74,6 @@ nnoremap <C-K> :wincmd k <CR>:resize +1 <CR>
 nnoremap <C-L> :wincmd h <CR>:vertical resize +1 <CR>
 
 nnoremap ;c :close   <CR>
-nnoremap ;d :bd      <CR>
 nnoremap ;h :split   <CR>
 nnoremap ;q :quitall <CR>
 nnoremap ;v :vsplit  <CR>
@@ -88,8 +90,6 @@ nnoremap ;7 :b 7 <CR>
 nnoremap ;8 :b 8 <CR>
 nnoremap ;9 :b 9 <CR>
 nnoremap ;0 :b 0 <CR>
-nnoremap ;] :bn  <CR>
-nnoremap ;[ :bp  <CR>
 
 nnoremap ;$ :%s/$\(\w\+\)/${\1:?}/gc<CR>
 nnoremap ;; :nohlsearch <CR>
@@ -97,8 +97,10 @@ nnoremap ;. :cnext      <CR>
 nnoremap ;, :clast      <CR>
 nnoremap ;/ :cope       <CR>
 
-
-
+" navigating buffers
+nnoremap + :bn<CR>
+nnoremap _ :bp<CR>
+nnoremap - :bd<CR>
 
 
 
