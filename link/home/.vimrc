@@ -60,12 +60,12 @@ map <F9> :NERDTreeToggle <CR>
 map! <F9> <ESC>:NERDTreeToggle <CR>
 
 " ctrl-alt arrow to move line
-nnoremap <C-A-Up>         :m .-2  <CR>
-nnoremap <C-A-Down>       :m .+1  <CR>
-inoremap <C-A-Up>   <Esc> :m .-2  <CR>i
-inoremap <C-A-Down> <Esc> :m .+1  <CR>i
-vnoremap <C-A-Up>         :m '<-2 <CR>gv
-vnoremap <C-A-Down>       :m '>+1 <CR>gv
+nnoremap <C-A-Up>          :m .-2  <CR>
+nnoremap <C-A-Down>        :m .+1  <CR>
+inoremap <C-A-Up>   <Esc>  :m .-2  <CR>i
+inoremap <C-A-Down> <Esc>  :m .+1  <CR>i
+vnoremap <C-A-Up>          :m '<-2 <CR>gv
+vnoremap <C-A-Down>        :m '>+1 <CR>gv
 
 " resize window
 nnoremap <C-H> :wincmd h <CR>:vertical resize -1 <CR>
@@ -99,8 +99,8 @@ nnoremap ;/ :cope       <CR>
 
 " navigating buffers
 nnoremap + :bn<CR>
-nnoremap _ :bp<CR>
-nnoremap - :bd<CR>
+nnoremap - :bp<CR>
+nnoremap _ :bd<CR>
 
 
 
