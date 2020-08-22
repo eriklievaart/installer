@@ -1,5 +1,6 @@
 #!/bin/dash
 
+dp -p s
 history-cleanup &
 unclutter -idle 1 -root &
 setxkbmap -layout erik &
@@ -9,6 +10,8 @@ rm -rf ~/.lesshst ~/.swt ~/.wget-hsts ~/.xsession-errors.old ~/.sudo_as_admin_su
 redshift -P -O 4500 &
 xset -dpms &
 xset s off &
+automount &
+gajim &
 
 
 

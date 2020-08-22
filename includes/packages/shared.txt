@@ -13,6 +13,7 @@ redshift
 rofi
 screen
 scrot
+sshfs
 tldr
 tree
 unclutter

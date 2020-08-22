@@ -13,3 +13,10 @@ i3
 
 vim-gtk
 
+qemu
+qemu-kvm
+libvirt-daemon
+libvirt-clients
+bridge-utils
+virt-manager
+

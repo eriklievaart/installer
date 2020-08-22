@@ -27,7 +27,7 @@ set $shift Shift
 bindsym Print exec xfce4-screenshooter
 
 bindsym $sup+a exec alacritty
-bindsym $sup+c workspace 1; exec chromium "http://eriklievaart.com/cheat?q=$(zenity --entry --text="lookup")"
+bindsym $sup+c workspace 1; exec firefox "http://eriklievaart.com/cheat?q=$(zenity --entry --text="lookup")"
 bindsym $sup+d exec notify-send "$(date '+%H:%M:%S %a %d-%m-%Y' )"
 bindsym $sup+e exec eclipse -w
 bindsym $sup+f exec firefox
@@ -80,6 +80,8 @@ bindsym $sup+F9  exec link-select surf
 bindsym $sup+F10 exec link-select chromium-browser
 bindsym $sup+F11 fullscreen toggle
 
+bindsym $sup+$alt+c workspace 1; exec firefox -new-window "http://eriklievaart.com/cheat?q=$(zenity --entry --text="lookup")"
+bindsym $sup+$alt+f exec firefox -new-window
 bindsym $sup+$alt+1 workspace 6
 bindsym $sup+$alt+2 workspace 7
 bindsym $sup+$alt+3 workspace 8
