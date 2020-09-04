@@ -11,7 +11,7 @@ redshift -P -O 4500 &
 xset -dpms &
 xset s off &
 automount &
-gajim &
+flatpak run org.gajim.Gajim&
 
 
 
