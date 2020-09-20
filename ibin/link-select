@@ -8,7 +8,7 @@ my $index = 0;
 my $browser = @ARGV ? $ARGV[0] : 'firefox';
 
 
-sub read_link() {
+sub try_link() {
 	say;
 	my %link = {};
 
@@ -20,20 +20,19 @@ sub read_link() {
 			say "regex match: '$1' = '$2'";
 			$link{$1} = $2;
 
-		} elsif ($link{'name'} eq $selected) {
-			last; # open link
-
 		} else {
-			return; # next link
+			last; # next link
 		}
-		$index ++;
+		$index++;
 	}
-	say;
-	say "match:", $link{'name'};
-	say "user:", $link{'user'};
-	system "echo '$link{'user'}' | xclip";
-	system "$browser $link{'url'} &";
-	exit 0;
+	if ($link{'name'} eq $selected) {
+		say "";
+		say "match:", $link{'name'};
+		say "user:", $link{'user'};
+		system "echo '$link{'user'}' | xclip";
+		system "$browser $link{'url'} &";
+		exit 0;
+	}
 }
 
 sub goto_next_link() {
@@ -49,7 +48,7 @@ exit 1 if ! $selected;
 
 while ( $index < $#lines ) {
 	goto_next_link();
-	my $found = read_link();
+	try_link();
 }
 
 
