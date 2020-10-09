@@ -55,6 +55,7 @@ load() {
 			apply $settings
 		fi
 	done < $presets
+	notify-send "preset $1 not found"
 }
 
 xrandr | grep ' connected '
@@ -96,5 +97,4 @@ else
 	apply $1
 fi
 
-notify-send "preset $1 not found"
 

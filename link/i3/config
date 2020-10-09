@@ -33,6 +33,7 @@ bindsym $sup+e exec eclipse -w
 bindsym $sup+f exec firefox
 bindsym $sup+g exec link-select
 bindsym $sup+i exec gvim ~/.config/i3/config
+bindsym $sup+l exec links
 bindsym $sup+m exec speedcrunch
 bindsym $sup+p exec scrot -u ~/Pictures/$(date +%s).png
 bindsym $sup+q kill
@@ -52,6 +53,7 @@ bindsym $sup+8 workspace 8
 bindsym $sup+9 workspace 9
 bindsym $sup+0 workspace 10
 bindsym $sup+grave workspace 10
+bindsym $sup+Escape workspace 10
 bindsym $sup+KP_1 workspace 1
 bindsym $sup+KP_2 workspace 2
 bindsym $sup+KP_3 workspace 3
@@ -120,11 +122,13 @@ bindsym $sup+$ctrl+p exec audtool --playback-pause
 bindsym $sup+$ctrl+r exec audtool --playlist-repeat-toggle; exec notify-send "repeat: $(audtool --playlist-repeat-status)"
 bindsym $sup+$ctrl+s exec audtool --playlist-shuffle-toggle; exec notify-send "shuffle: $(audtool --playlist-shuffle-status)"
 bindsym $sup+$ctrl+v exec pkill vlc
-bindsym $sup+$ctrl+KP_1 exec audtool --playback-seek-relative -10 
-bindsym $sup+$ctrl+KP_3 exec audtool --playback-seek-relative +10
-bindsym $sup+$ctrl+KP_4 exec audtool --playlist-reverse
-bindsym $sup+$ctrl+KP_5 exec audtool --playback-play
-bindsym $sup+$ctrl+KP_6 exec audtool --playlist-advance
+bindsym $sup+$ctrl+0 exec audacious-queue -d
+
+bindsym $sup+$ctrl+Left exec audtool --playlist-reverse
+bindsym $sup+$ctrl+Down exec audtool --playback-play
+bindsym $sup+$ctrl+Right exec audtool --playlist-advance
+bindsym $sup+$ctrl+comma exec audtool --playback-seek-relative -10 
+bindsym $sup+$ctrl+period exec audtool --playback-seek-relative +10
 bindsym $sup+$ctrl+KP_Multiply exec audacious-queue -d
 bindsym $sup+$ctrl+KP_Divide   exec audacious-queue -f
 bindsym $sup+$ctrl+KP_Add      exec amixer -D pulse sset Master 5%+
