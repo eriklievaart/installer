@@ -24,7 +24,7 @@ if [ "${1##*.}" = "tar" ]; then
 	/bin/tar -xf "$1"
 fi
 
-if [ "${1##*.}" = "gz" ]; then
+if [ "${1##*.}" = "gz" -o "${1##*.}" = "tgz" ]; then
 	echo Unpacking gzip file	
 	/bin/gunzip -c "$1" | tar -xf -		
 fi

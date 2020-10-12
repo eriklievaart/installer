@@ -1,3 +1,3 @@
 #!/bin/bash 
 
-python3 ~/bin/python/packmaster.py
+python3 $IBIN/python/packmaster.py
