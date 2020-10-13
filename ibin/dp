@@ -5,10 +5,25 @@ sh -n $0
 config=~/.config/dp
 presets=$config/presets
 ports=$config/ports
+feh=$config/feh-dir
+
 
 die() {
 	echo >&2 "$@"
 	exit 1
+}
+
+background() {
+	echo "image dir config file: $feh"
+	root=$([ -f $feh ] && head -n 1 $feh || echo "")
+	if [ ! -d "$root" ]; then
+		echo "bacground image dir not configured"
+		root=$(zenity --entry --text="background image dir not configured in $feh, where to load images from?")
+		if [ "$root" != "" ]; then
+			echo "$root" > $feh
+		fi
+	fi
+	feh --randomize --bg-fill "$root"
 }
 
 apply() {
@@ -22,7 +37,7 @@ apply() {
 		[ "$port" = "" ] && break
 		[ "$setting" = "" ] && break
 		[ "$setting" = "." ] && continue
-		
+
 		xrandr="$xrandr --output $port"
 		[ "$previous" != "" ] && xrandr="$xrandr --right-of $previous"
 
@@ -42,7 +57,7 @@ apply() {
 	done
 	echo "$xrandr" | tee /tmp/dp.log
 	$xrandr
-	feh --randomize --bg-fill ~/Pictures/backgrounds
+	background
 	redshift -P -O 4500
 	exit 0
 }
