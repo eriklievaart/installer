@@ -1,6 +1,14 @@
 #!/bin/sh
 
-params="-m 4G -enable-kvm"
+if [ ! "$(ls *.img)" ]; then
+	if [ "$(ls cd.iso)" ]; then
+		echo "cd.iso found"
+	fi
+	echo 'to create a disk image: qemu-img create disk.img 100G'
+	exit 4
+fi
+
+params="-m 4G -smp 2 -enable-kvm"
 
 for image in *.img
 do
