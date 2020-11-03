@@ -7,6 +7,7 @@ alias dirs="dirs -v"
 alias l='ls'
 alias ll='ls -al'
 alias la='ls -al'
+alias lh='ls -sShr --format=single-column'
 
 alias hgrep="history | grep"
 
