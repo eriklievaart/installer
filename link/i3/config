@@ -35,11 +35,12 @@ bindsym $sup+g exec link-select
 bindsym $sup+i exec gvim ~/.config/i3/config
 bindsym $sup+l exec links
 bindsym $sup+m exec speedcrunch
-bindsym $sup+p exec scrot -u ~/Pictures/$(date +%s).png
+bindsym $sup+p exec pcmanfm
 bindsym $sup+q kill
 bindsym $sup+r exec rofi -show run
-bindsym $sup+s exec rofi -show ssh
+bindsym $sup+s exec scrot -u ~/Pictures/$(date +%s).png
 bindsym $sup+t exec xfce4-terminal
+bindsym $sup+v exec mate-volume-control
 bindsym $sup+w exec rofi -show window
 bindsym $sup+y exec youtube-play
 bindsym $sup+1 workspace 1
