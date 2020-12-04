@@ -39,21 +39,23 @@ apply() {
 		[ "$setting" = "." ] && continue
 
 		xrandr="$xrandr --output $port"
-		[ "$previous" != "" ] && xrandr="$xrandr --right-of $previous"
 
 		case $setting in
 			a)   xrandr="$xrandr --auto";;
 			n)   xrandr="$xrandr --auto --rotate normal";;
 			l)   xrandr="$xrandr --auto --rotate left";;
 			r)   xrandr="$xrandr --auto --rotate right";;
-			0)   xrandr="$xrandr --off";;
-			o)   xrandr="$xrandr --off";;
+			0)   xrandr="$xrandr --off"; continue;;
+			o)   xrandr="$xrandr --off"; continue;;
 			=)   xrandr="$xrandr --rotate normal";;
 			'[') xrandr="$xrandr --rotate left";;
 			']') xrandr="$xrandr --rotate right";;
 			*)   die "unknown setting: $setting"
 		esac
+
+		[ "$previous" != "" ] && xrandr="$xrandr --right-of $previous"
 		previous="$port"
+
 	done
 	echo "$xrandr" | tee /tmp/dp.log
 	$xrandr
