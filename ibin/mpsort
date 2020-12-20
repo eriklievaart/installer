@@ -1,0 +1,78 @@
+#!/bin/dash
+set -e
+
+selected=""
+
+print() {
+	if [ "$selected" != "" ]; then
+		echo "selected: ${selected##*/}"
+		[ -f "${selected:?}" ] || echo "*file no longer exists*"
+	fi
+}
+
+header() {
+	playing=$(audtool --current-song-filename)
+	clear
+	echo "#######################################################################################################"
+	echo "now playing: ${playing##*/} ($(ls "${playing%/*}" | wc -l))"
+	echo "#######################################################################################################"
+}
+
+move() {
+	if [ "$selected" = "" ]; then
+		echo "*no file selected!*"
+		return
+	fi
+	if [ ! -f "${selected:?}" ]; then
+		echo "*file no longer exists!* -> ${selected:?}"
+		return
+	fi
+	echo "moving ${selected##*/}"
+
+	name=${selected##*/}
+	parent=$(upath -p "${1%/*}")
+	dir="${parent:?}${2:?}"
+	echo "to ${dir:?}"
+
+	if [ ! -d "${dir:?}" ]; then
+		echo "*directory does not exist!* -> ${dir:?}"
+		return
+	fi
+	mv "${selected:?}" "${dir:?}"
+	selected="${dir:?}/${name:?}"
+}
+
+delete() {
+	if [ -f "$selected" ]; then
+		echo "deleting ${selected:?}"
+		trash-put "${selected:?}"
+		selected=""
+	fi
+}
+
+select() {
+	selected="${playing:?}";
+	print;
+	if [ "$1" = "delete" ]; then
+		delete
+	elif [ "$1" != "" ]; then
+		move "$selected" "$1"
+	fi
+}
+
+header
+
+while read input arg
+do
+	header
+	case "${input}" in
+		delete) delete;; 
+		1)      move "$selected" 1;;
+		2)      move "$selected" 2;;
+		3)      move "$selected" 3;;
+		s)      select "$arg";;
+		*)      print;;
+	esac
+done
+
+

@@ -1,0 +1,80 @@
+#!/bin/sh
+set -e
+
+
+die() {
+	echo >&2 "$@"
+	exit 1
+}
+
+
+if [ "$#" -lt 1 ]; then
+	die "1 argument required: [application]"
+fi
+
+terminate() {
+	if docker ps | sed -r '1d;s/.* //' | grep -q "$1"; then
+		echo "stopping container $1"
+		docker stop $1 &
+	fi
+}
+
+build() {
+	antastic $@
+}
+
+start(){
+	docker run --rm --name $1 -v /home/eazy/Applications/$1:/vol/application --network=host felix &
+}
+
+wait_on_terminate() {
+	[ -z "$1" ] && die "missing argument for wait_on_terminate"
+	while docker logs $1 > /dev/null;
+	do
+		sleep 0.1
+	done
+}
+
+restart() {
+	terminate $1
+	wait_on_terminate $1
+	start $1
+}
+
+auto() {
+	app=$(echo "$@" | sed 's/.* //')
+	terminate $app
+	build $@
+	wait_on_terminate $app
+	start $app
+}
+
+logs() {
+	docker logs $1
+}
+
+shell() {
+	docker exec -it $1 bash
+}
+
+if [ "$#" -eq 1 ]; then
+	auto $1
+	exit 0
+fi
+
+case $1 in
+	start|run) start        $2;;
+	stop)      terminate    $2;;
+	restart)   restart      $2;;
+	bash)      shell        $2;;
+	logs)      logs         $2;;
+	build)     shift; build $@;;
+	auto)      shift; auto  $@;;
+	--)        shift; auto  $@;;
+	*)         echo "unkown command '$1'"
+esac
+
+
+
+
+

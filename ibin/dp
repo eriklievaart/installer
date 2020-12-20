@@ -104,6 +104,7 @@ if [ ! -f $presets ]; then
 	echo "h =====" >> $presets
 	echo "- onooo" >> $presets
 	echo "= nnooo" >> $presets
+	echo "s nnnnn" >> $presets
 fi
 
 [ "$#" -gt 0 ] || die "either call $0 -p [preset] or $0 [settings]"
