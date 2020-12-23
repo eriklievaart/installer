@@ -24,7 +24,14 @@ build() {
 }
 
 start(){
-	docker run --rm --name $1 -v /home/eazy/Applications/$1:/vol/application --network=host felix &
+	override="/home/eazy/Applications/$1/docker.sh"
+	if [ -f "$override" ]; then
+		echo "using docker override: $override"
+		$override &
+	else
+		echo "to override docker command create $override"
+		docker run --rm --name $1 -v /home/eazy/Applications/$1:/vol/application --network=host felix &
+	fi
 }
 
 wait_on_terminate() {

@@ -60,19 +60,35 @@ select() {
 	fi
 }
 
-header
-
-while read input arg
-do
+command() {
 	header
-	case "${input}" in
+	case "${1-?}" in
 		delete) delete;; 
 		1)      move "$selected" 1;;
 		2)      move "$selected" 2;;
 		3)      move "$selected" 3;;
-		s)      select "$arg";;
+		s)      select $2;;
 		*)      print;;
 	esac
-done
+}
+
+interactive() {
+	header
+	while read cmd arg
+	do
+		echo "$cmd $arg"
+		command $cmd $arg
+	done
+}
+
+
+
+
+if [ "$#" -eq 0 ]; then
+	interactive
+else
+	command $@
+fi
+
 
 
