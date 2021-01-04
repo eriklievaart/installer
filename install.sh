@@ -18,17 +18,9 @@ LOG_FILE=$LOG_DIR/installer_$(date +%y-%m-%d_%T).log
 UP_TO_DATE=false
 CACHE_DIR=~/.cache
 
-CHECKSTYLE_VERSION=8.11
-CHECKSTYLE_DESTINATION=~/Applications/checkstyle/checkstyle.jar
-CHECKSTYLE_URL="https://github.com/checkstyle/checkstyle/releases/download/checkstyle-$CHECKSTYLE_VERSION/checkstyle-$CHECKSTYLE_VERSION-all.jar"
-
 ANT_JUNIT_VERSION=1.8.4
 ANT_JUNIT_DESTINATION=~/.ant/lib/ant-junit.jar
 ANT_JUNIT_URL="https://repo1.maven.org/maven2/org/apache/ant/ant-junit/$ANT_JUNIT_VERSION/ant-junit-$ANT_JUNIT_VERSION.jar"
-
-JUNIT_VERSION=4.7
-JUNIT_DESTINATION=~/.ant/lib/junit-$JUNIT_VERSION.jar
-JUNIT_URL="https://repo1.maven.org/maven2/junit/junit/$JUNIT_VERSION/junit-$JUNIT_VERSION.jar"
 
 GUICE_VERSION=1.0
 GUICE_SRC_JAR_NAME="guice-$GUICE_VERSION-src.jar"
@@ -86,7 +78,7 @@ cd -
 
 # firefox settings
 if [ -d ~/.mozilla ]; then
-	file=$(find ~/.mozilla -name prefs.js)
+	file=$(find ~/.mozilla -name prefs.js | head -n 1)
 	append=""
 	while read key value
 	do 
@@ -167,10 +159,8 @@ sed -i '/^text\/plain=/d;$s|$|\ntext/plain=xed.desktop|' ~/.config/mimeapps.list
 sed -i '/MiscShowUnsafePasteDialog/d' ~/.config/xfce4/terminal/terminalrc
 echo 'MiscShowUnsafePasteDialog=FALSE' >> ~/.config/xfce4/terminal/terminalrc
 
-fetch_url ${JUNIT_DESTINATION?} ${JUNIT_URL?}
 fetch_url ${ANT_JUNIT_DESTINATION?} ${ANT_JUNIT_URL?}
 fetch_url ${GUICE_SRC_DESTINATION?} ${GUICE_SRC_URL?}
-fetch_url ${CHECKSTYLE_DESTINATION?} ${CHECKSTYLE_URL?}
 
 
 log "installing eclipse"

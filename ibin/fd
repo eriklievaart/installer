@@ -36,7 +36,7 @@ start(){
 
 wait_on_terminate() {
 	[ -z "$1" ] && die "missing argument for wait_on_terminate"
-	while docker logs $1 > /dev/null;
+	while docker ps -a | sed -r '1d;s/.* //' | grep -q "$1";
 	do
 		sleep 0.1
 	done
@@ -78,7 +78,7 @@ case $1 in
 	build)     shift; build $@;;
 	auto)      shift; auto  $@;;
 	--)        shift; auto  $@;;
-	*)         echo "unkown command '$1'"
+	*)                auto  $@;;
 esac
 
 
