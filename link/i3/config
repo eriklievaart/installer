@@ -40,7 +40,7 @@ bindsym $sup+p exec pcmanfm
 bindsym $sup+q kill
 bindsym $sup+r exec rofi -show run
 bindsym $sup+s exec scrot -u ~/Pictures/$(date +%s).png
-bindsym $sup+t exec xfce4-terminal
+bindsym $sup+t exec sakura
 bindsym $sup+v exec mate-volume-control
 bindsym $sup+w exec rofi -show window
 bindsym $sup+x exec xterm -fa "Ubuntu Mono" -fs 14 -bg '#210' -fg '#bbb'
@@ -117,21 +117,21 @@ bindsym $sup+$shift+space floating toggle
 bindsym $sup+$shift+Left  move workspace to output left
 bindsym $sup+$shift+Right move workspace to output right
 
-bindsym $sup+$ctrl+q exec audtool --shutdown
-bindsym $sup+$ctrl+a exec audtool --playlist-auto-advance-toggle; exec notify-send "advance: $(audtool --playlist-auto-advance-status)"
-bindsym $sup+$ctrl+i exec notify-send "$(audtool --current-song-filename | sed 's:.*/::')"
-bindsym $sup+$ctrl+m exec pkill audacious; exec pkill vlc
-bindsym $sup+$ctrl+p exec audtool --playback-pause
-bindsym $sup+$ctrl+r exec audtool --playlist-repeat-toggle; exec notify-send "repeat: $(audtool --playlist-repeat-status)"
-bindsym $sup+$ctrl+s exec audtool --playlist-shuffle-toggle; exec notify-send "shuffle: $(audtool --playlist-shuffle-status)"
-bindsym $sup+$ctrl+v exec pkill vlc
-bindsym $sup+$ctrl+0 exec audacious-queue -d
-
-bindsym $sup+$ctrl+Left exec audtool --playlist-reverse
-bindsym $sup+$ctrl+Down exec audtool --playback-play
-bindsym $sup+$ctrl+Right exec audtool --playlist-advance
-bindsym $sup+$ctrl+comma exec audtool --playback-seek-relative -10 
-bindsym $sup+$ctrl+period exec audtool --playback-seek-relative +10
+bindsym $sup+$ctrl+q           exec audtool --shutdown
+bindsym $sup+$ctrl+a           exec audtool --playlist-auto-advance-toggle; exec notify-send "advance: $(audtool --playlist-auto-advance-status)"
+bindsym $sup+$ctrl+i           exec notify-send "$(audtool --current-song-filename | sed 's:.*/::')"
+bindsym $sup+$ctrl+m           exec pkill audacious; exec pkill vlc
+bindsym $sup+$ctrl+p           exec audtool --playback-pause
+bindsym $sup+$ctrl+r           exec audtool --playlist-repeat-toggle; exec notify-send "repeat: $(audtool --playlist-repeat-status)"
+bindsym $sup+$ctrl+s           exec audtool --playlist-shuffle-toggle; exec notify-send "shuffle: $(audtool --playlist-shuffle-status)"
+bindsym $sup+$ctrl+v           exec pkill vlc
+bindsym $sup+$ctrl+0           exec audacious-queue -d
+bindsym $sup+$ctrl+Left        exec audtool --playlist-reverse
+bindsym $sup+$ctrl+Down        exec audtool --playback-play
+bindsym $sup+$ctrl+Right       exec audtool --playlist-advance
+bindsym $sup+$ctrl+comma       exec audtool --playback-seek-relative -10
+bindsym $sup+$ctrl+Escape      exec mpsort s $(zenity --entry --text='mpsort') >> /tmp/mpsort
+bindsym $sup+$ctrl+period      exec audtool --playback-seek-relative +10
 bindsym $sup+$ctrl+KP_Multiply exec audacious-queue -d
 bindsym $sup+$ctrl+KP_Divide   exec audacious-queue -f
 bindsym $sup+$ctrl+KP_Add      exec amixer -D pulse sset Master 5%+
@@ -163,7 +163,7 @@ bindsym $sup+$ctrl+$alt+equal exec dp -p '='
 # application window rules
 for_window [class="(?i)firefox"]                                    move workspace 1; workspace 1
 for_window [class="(?i)xed"]                                        move workspace 2; workspace 2
-for_window [class="(?i)xfce4-terminal"]                             move workspace 3; workspace 3
+for_window [class="(?i)sakura"]                                     move workspace 3; workspace 3
 for_window [class="(?i)gvim"]                                       move workspace 4; workspace 4
 for_window [class="(?i)vlc"]                                        move workspace 5; workspace 5
 for_window [class="(?i)xviewer"]                                    move workspace 6; workspace 6

@@ -1,4 +1,5 @@
 #!/bin/dash
+set -e
 
 echo "#!/bin/dash" > $1
 chmod +x $1
