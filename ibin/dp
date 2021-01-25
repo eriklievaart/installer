@@ -23,7 +23,10 @@ background() {
 			echo "$root" > $feh
 		fi
 	fi
-	feh --randomize --bg-fill "$root"
+	random=$(find "$root" -type f | sort -R | head -n 1)
+	echo "selected image: $random"
+	echo "$random" >> /tmp/feh.txt
+	feh --bg-fill "$random"
 }
 
 apply() {

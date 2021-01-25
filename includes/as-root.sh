@@ -90,3 +90,8 @@ pulse=/etc/pulse/daemon.conf
 sed -i '/default-sample-rate/d' $pulse
 sed -i '$ s/$/\ndefault-sample-rate = 48000/' $pulse
 
+sed '/^execute /d' ${GIT_DIR?}/installer/link/home/.vimrc > /root/.vimrc
+
+
+
+
