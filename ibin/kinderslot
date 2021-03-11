@@ -1,0 +1,23 @@
+#!/bin/dash
+
+# install with crontab -e
+# * 0-6 * * * /home/eazy/Development/git/installer/ibin/kinderslot
+
+hour=$(date "+%H")
+marker="/tmp/$hour"
+echo "checking marker file: '$marker'" > /tmp/kinderslot
+if [ -e "$marker" ]; then
+	exit 0
+fi
+
+notify-send "kinderslot in 60s"
+
+pkill -i -f steam
+pkill -i -f firefox
+
+sleep 5
+
+pkill -i -f -9 steam
+pkill -i -f -9 firefox
+
+

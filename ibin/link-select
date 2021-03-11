@@ -2,7 +2,7 @@
 use 5.26.1;
 
 my $file = '~/Applications/links/links.ini';
-my $selected = `cat $file | grep name | sed 's/.*=//' | rofi -i -l 40 -dmenu`;
+my $selected = `cat $file | grep name | sed 's/.*=//' | rofi -i -l 40 -dmenu -theme gruvbox-dark`;
 my @lines = `cat $file`;
 my $index = 0;
 my $browser = @ARGV ? $ARGV[0] : 'firefox';

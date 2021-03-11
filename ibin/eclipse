@@ -18,7 +18,7 @@ open() {
 }
 
 if [ "$1" = "-w" ]; then
-	workspace=$(ls ~/Development/workspace | rofi -dmenu)
+	workspace=$(ls ~/Development/workspace | rofi -dmenu -theme purple)
 	[ $? ] && open "$workspace"
 
 elif [ "$1" ]; then
