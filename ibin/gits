@@ -1,10 +1,13 @@
 #!/bin/dash
 # script to run git commands on multiple git repos simultaneously
+set -e
 
 
 YELLOW='\033[1;33m'
 RED='\033[1;31m'
 PLAIN='\033[0m'
+
+LAST=~/.cache/gits-last-repo
 
 
 if [ "$1" = "acp" ]; then
@@ -17,9 +20,13 @@ fi
 
 
 if [ "$(echo "$1" | cut -c 1)" = "@" ]; then
-	set -e
 	project=$(echo "$1" | sed 's/@//')
+	if [ "$1" = "@" ]; then
+		project="$(cat $LAST)"
+	fi
+
 	repo=~/Development/git/$project
+	config=$repo/.git/config
 	echo "$repo"
 	shift
 
@@ -28,7 +35,14 @@ if [ "$(echo "$1" | cut -c 1)" = "@" ]; then
 		exit 404
 	fi
 
+	url="$(sed -n '/^\s*url\s*=/p' "$config")"
+	if ! echo "$url" | grep -q @; then
+		echo "$RED repo $project does not have user configured $PLAIN"
+		vi "$config"
+	fi
+
 	cd $repo
+	echo $project > $LAST
 	if [ "$1" = "acp" ]; then
 		git add --all
 		if [ -z "$2" ]; then
