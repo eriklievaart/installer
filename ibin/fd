@@ -30,7 +30,7 @@ start(){
 		$override &
 	else
 		echo "to override docker command create $override"
-		docker run --rm --name $1 -v /home/eazy/Applications/$1:/vol/application --network=host felix &
+		docker run --rm --name $1 -v /home/eazy/Applications/$1:/vol/application --network=host lievaart/felix &
 	fi
 }
 
