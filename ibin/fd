@@ -39,7 +39,7 @@ start(){
 
 		# enable hot deployment of freemarker templates
 		osgiprops=~/Applications/$1/osgi.properties
-		freemarker=$([ -f "${osgiprops:?}" ] && sed -n '/^\s*com.eriklievaart.javalightning.freemarker.path\s*=/p' "${osgiprops:?}")
+		freemarker=$(cat "${osgiprops:?}" | sed -n '/^\s*com.eriklievaart.javalightning.freemarker.path\s*=/p')
 		if [ "$freemarker" != "" ]; then
 			hotpath=$(echo "$freemarker" | sed -r 's/[^=]+=\s*//')
 			volumes="$volumes -v $HOME/Development/git/$1/main/resources:${hotpath:?}"

@@ -37,8 +37,12 @@ if [ "$(echo "$1" | cut -c 1)" = "@" ]; then
 
 	url="$(sed -n '/^\s*url\s*=/p' "$config")"
 	if ! echo "$url" | grep -q @; then
-		echo "$RED repo $project does not have user configured $PLAIN"
-		vi "$config"
+		if [ "$url" = "" ]; then
+			echo "$RED repo $project does not have a remote configured $PLAIN"
+		else
+			echo "$RED repo $project does not have a user configured $PLAIN"
+			vi "$config"
+		fi
 	fi
 
 	cd $repo
