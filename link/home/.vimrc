@@ -78,6 +78,7 @@ nnoremap _ :bd<CR>
 nnoremap ;c :close   <CR>
 nnoremap ;h :split   <CR>
 nnoremap ;v :vsplit  <CR>
+nnoremap ;w :set invwrap  <CR>
 
 nnoremap ;$ :%s/$\(\w\+\)/${\1:?}/gc<CR>
 nnoremap ;; :nohlsearch <CR>
