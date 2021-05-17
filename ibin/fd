@@ -9,7 +9,12 @@ die() {
 
 
 if [ "$#" -lt 1 ]; then
-	die "1 argument required: [application]"
+	echo 'builds a list of projects and launches an osgi docker container'
+	echo 'the last project will be used to bootstrap osgi'
+	echo
+	echo 'usage: fd [project]...'
+	echo "at least one project required!"
+	exit 1
 fi
 
 terminate() {
@@ -24,13 +29,22 @@ build() {
 }
 
 start(){
-	override="/home/eazy/Applications/$1/docker.sh"
+	override=~/Applications/$1/docker.sh
 	if [ -f "$override" ]; then
 		echo "using docker override: $override"
 		$override &
 	else
 		echo "to override docker command create $override"
-		docker run --rm --name $1 -v /home/eazy/Applications/$1:/vol/application --network=host felix &
+		volumes="-v $HOME/Applications/$1:/vol/application"
+
+		# enable hot deployment of freemarker templates
+		osgiprops=~/Applications/$1/osgi.properties
+		freemarker=$(cat "${osgiprops:?}" | sed -n '/^\s*com.eriklievaart.javalightning.freemarker.path\s*=/p')
+		if [ "$freemarker" != "" ]; then
+			hotpath=$(echo "$freemarker" | sed -r 's/[^=]+=\s*//')
+			volumes="$volumes -v $HOME/Development/git/$1/main/resources:${hotpath:?}"
+		fi
+		docker run --rm --name $1 $volumes --network=host lievaart/felix &
 	fi
 }
 
