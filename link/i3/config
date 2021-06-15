@@ -93,6 +93,7 @@ bindsym $sup+$alt+3 workspace 8
 bindsym $sup+$alt+4 workspace 9
 bindsym $sup+$alt+5 workspace 10
 bindsym $sup+$alt+grave workspace 5
+bindsym $sup+$alt+Escape workspace 5
 bindsym $sup+$alt+Left move left
 bindsym $sup+$alt+Down move down
 bindsym $sup+$alt+Up move up
@@ -154,6 +155,7 @@ bindsym $sup+$ctrl+$alt+7 exec dp -p 7
 bindsym $sup+$ctrl+$alt+8 exec dp -p 8
 bindsym $sup+$ctrl+$alt+9 exec dp -p 9
 bindsym $sup+$ctrl+$alt+h exec dp -p h
+bindsym $sup+$ctrl+$alt+i exec xcalib -invert -alter
 bindsym $sup+$ctrl+$alt+r exec dp -r nnnnn
 bindsym $sup+$ctrl+$alt+minus exec dp -p '-'
 bindsym $sup+$ctrl+$alt+equal exec dp -p '='
@@ -162,7 +164,6 @@ bindsym $sup+$ctrl+$alt+equal exec dp -p '='
 
 
 # application window rules
-for_window [class="(?i)firefox"]                                    move workspace 1; workspace 1
 for_window [class="(?i)xed"]                                        move workspace 2; workspace 2
 for_window [class="(?i)gvim"]                                       move workspace 4; workspace 4
 for_window [class="(?i)vlc"]                                        move workspace 5; workspace 5

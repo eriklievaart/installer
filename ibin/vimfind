@@ -1,4 +1,13 @@
 #!/bin/sh
 
-vim $(find -type f | grep "$1")
+if [ "$1" = "-d" ]; then
+	file=~/Development/git/$2/main/config/dependencies.txt
+	if [ -f $file ]; then
+		vim ~/Development/git/$2/main/config/dependencies.txt
+	else
+		echo "no project named '$2' exists"
+	fi
+else
+	vim $(find -type f | grep "$1")
+fi
 
