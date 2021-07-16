@@ -3,6 +3,17 @@
 # install with crontab -e
 # * 0-6 * * * /home/eazy/Development/git/installer/ibin/kinderslot
 
+arg="$(echo "$1" | sed 's/[^0-9]*//g')"
+if [ "$arg" != "" ]; then
+	echo "kinderslot $arg"
+	touch /tmp/00
+	for i in $(seq $arg)
+	do
+		touch "/tmp/0$i"
+	done
+	exit 0
+fi
+
 hour=$(date "+%H")
 marker="/tmp/$hour"
 echo "checking marker file: '$marker'" > /tmp/kinderslot
