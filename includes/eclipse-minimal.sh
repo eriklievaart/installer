@@ -13,7 +13,7 @@ ECLIPSE_PLUGINS=${ECLIPSE_INSTALL?}/plugins
 ECLIPSE_PLATFORM_URL="http://eriklievaart.com/download?file=eclipse"
 ECLIPSE_PLATFORM_CACHE=~/.cache/eclipse/platform/eclipse-platform-${ECLIPSE_VERSION?}.tar.gz
 
-ECLIPSEINIT_URL="http://www.eriklievaart.com/download?file=eclipseinit"
+ECLIPSEINIT_URL="http://eriklievaart.com/download?file=eclipseinit"
 ECLIPSEINIT_CACHE=~/.cache/eclipse/plugin/eclipseinit.jar
 
 

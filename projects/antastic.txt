@@ -5,23 +5,23 @@ skip.checkstyle=true
 skip.generate=true
 
 
-toolkit       master-osgi-install
-osgi          master-osgi-install
-javalightning master-osgi-install
+toolkit        master-osgi-install
+osgi           master-osgi-install
+javalightning  master-osgi-install
 
-toolkit       master-install
-pb-parser     master-install
+toolkit        master-install
+pb-parser      master-install
 
-antastic      master-jar-deploy
-doclauncher   master-jar-deploy
-felix         master-jar-deploy
-links         master-jar-deploy
-refactor      master-jar-deploy
-regex         master-jar-deploy
-src           master-jar-deploy
+antastic       master-jar-deploy
+doclauncher    master-jar-deploy
+#felix-launcher master-jar-deploy
+links          master-jar-deploy
+refactor       master-jar-deploy
+regex          master-jar-deploy
+src            master-jar-deploy
 
-q             master-osgi-deploy
-tmp           master-osgi-deploy
+q              master-osgi-deploy
+tmp            master-osgi-deploy
 
 
 
