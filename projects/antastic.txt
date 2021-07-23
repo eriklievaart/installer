@@ -14,7 +14,7 @@ pb-parser      master-install
 
 antastic       master-jar-deploy
 doclauncher    master-jar-deploy
-#felix-launcher master-jar-deploy
+felix-launcher master-jar-deploy
 links          master-jar-deploy
 refactor       master-jar-deploy
 regex          master-jar-deploy
