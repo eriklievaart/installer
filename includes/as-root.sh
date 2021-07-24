@@ -46,7 +46,7 @@ zbashrc() {
 	bashrc=${home:?}/.bashrc
 	if ! cat $bashrc | grep -q '/z/z.sh'; then
 		echo "" >> $bashrc
-		echo "_Z_DATA=$$HOME/.cache/z" >> $bashrc
+		echo '_Z_DATA=$HOME/.cache/z' >> $bashrc
 		echo ". $Z_SCRIPT" >> $bashrc
 	fi
 }
