@@ -19,6 +19,7 @@ trash-cli
 tree
 unclutter
 unrar
+xcalib
 xclip
 xdotool
 xfce4-screenshooter

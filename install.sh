@@ -167,6 +167,12 @@ log "installing eclipse"
 tail -n 0 -f ${LOG_FILE?} &
 sh includes/eclipse-minimal.sh >> ${LOG_FILE?}
 
+if crontab -l | grep -q '/tmp/a'; then
+    echo crontab already installed
+else
+    echo '@reboot mkdir /tmp/a' | crontab -
+fi
+
 
 # install my own hobby projects
 cd projects

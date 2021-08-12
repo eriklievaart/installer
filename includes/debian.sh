@@ -33,7 +33,7 @@ do
 	install $package
 done
 
-java_version=11
+java_version=14
 install openjdk-${java_version?}-jdk
 install openjdk-${java_version?}-doc
 sudo update-alternatives --set java /usr/lib/jvm/java-${java_version?}-openjdk-amd64/bin/java
