@@ -5,6 +5,7 @@ if [ ! "$(ls *.img)" ]; then
 		echo "cd.iso found"
 	fi
 	echo 'to create a disk image: qemu-img create disk.img 100G'
+	echo 'to create a boot disk, simply place .iso file in same directory'
 	exit 4
 fi
 

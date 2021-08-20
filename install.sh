@@ -159,6 +159,14 @@ sed -i '/^text\/plain=/d;$s|$|\ntext/plain=xed.desktop|' ~/.config/mimeapps.list
 sed -i '/MiscShowUnsafePasteDialog/d' ~/.config/xfce4/terminal/terminalrc
 echo 'MiscShowUnsafePasteDialog=FALSE' >> ~/.config/xfce4/terminal/terminalrc
 
+# configure sakura
+sakura_config=~/.config/sakura/sakura.conf
+if [ -f "$sakura_config" ]; then
+	sed -i 's/less_questions=false/less_questions=true/';
+else
+	echo "[sakura]\nless_questions=true" > $sakura_config
+fi
+
 fetch_url ${ANT_JUNIT_DESTINATION?} ${ANT_JUNIT_URL?}
 fetch_url ${GUICE_SRC_DESTINATION?} ${GUICE_SRC_URL?}
 

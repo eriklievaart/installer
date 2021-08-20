@@ -1,13 +1,39 @@
 #!/bin/sh
 
-if [ "$1" = "-d" ]; then
-	file=~/Development/git/$2/main/config/dependencies.txt
+cheat() {
+	cd ~/Development/git/cheat/files
+	exec vim $(find . -type f | grep "$1")
+}
+
+dependencies() {
+	project="$1"
+	file=~/Development/git/$project/main/config/dependencies.txt
 	if [ -f $file ]; then
-		vim ~/Development/git/$2/main/config/dependencies.txt
+		exec vim ~/Development/git/$project/main/config/dependencies.txt
 	else
-		echo "no project named '$2' exists"
+		echo "no project named '$project' exists"
 	fi
-else
-	vim $(find -type f | grep "$1")
-fi
+}
+
+vimgrep() {
+	exec vim $(find -type f | sed '/\/\.git\//d' | grep "$1")
+}
+
+vimwhich() {
+	file=$(which "$1")
+	if [ -f "$file" ]; then
+		exec vim "$file"
+	else
+		echo "cannot find '$1'"
+	fi
+}
+
+case $1 in
+	-c) cheat        "$2";;
+	-d) dependencies "$2";;
+	-g) vimgrep      "$2";;
+	-w) vimwhich     "$2";;
+esac
+
+
 

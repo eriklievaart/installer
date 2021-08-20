@@ -80,7 +80,8 @@ bindsym $sup+Up focus up
 bindsym $sup+F1  exec sakura
 bindsym $sup+F2  exec gnome-terminal
 bindsym $sup+F3  exec xterm -fa "Ubuntu Mono" -fs 14
-bindsym $sup+F4  exec alacritty
+bindsym $sup+F4  exec qterminal
+bindsym $sup+F5  exec alacritty
 bindsym $sup+F9  exec link-select surf
 bindsym $sup+F10 exec link-select chromium-browser
 bindsym $sup+F11 fullscreen toggle
