@@ -65,6 +65,11 @@ else
 fi
 
 
+# remove sudo requirement docker
+grep -v -q '^docker:' /etc/group || groupadd docker
+usermod -aG docker $USER
+
+
 # link icewm theme
 relink ${GIT_DIR?}/installer/link/mytheme /usr/share/icewm/themes/mytheme
 # link custom keyboard mapping

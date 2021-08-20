@@ -162,7 +162,7 @@ echo 'MiscShowUnsafePasteDialog=FALSE' >> ~/.config/xfce4/terminal/terminalrc
 # configure sakura
 sakura_config=~/.config/sakura/sakura.conf
 if [ -f "$sakura_config" ]; then
-	sed -i 's/less_questions=false/less_questions=true/';
+	sed -i 's/less_questions=false/less_questions=true/' $sakura_config;
 else
 	echo "[sakura]\nless_questions=true" > $sakura_config
 fi
