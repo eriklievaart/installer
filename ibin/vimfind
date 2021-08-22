@@ -2,7 +2,7 @@
 
 cheat() {
 	cd ~/Development/git/cheat/files
-	exec vim $(find . -type f | grep "$1")
+	exec vim $(find . -type f -name "*$1*")
 }
 
 dependencies() {
