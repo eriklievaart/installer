@@ -1,12 +1,19 @@
 #!/bin/sh
 
 if [ ! "$(ls *.img)" ]; then
-	if [ "$(ls cd.iso)" ]; then
-		echo "cd.iso found"
+	echo 'create image of size [100G]:'
+	read size
+	size=$([ "$size" == "" ] && echo 100G || echo "$size")
+	qemu-img create disk.img $size
+
+	if [ -f "$1" -o "$(ls *.iso)" ]; then
+		echo "iso found"
+	else
+		echo "no iso found!"
+		echo "either call: autoqemu [iso]"
+		echo "or place iso in current directory"
+		exit 4
 	fi
-	echo 'to create a disk image: qemu-img create disk.img 100G'
-	echo 'to create a boot disk, simply place .iso file in same directory'
-	exit 4
 fi
 
 params="-m 4G -smp 2 -enable-kvm"
@@ -16,6 +23,9 @@ do
 	params="$params -drive file=$image,format=raw"
 done
 
+if [ "$1" != "" ]; then
+	params="$params -cdrom $1"
+fi
 for iso in $(ls | grep '[.]iso$')
 do
 	params="$params -cdrom $iso"
