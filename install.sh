@@ -149,7 +149,7 @@ cd -
 
 # configure xed text editor
 dconf write /org/x/editor/preferences/editor/scheme "'cobalt'"
-touch ~/.config/mimeapps.list
+[ -f ~/.config/mimeapps.list ] || touch ~/.config/mimeapps.list
 sed -i 's/mousepad.desktop/xed.desktop/g' ~/.config/mimeapps.list
 sed -i '/^text\/plain=/d;$s|$|\ntext/plain=xed.desktop|' ~/.config/mimeapps.list
 
@@ -160,6 +160,7 @@ sed -i '/MiscShowUnsafePasteDialog/d' ~/.config/xfce4/terminal/terminalrc
 echo 'MiscShowUnsafePasteDialog=FALSE' >> ~/.config/xfce4/terminal/terminalrc
 
 # configure sakura
+[ -d ~/.config/sakura ] || mkdir -p ~/.config/sakura
 sakura_config=~/.config/sakura/sakura.conf
 if [ -f "$sakura_config" ]; then
 	sed -i 's/less_questions=false/less_questions=true/' $sakura_config;

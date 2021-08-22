@@ -15,6 +15,7 @@ screen
 scrot
 sshfs
 tldr
+tmux
 trash-cli
 tree
 tty-clock

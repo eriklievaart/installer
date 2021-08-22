@@ -75,22 +75,8 @@ relink ${GIT_DIR?}/installer/link/mytheme /usr/share/icewm/themes/mytheme
 # link custom keyboard mapping
 relink ${GIT_DIR?}/installer/link/xkb/erik /usr/share/X11/xkb/symbols/erik
 
-
-# TODO: use xdg-mime instead
-
-# open media with vlc by default
-#defaults=/usr/share/applications/defaults.list
-#defaults_bak=$defaults.bak
-#if [ -f "${defaults?}" -a ! -f "${defaults_bak?}" ]; then
-    #echo "setting vlc as default media player in $defaults"
-    #sed -i -r '/xplayer.desktop|Totem.desktop/s:=(.*):=vlc.desktop;\1:p' "$defaults"
-    #cp -n "${defaults?}" "${defaults_bak?}"
-#
-#elif [ -f "${defaults_bak}" ]; then
-    #echo "$defaults already modified"
-#else
-    #echo "cannot configure vlc, ${defaults?} not found."
-#fi
+xdg-mime default audacious.desktop $(cat /usr/share/applications/audacious.desktop | sed -n '/[mM]ime/{s/.*[^=]=//;s/;/\n/g;p}')
+xdg-mime default vlc.desktop $(cat /usr/share/applications/vlc.desktop | sed -n '/[mM]ime/{s/.*[^=]=//;s/;/\n/g;p}' | grep -v audio)
 
 # set default sample rate to 48KHz, so that Audioengine HD3 USB connection works
 pulse=/etc/pulse/daemon.conf
