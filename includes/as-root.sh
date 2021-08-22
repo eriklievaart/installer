@@ -76,19 +76,21 @@ relink ${GIT_DIR?}/installer/link/mytheme /usr/share/icewm/themes/mytheme
 relink ${GIT_DIR?}/installer/link/xkb/erik /usr/share/X11/xkb/symbols/erik
 
 
-# open media with vlc by default
-defaults=/usr/share/applications/defaults.list
-defaults_bak=$defaults.bak
-if [ -f "${defaults?}" -a ! -f "${defaults_bak?}" ]; then
-    echo "setting vlc as default media player in $defaults"
-    sed -i -r '/xplayer.desktop|Totem.desktop/s:=(.*):=vlc.desktop;\1:p' "$defaults"
-    cp -n "${defaults?}" "${defaults_bak?}"
+# TODO: use xdg-mime instead
 
-elif [ -f "${defaults_bak}" ]; then
-    echo "$defaults already modified"
-else
-    echo "cannot configure vlc, ${defaults?} not found."
-fi
+# open media with vlc by default
+#defaults=/usr/share/applications/defaults.list
+#defaults_bak=$defaults.bak
+#if [ -f "${defaults?}" -a ! -f "${defaults_bak?}" ]; then
+    #echo "setting vlc as default media player in $defaults"
+    #sed -i -r '/xplayer.desktop|Totem.desktop/s:=(.*):=vlc.desktop;\1:p' "$defaults"
+    #cp -n "${defaults?}" "${defaults_bak?}"
+#
+#elif [ -f "${defaults_bak}" ]; then
+    #echo "$defaults already modified"
+#else
+    #echo "cannot configure vlc, ${defaults?} not found."
+#fi
 
 # set default sample rate to 48KHz, so that Audioengine HD3 USB connection works
 pulse=/etc/pulse/daemon.conf

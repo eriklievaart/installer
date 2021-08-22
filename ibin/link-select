@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use 5.26.1;
 
-my $file = '~/Applications/links/links.ini';
+my $file = '~/Development/git/cheat/links.ini';
 my $selected = `cat $file | grep name | sed 's/.*=//' | rofi -i -l 40 -dmenu -theme gruvbox-dark`;
 my @lines = `cat $file`;
 my $index = 0;

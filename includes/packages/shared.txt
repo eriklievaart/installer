@@ -17,6 +17,7 @@ sshfs
 tldr
 trash-cli
 tree
+tty-clock
 unclutter
 unrar
 xcalib
