@@ -1,7 +1,8 @@
 #!/bin/dash
 
-for file in $(find -type f -name '*.txt' $1)
+for file in $(find -type f $1 | grep -E '[.](xml|txt)$')
 do
+	echo "cleanup: $file"
 	sed -i 's/\s*$//' "$file"
 done
 
