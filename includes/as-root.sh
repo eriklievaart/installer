@@ -2,7 +2,11 @@
 set -e                    # fail on errors
 sh -n as-root.sh          # check this file for syntax errors before executing it
 
-. ./globals.sh
+if [ -f globals.sh ]; then
+	. ./globals.sh
+else
+	. includes/globals.sh
+fi
 
 die() {
     echo >&2 "Error: $@"

@@ -2,7 +2,11 @@
 # This script creates a lightweight installation of Eclipse without bloat
 set -e
 
-. ./globals.sh
+if [ -f globals.sh ]; then
+	. ./globals.sh
+else
+	. includes/globals.sh
+fi
 
 
 ECLIPSE_LAUNCHER=~/bin/eclipse
