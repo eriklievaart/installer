@@ -1,6 +1,6 @@
 #!/bin/dash
 
-# usage: ./install    = git pull & install projects
+# usage: ./install    = skip projects
 # usage: ./install -a = git pull & install projects
 # usage: ./install -i = install projects
 # usage: ./install -g = git pull projects
@@ -10,7 +10,7 @@ set -e                    # fail on errors
 sh -n "$0"                # check this file for syntax errors before executing it
 
 # load globals
-. ./globals.sh
+. includes/globals.sh
 
 STAMP_START=$(date +%s)
 LOG_DIR=/tmp/installer
@@ -141,9 +141,9 @@ done
 # vim plugins
 mkdir -p ~/.vim/autoload ~/.vim/bundle && curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 cd ~/.vim/bundle
-[ -d nerdtree ] || git clone https://github.com/preservim/nerdtree.git
-[ -d colorizer ] || git clone https://github.com/lilydjwg/colorizer
-[ -d vim-airline ] || git clone https://github.com/vim-airline/vim-airline
+[ -d nerdtree ]           || git clone https://github.com/preservim/nerdtree.git
+[ -d colorizer ]          || git clone https://github.com/lilydjwg/colorizer
+[ -d vim-airline ]        || git clone https://github.com/vim-airline/vim-airline
 [ -d vim-airline-themes ] || git clone https://github.com/vim-airline/vim-airline-themes
 cd -
 
@@ -185,9 +185,7 @@ fi
 
 # install my own hobby projects
 cd projects
-if [ -z "$@" ]; then
-	./projects.sh -a
-else
+if [ ! -z "$@" ]; then
 	./projects.sh "$@"
 fi
 

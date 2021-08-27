@@ -7,9 +7,10 @@ cheat() {
 
 dependencies() {
 	project="$1"
-	file=~/Development/git/$project/main/config/dependencies.txt
-	if [ -f $file ]; then
-		exec vim ~/Development/git/$project/main/config/dependencies.txt
+	dir=~/Development/git/$project
+	if [ -d $file ]; then
+		cd $dir
+		exec vim main/config/dependencies.txt
 	else
 		echo "no project named '$project' exists"
 	fi

@@ -2,7 +2,7 @@
 set -e                    # fail on errors
 sh -n as-root.sh          # check this file for syntax errors before executing it
 
-. ../globals.sh
+. ./globals.sh
 
 die() {
     echo >&2 "Error: $@"
@@ -83,6 +83,7 @@ pulse=/etc/pulse/daemon.conf
 sed -i '/default-sample-rate/d' $pulse
 sed -i '$ s/$/\ndefault-sample-rate = 48000/' $pulse
 
+rm -f /bin/vi
 sed '/^execute /d' ${GIT_DIR?}/installer/link/home/.vimrc > /root/.vimrc
 
 

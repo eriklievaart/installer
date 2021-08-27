@@ -9,6 +9,9 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline_statusline_ontop=0
 let g:airline_theme='powerlineish'
 
+" fix airline in tmux
+set t_Co=256
+
 " use syntax highlighting on search
 syntax on
 
@@ -38,13 +41,13 @@ map Y y$
 " navigating buffers
 nnoremap + :bn<CR>
 nnoremap - :bp<CR>
-nnoremap _ :bd<CR>
 
-nnoremap ;c :close   <CR>
-nnoremap ;h :split   <CR>
+nnoremap ;c :close         <CR>
+nnoremap ;d :bd            <CR>
+nnoremap ;h :split         <CR>
 nnoremap ;t :vert terminal <CR>
-nnoremap ;v :vsplit  <CR>
-nnoremap ;w :set invwrap  <CR>
+nnoremap ;v :vsplit        <CR>
+nnoremap ;w :set invwrap   <CR>
 
 nnoremap ;$ :%s/$\(\w\+\)/${\1:?}/gc<CR>
 nnoremap ;; :nohlsearch <CR>
@@ -82,12 +85,6 @@ map! <F8> <ESC>:w <bar> !clear; ./% <CR>
 " toggle file browser
 map <F9> :NERDTreeToggle <CR>
 map! <F9> <ESC>:NERDTreeToggle <CR>
-
-
-
-
-
-
 
 
 

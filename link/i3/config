@@ -3,9 +3,10 @@ font pango:monospace 8
 hide_edge_borders both
 floating_modifier $sup
 
-workspace_layout tabbed
 workspace 10 output eDP-1
 workspace 1 output HDMI-2
+workspace_layout default
+default_orientation vertical
 
 # class                 border  backgr. text    indicator child_border
 client.focused          #4c7899 #006600 #cccccc #2e9ef4   #285577
@@ -44,7 +45,7 @@ bindsym $sup+t exec sakura
 bindsym $sup+v exec mate-volume-control
 bindsym $sup+w exec rofi -show window -theme fancy
 bindsym $sup+x exec xterm -fa "Ubuntu Mono" -fs 14 -bg '#210' -fg '#bbb'
-bindsym $sup+y exec youtube-play
+bindsym $sup+y exec yt -p
 bindsym $sup+1 workspace 1
 bindsym $sup+2 workspace 2
 bindsym $sup+3 workspace 3

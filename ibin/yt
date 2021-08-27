@@ -1,0 +1,33 @@
+#!/bin/sh
+
+interactive() {
+	[ -d logs ] || mkdir logs
+	while read line
+	do
+		[ -z "$line" ] && break
+		name=$(echo "$line" | sed 's|.*[?]||;s|[^=]*=||;s|[&].*||')
+		log="logs/$name"
+		echo "log: $log"
+		youtube-dl "$line" > $log &
+	done
+}
+
+play() {
+	id=$(date +%T+%N | tr -d '+:')
+	url=$(xclip -o -selection clipboard)
+	dir=/tmp/youtube/$id
+
+	mkdir -p $dir
+	cd $dir
+
+	zenity --info --text="downloading $url" &
+	youtube-dl -i $url
+	vlc .
+}
+
+case $1 in
+	-i) interactive;;
+	-p) play $2;;
+esac
+
+
