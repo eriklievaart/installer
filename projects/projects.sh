@@ -1,7 +1,7 @@
 #!/bin/dash
 set -e
 
-. ../globals.sh
+. ../includes/globals.sh
 
 YELLOW='\033[1;33m'
 RED='\033[1;31m'

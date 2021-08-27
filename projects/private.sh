@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-. ../globals.sh
+. ../includes/globals.sh
 
 gits @ws pull
 
