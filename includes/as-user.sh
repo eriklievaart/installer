@@ -1,5 +1,6 @@
 #!/bin/dash
 set -e
+. ./globals.sh
 
 ANT_JUNIT_VERSION=1.8.4
 ANT_JUNIT_DESTINATION=~/.ant/lib/ant-junit.jar
@@ -89,7 +90,7 @@ if cat ~/.profile | grep -q "/ibin"; then
 	echo "ibin already installed"
 else
 	echo "adding ibin (personal scripts) to path"
-	chmod +x ibin/*
+	chmod +x ${IBIN_DIR:?}/*
 	echo "export IBIN=${IBIN_DIR?}" >> ~/.profile
 	echo 'PATH=$PATH:~/bin:$IBIN' >> ~/.profile
 fi
@@ -113,7 +114,7 @@ if ! grep -q '.bash_aliases' ~/.bashrc; then
 	echo ". ~/.bash_aliases" >> ~/.bashrc
 fi
 
-create_link $PWD/link/i3 ~/.config/i3
+create_link "$PWD/link/i3" ~/.config/i3
 
 link_dir=link/home
 for file in $(ls -a "${link_dir?}" | sed -n '/[.]*[^.].*/p')
@@ -133,10 +134,12 @@ cd ~/.vim/bundle
 cd -
 
 # configure xed text editor
-dconf write /org/x/editor/preferences/editor/scheme "'cobalt'"
-[ -f ~/.config/mimeapps.list ] || touch ~/.config/mimeapps.list
-sed -i 's/mousepad.desktop/xed.desktop/g' ~/.config/mimeapps.list
-sed -i '/^text\/plain=/d;$s|$|\ntext/plain=xed.desktop|' ~/.config/mimeapps.list
+if [ "$display" != "" ]; then
+	dconf write /org/x/editor/preferences/editor/scheme "'cobalt'"
+	[ -f ~/.config/mimeapps.list ] || touch ~/.config/mimeapps.list
+	sed -i 's/mousepad.desktop/xed.desktop/g' ~/.config/mimeapps.list
+	sed -i '/^text\/plain=/d;$s|$|\ntext/plain=xed.desktop|' ~/.config/mimeapps.list
+fi
 
 # configure xfce terminal
 [ ! -d ~/.config/xfce4/terminal ] && mkdir -p ~/.config/xfce4/terminal

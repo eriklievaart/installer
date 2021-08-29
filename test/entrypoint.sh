@@ -1,29 +1,37 @@
 #!/bin/dash
 set -e
 
-# use apt cache
-echo 'Acquire::http::Proxy "http://cache:3142";' > /etc/apt/apt.conf.d/01proxy
 
 # mock setup
+name=automated
+useradd ${name:?}
+
+export USER="$name"
+export homedir=/home/${name:?}
 export java_version=17
+git="$homedir/Development/git"
+
+# create normal desktop linux directory structure
+mkdir -p "$git"
+mkdir -p "$homedir/.config"
 mkdir -p /etc/pulse
-touch /etc/pulse/daemon.conf
+
+touch "/etc/pulse/daemon.conf"
+touch "${homedir:?}/.bashrc"
+
 echo "#!/bin/dash" >> /bin/ufw
 echo "echo 'dummy ufw' >> /bin/ufw"
 chmod +x /bin/ufw
 
-name=automated
-useradd ${name:?}
-export homedir=/home/${name:?}
-touch "${homedir:?}/.bashrc"
+echo 'Acquire::http::Proxy "http://apt-cache:3142";' > /etc/apt/apt.conf.d/01proxy
+cp -r /installer "$git"
+chown -R $name /home/$name
 
-cd $(find -type d -name installer)
-cd includes
-export USER="$name"
+cd "$git/installer/includes"
 ./as-root.sh
+su ${USER:?} -c ./as-user.sh
 
-su ${user:?} -c ./as-root.sh
-#chown ${user:?} /home/${user:?}
-
+echo
+echo "Script completed successfully!"
 
 

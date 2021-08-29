@@ -32,6 +32,7 @@ alias ncal='ncal -b'
 alias run='docker run -it'
 alias wdocker='watch -n 1 docker ps'
 alias dockerrm='docker container rm -f $(docker container ps -aq)'
+alias dockerrun='docker run --rm -it '
 
 alias s='mpsort s'
 alias targets='sed -n "/target/{s/.*name=\"//;s/\".*//;p}" ~/Development/git/ant/master.xml | sort'
