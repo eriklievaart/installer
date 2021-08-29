@@ -16,7 +16,7 @@ login() {
 cd "${GIT_DIR?}"
 for project in $(cat "${GIT_DIR?}/ws/main/static/workspaces.txt")
 do
-	if [ ! -d "${GIT_DIR?}/$project" ]; then 
+	if [ ! -d "${GIT_DIR?}/$project" ]; then
 		login
 		echo "$project"
 		git clone https://$user@bitbucket.org/$user/$project

@@ -1,4 +1,7 @@
 
+alias ddg='lynx -cookies -lss=~/lynx.lss "https://lite.duckduckgo.com/lite/"'
+alias lynx='lynx -cookies -lss=~/lynx.lss'
+
 alias l='ls'
 alias ll='ls -l'
 alias la='ls -al'
@@ -8,6 +11,7 @@ alias dep="cat ~/Development/repo/index.txt | grep"
 alias hgrep="history | grep"
 alias grepi="grep -i"
 alias findg="find . | grep"
+
 
 alias todo='cd ~/Development/git/cheat/drive/todo; vim todo.txt'
 

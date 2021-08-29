@@ -1,17 +1,10 @@
 
-pal 
 par2
-ssh 
-git-gui
+ssh
 
 synaptic
-virtualbox-qt
 
-icewm
-icewm-common
 i3
-
-vim-gtk
 
 docker.io
 qemu

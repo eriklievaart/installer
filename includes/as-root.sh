@@ -1,12 +1,7 @@
 #!/bin/sh
-set -e                    # fail on errors
-sh -n as-root.sh          # check this file for syntax errors before executing it
+set -e
 
-if [ -f globals.sh ]; then
-	. ./globals.sh
-else
-	. includes/globals.sh
-fi
+. ./globals.sh
 
 die() {
     echo >&2 "Error: $@"
@@ -17,7 +12,7 @@ relink() {
 	[ ${#2} -gt 10 ] || die "link to short '$2'"
 	if [ ! -e "${2:?}" ]; then
 		rm -f "${2:?}"
-		sudo ln -s "${1:?}" "${2:?}"
+		ln -s "${1:?}" "${2:?}"
 	fi
 }
 
@@ -26,11 +21,7 @@ if [ "$(id -u)" != "0" ]; then
 fi
 
 # enable firewall
-sudo ufw enable 
-echo ""
-
-# allow users to invoke shutdown
-sudo chmod +s /sbin/shutdown
+ufw enable
 
 if [ -f /usr/bin/pacman ]; then
 	./arch.sh
@@ -71,7 +62,7 @@ fi
 
 # remove sudo requirement docker
 grep -v -q '^docker:' /etc/group || groupadd docker
-usermod -aG docker $USER
+usermod -aG docker "$USER"
 
 
 # link icewm theme
@@ -88,7 +79,7 @@ sed -i '/default-sample-rate/d' $pulse
 sed -i '$ s/$/\ndefault-sample-rate = 48000/' $pulse
 
 rm -f /bin/vi
-sed '/^execute /d' ${GIT_DIR?}/installer/link/home/.vimrc > /root/.vimrc
+sed '/^execute /d' ${GIT_DIR?}/installer/includes/link/home/.vimrc > /root/.vimrc
 
 
 

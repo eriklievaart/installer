@@ -1,7 +1,7 @@
 
-git 
+git
 python3
-ant 
+ant
 
 curl
 dash
@@ -20,7 +20,7 @@ trash-cli
 tree
 tty-clock
 unclutter
-unrar
+unrar-free
 xcalib
 xclip
 xdotool

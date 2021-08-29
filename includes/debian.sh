@@ -5,8 +5,9 @@ install() {
 	if (!(dpkg -s $1 | grep "Status: install" )) > /dev/null
 	then
 		update_once
+		echo
 		echo "Installing $1."
-		sudo apt-get -y install $1
+		apt -y -qq install $1
 		check_status $?
 	else
 		echo "$1 is already installed"
@@ -22,7 +23,7 @@ check_status() {
 update_once() {
 	if [ $UP_TO_DATE ]; then
 		set +e
-		sudo apt-get update
+		apt-get update
 		set -e
 		UP_TO_DATE=true
 	fi
@@ -33,9 +34,11 @@ do
 	install $package
 done
 
-java_version=14
+if [ "java_version" = "" ]; then
+	java_version=$(apt search openjdk-1 | awk '$2 ~ /^openjdk-[0-9]{2}-jdk$/{print substr($2, 9, 2)}' | sort | tail -n 1)
+fi
 install openjdk-${java_version?}-jdk
 install openjdk-${java_version?}-doc
 install openjdk-${java_version?}-source
-sudo update-alternatives --set java /usr/lib/jvm/java-${java_version?}-openjdk-amd64/bin/java
+update-alternatives --set java /usr/lib/jvm/java-${java_version?}-openjdk-amd64/bin/java
 

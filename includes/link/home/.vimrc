@@ -35,7 +35,7 @@ set shiftwidth=4
 set tabstop=4
 
 
-" make Y consistent with D and C (yank til end)
+" make Y consistent with D and C (yank til end of line)
 map Y y$
 
 " navigating buffers
@@ -45,15 +45,16 @@ nnoremap - :bp<CR>
 nnoremap ;c :close         <CR>
 nnoremap ;d :bd            <CR>
 nnoremap ;h :split         <CR>
+nnoremap ;r :w             <CR>:compiler vimtastic <CR> :set makeef=/tmp/build/vimtastic.log <CR> :make<CR>
 nnoremap ;t :vert terminal <CR>
 nnoremap ;v :vsplit        <CR>
 nnoremap ;w :set invwrap   <CR>
 
 nnoremap ;$ :%s/$\(\w\+\)/${\1:?}/gc<CR>
-nnoremap ;; :nohlsearch <CR>
-nnoremap ;. :cnext      <CR>
-nnoremap ;, :clast      <CR>
-nnoremap ;/ :cope       <CR>
+nnoremap ;; :nohlsearch             <CR>
+nnoremap ;. :cnext                  <CR>
+nnoremap ;, :clast                  <CR>
+nnoremap ;/ :copen                  <CR>
 
 " ctrl-n to toggle line numbers
 nmap <C-N> :set invnumber<CR>

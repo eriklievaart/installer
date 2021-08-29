@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/dash
 
 packages=$(cat packages/shared.txt packages/arch.txt | sed '/^\s*$/d' | tr '\n' ' ' | sed 's:\s\+: :')
 sudo pacman -R vi

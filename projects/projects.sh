@@ -44,7 +44,7 @@ sources() {
 		then
 			cd $repo_dir
 			echo "$repo_dir"
-			
+
 			if git diff-index --quiet HEAD --; then
 				git pull --rebase
 			else

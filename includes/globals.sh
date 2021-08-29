@@ -2,6 +2,10 @@
 
 # global properties
 HOME=~
+echo "$homedir"
+if [ "$homedir" != "" ]; then
+	HOME="$homedir"
+fi
 if [ "$HOME" = "/root" ]; then
 	HOME=/home/${SUDO_USER:?}
 fi
