@@ -35,7 +35,7 @@ do
 done
 
 if [ "$java_version" = "" ]; then
-	java_version=$(apt search openjdk-1 | awk '$2 ~ /^openjdk-[0-9]{2}-jdk$/{print substr($2, 9, 2)}' | sort | tail -n 1)
+	java_version=$(apt search 'openjdk' | awk '$2 ~ /^openjdk-[0-9]{2}-jdk$/{num=substr($2, 9, 2); if(num<16){print num}}' | sort | tail -n 1)
 fi
 install openjdk-${java_version?}-jdk
 install openjdk-${java_version?}-doc

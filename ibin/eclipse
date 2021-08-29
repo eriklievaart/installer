@@ -2,8 +2,7 @@
 set -e
 
 installer=~/Development/git/installer/includes/eclipse-minimal.sh
-version=$(sed '/^ECLIPSE_VERSION/!d; s/.*=//' $installer)
-executable=~/Applications/eclipse/$version/eclipse
+executable=~/Applications/eclipse/eclipse
 workspaces=~/Development/workspace
 
 open() {

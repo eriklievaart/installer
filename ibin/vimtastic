@@ -28,20 +28,12 @@ OLD_IFS="$IFS"
 IFS=
 antastic "$project" 2>&1 | while read -r line
 do
-	#echo "$line"
-
-	# ant build files, then javac, then checkstyle
+	# print everything to system output
+	echo "$line"
+	# log ant build files, then javac, then checkstyle
 	echo "$line" | sed -nr '/^\//p' >> /tmp/build/vimtastic.log
 	echo "$line" | sed -nr '/\s*\[javac\]/{s|^\s*\[javac\] ||;p}' >> /tmp/build/vimtastic.log
 	echo "$line" | sed -nr "/\s*\[checkstyle\]/{s|\[checkstyle\] \[ERROR\] ||;s|(:[0-9]+:)[0-9]+:|\1|;p}" >> /tmp/build/vimtastic.log
-
-	#if echo "$line" | grep -q "\[javac\]"; then
-		#echo "$line" | sed -r "s/^\[javac\] //" >> /tmp/build/vimtastic.log
-	#fi
-	#if echo "$line" | grep -q "\[checkstyle\]"; then
-		#echo "$line" | sed -r "s/\[checkstyle\] \[ERROR\] //" >> /tmp/build/vimtastic.log
-	#fi
-	# ant build files
 done
 IFS="$OLD_IFS"
 

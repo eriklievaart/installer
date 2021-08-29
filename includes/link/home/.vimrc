@@ -42,19 +42,19 @@ map Y y$
 nnoremap + :bn<CR>
 nnoremap - :bp<CR>
 
-nnoremap ;c :close         <CR>
-nnoremap ;d :bd            <CR>
-nnoremap ;h :split         <CR>
-nnoremap ;r :w             <CR>:compiler vimtastic <CR> :set makeef=/tmp/build/vimtastic.log <CR> :make<CR>
-nnoremap ;t :vert terminal <CR>
-nnoremap ;v :vsplit        <CR>
-nnoremap ;w :set invwrap   <CR>
+nnoremap <space>c :close         <CR>
+nnoremap <space>d :bd            <CR>
+nnoremap <space>h :split         <CR>
+nnoremap <space>r :w             <CR>:compiler vimtastic <CR>:set shellpipe= <CR>:set makeef=/tmp/build/vimtastic.log <CR>:make <CR>
+nnoremap <space>t :vert terminal <CR>
+nnoremap <space>v :vsplit        <CR>
+nnoremap <space>w :set invwrap   <CR>
 
-nnoremap ;$ :%s/$\(\w\+\)/${\1:?}/gc<CR>
-nnoremap ;; :nohlsearch             <CR>
-nnoremap ;. :cnext                  <CR>
-nnoremap ;, :clast                  <CR>
-nnoremap ;/ :copen                  <CR>
+nnoremap <space>$ :%s/$\(\w\+\)/${\1:?}/gc<CR>
+nnoremap <space>; :nohlsearch             <CR>
+nnoremap <space>. :cnext                  <CR>
+nnoremap <space>, :clast                  <CR>
+nnoremap <space>/ :copen                  <CR>
 
 " ctrl-n to toggle line numbers
 nmap <C-N> :set invnumber<CR>
