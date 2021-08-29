@@ -34,7 +34,7 @@ do
 	install $package
 done
 
-if [ "java_version" = "" ]; then
+if [ "$java_version" = "" ]; then
 	java_version=$(apt search openjdk-1 | awk '$2 ~ /^openjdk-[0-9]{2}-jdk$/{print substr($2, 9, 2)}' | sort | tail -n 1)
 fi
 install openjdk-${java_version?}-jdk

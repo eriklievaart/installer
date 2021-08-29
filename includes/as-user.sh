@@ -2,6 +2,15 @@
 set -e
 . ./globals.sh
 
+LOG_DIR=/tmp/installer
+LOG_FILE=$LOG_DIR/installer_$(date +%y-%m-%d_%T).log
+UP_TO_DATE=false
+CACHE_DIR=~/.cache
+
+ECLIPSE_MINIMAL_URL="http://eriklievaart.com/download?file=eclipseminimal"
+ECLIPSE_MINIMAL_CACHE=~/.cache/eclipse.zip
+ECLIPSE_INSTALL=~/Applications/eclipse
+
 ANT_JUNIT_VERSION=1.8.4
 ANT_JUNIT_DESTINATION=~/.ant/lib/ant-junit.jar
 ANT_JUNIT_URL="https://repo1.maven.org/maven2/org/apache/ant/ant-junit/$ANT_JUNIT_VERSION/ant-junit-$ANT_JUNIT_VERSION.jar"
@@ -10,11 +19,6 @@ GUICE_VERSION=1.0
 GUICE_SRC_JAR_NAME="guice-$GUICE_VERSION-src.jar"
 GUICE_SRC_DESTINATION=~/Development/repo/remote/com/google/inject/guice/1.0/$GUICE_SRC_JAR_NAME
 GUICE_SRC_URL="http://eriklievaart.com/download?file=guice1src"
-
-LOG_DIR=/tmp/installer
-LOG_FILE=$LOG_DIR/installer_$(date +%y-%m-%d_%T).log
-UP_TO_DATE=false
-CACHE_DIR=~/.cache
 
 
 log() {
@@ -162,8 +166,14 @@ fetch_url ${GUICE_SRC_DESTINATION?} ${GUICE_SRC_URL?}
 
 
 log "installing eclipse"
-tail -n 0 -f ${LOG_FILE?} &
-./eclipse-minimal.sh >> ${LOG_FILE?}
+${IBIN_DIR?}/wgetc "${ECLIPSE_MINIMAL_URL?}" "${ECLIPSE_MINIMAL_CACHE?}"
+if [ -d "${ECLIPSE_INSTALL?}" ]; then
+    echo "eclipse already installed"
+else
+    echo "unpacking ${ECLIPSE_MINIMAL_CACHE} to ${ECLIPSE_INSTALL}"
+    unzip "${ECLIPSE_MINIMAL_CACHE?}" -d "${ECLIPSE_INSTALL?}"
+fi
+
 
 if crontab -l | grep -q '/tmp/a'; then
     echo crontab already installed
