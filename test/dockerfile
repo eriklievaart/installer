@@ -1,6 +1,6 @@
 
 FROM debian
 
-RUN apt update && apt install -y git cron wget dconf-cli
+RUN apt update && apt install -y git cron wget dconf-cli vim
 
 

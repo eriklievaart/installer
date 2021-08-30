@@ -50,11 +50,11 @@ nnoremap <space>t :vert terminal <CR>
 nnoremap <space>v :vsplit        <CR>
 nnoremap <space>w :set invwrap   <CR>
 
-nnoremap <space>$ :%s/$\(\w\+\)/${\1:?}/gc<CR>
-nnoremap <space>; :nohlsearch             <CR>
-nnoremap <space>. :cnext                  <CR>
-nnoremap <space>, :clast                  <CR>
-nnoremap <space>/ :copen                  <CR>
+nnoremap <space>$       :%s/$\(\w\+\)/${\1:?}/gc<CR>
+nnoremap <space><space> :nohlsearch             <CR>
+nnoremap <space>.       :cnext                  <CR>
+nnoremap <space>,       :clast                  <CR>
+nnoremap <space>/       :copen                  <CR>
 
 " ctrl-n to toggle line numbers
 nmap <C-N> :set invnumber<CR>

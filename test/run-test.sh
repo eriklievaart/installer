@@ -10,7 +10,12 @@ fi
 
 dir=/installer
 docker build -f dockerfile -t installer .
-docker run -it --rm --network=shared -v ${PWD%/*}:$dir installer $dir/test/entrypoint.sh
+
+echo
+echo "@@@@ in the container run @@@@"
+echo "/installer/test/entrypoint.sh"
+echo
+docker run -it --rm --name test --network=shared -v ${PWD%/*}:$dir installer bash
 
 
 

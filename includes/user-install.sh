@@ -14,6 +14,8 @@ ECLIPSE_INSTALL=~/Applications/eclipse
 ANT_JUNIT_VERSION=1.8.4
 ANT_JUNIT_DESTINATION=~/.ant/lib/ant-junit.jar
 ANT_JUNIT_URL="https://repo1.maven.org/maven2/org/apache/ant/ant-junit/$ANT_JUNIT_VERSION/ant-junit-$ANT_JUNIT_VERSION.jar"
+ANT_BSH_DESTINATION=~/.ant/lib/ant-bsh.jar
+ANT_BSH_URL="https://repo1.maven.org/maven2/org/beanshell/bsh/2.0b5/bsh-2.0b5.jar"
 
 GUICE_VERSION=1.0
 GUICE_SRC_JAR_NAME="guice-$GUICE_VERSION-src.jar"
@@ -34,6 +36,8 @@ fetch_url() {
 	destination=$1
 	url=$2
 
+	# delete the file if it exists, but is 0 bytes
+	[ -e "$destination" -a ! -s "$destination" ] && rm -f "$destination"
 	if [ -f ${destination?} ]
 	then
 		log "already downloaded: ${destination?}"
@@ -160,7 +164,7 @@ else
 	echo "[sakura]\nless_questions=true" > $sakura_config
 fi
 
-
+fetch_url ${ANT_BSH_DESTINATION?} ${ANT_BSH_URL?}
 fetch_url ${ANT_JUNIT_DESTINATION?} ${ANT_JUNIT_URL?}
 fetch_url ${GUICE_SRC_DESTINATION?} ${GUICE_SRC_URL?}
 
@@ -170,7 +174,8 @@ ${IBIN_DIR?}/wgetc "${ECLIPSE_MINIMAL_URL?}" "${ECLIPSE_MINIMAL_CACHE?}"
 if [ -d "${ECLIPSE_INSTALL?}" ]; then
     echo "eclipse already installed"
 else
-    echo "unpacking ${ECLIPSE_MINIMAL_CACHE} to ${ECLIPSE_INSTALL}"
+	mkdir -p "${ECLIPSE_INSTALL?}"
+    echo "unpacking ${ECLIPSE_MINIMAL_CACHE} to ${ECLIPSE_INSTALL?}"
     unzip "${ECLIPSE_MINIMAL_CACHE?}" -d "${ECLIPSE_INSTALL?}"
 fi
 

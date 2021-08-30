@@ -16,8 +16,8 @@ if [ "$HOME" = "/root" ]; then
 fi
 
 cd includes
-	sudo dash as-root.sh
-	./as-user.sh
+	sudo dash root-install.sh
+	dash user-install.sh
 cd -
 
 # install my own hobby projects
