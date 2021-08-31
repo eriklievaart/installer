@@ -89,10 +89,9 @@ fi
 
 for dir in $(ls ~/Development/git)
 do
+	[ -d ~/Development/git/"$dir" ] || continue
 	cd ~/Development/git/$dir
-	if [ ! -d ".git" ]; then
-		continue
-	fi
+	[ -d ".git" ] || continue
 
 	color=""
 	branch=$(git status | sed '/^On branch.*/!d; s/^On branch //')
