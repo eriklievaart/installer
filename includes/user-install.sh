@@ -122,18 +122,23 @@ if ! grep -q '.bash_aliases' ~/.bashrc; then
 	echo ". ~/.bash_aliases" >> ~/.bashrc
 fi
 
-create_link "$PWD/link/i3" ~/.config/i3
-
 link_dir=link/home
-for file in $(ls -a "${link_dir?}" | sed -n '/[.]*[^.].*/p')
+for dir in $(find ${link_dir?} -type d | sed "s|$link_dir||;s|/?$|/|")
 do
-	location=$PWD/$link_dir/$file
-	link=~/$file
-	create_link "$location" "$link"
+	[ -e ~/"$dir" ] || mkdir -p ~/"$dir"
+done
+
+for file in $(find ${link_dir?} -type f)
+do
+	dir=~/"$(echo "${file%/*}/" | sed "s|${link_dir?}||;s|^/||")"
+	link="${dir?}${file##*/}"
+	create_link "$PWD/${file?}" "${link?}"
 done
 
 # vim plugins
-mkdir -p ~/.vim/autoload ~/.vim/bundle && curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+if [ ! -f ~/.vim/autoload/pathogen.vim ]; then
+	mkdir -p ~/.vim/autoload ~/.vim/bundle && curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+fi
 cd ~/.vim/bundle
 [ -d nerdtree ]           || git clone https://github.com/preservim/nerdtree.git
 [ -d colorizer ]          || git clone https://github.com/lilydjwg/colorizer
