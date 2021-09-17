@@ -12,8 +12,7 @@ alias hgrep="history | grep"
 alias grepi="grep -i"
 alias findg="find . | grep"
 
-
-alias todo='cd ~/Development/git/cheat/drive/todo; vim todo.txt'
+alias todo='cd ~/Development/git/cheat/; vim drive/todo.txt'
 
 alias vima="vim ~/.bash_aliases"
 alias vimc="vimfind -c"
@@ -27,7 +26,7 @@ alias dl480='youtube-dl -i -f "[height <= 480][tbr<=500]"'
 alias dl720='youtube-dl -i -f "[height <= 720][tbr<=500]"'
 alias dlmp3='youtube-dl -i -x --audio-format mp3 '
 
-alias ncal='ncal -b'
+alias ncal='ncal -bM'
 
 alias run='docker run -it'
 alias wdocker='watch -n 1 docker ps'
