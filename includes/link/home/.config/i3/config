@@ -35,7 +35,7 @@ bindsym $sup+e exec eclipse -w
 bindsym $sup+f exec firefox
 bindsym $sup+g exec link-select
 bindsym $sup+i exec gvim ~/.config/i3/config
-bindsym $sup+l exec links
+bindsym $sup+l exec sakura -e "docker run --rm -it lievaart/lynx"
 bindsym $sup+m exec speedcrunch
 bindsym $sup+p exec pcmanfm
 bindsym $sup+q kill
@@ -88,7 +88,8 @@ bindsym $sup+F10 exec link-select chromium-browser
 bindsym $sup+F11 fullscreen toggle
 
 bindsym $sup+$alt+c workspace 1; exec firefox -new-window "http://eriklievaart.com/cheat?q=$(zenity --entry --text="lookup")"
-bindsym $sup+$alt+d exec sakura -e tty-clock -cs
+bindsym $sup+$alt+d exec sakura -e "tty-clock -cs -f '%a %d-%m-%Y'"
+bindsym $sup+$alt+l exec links
 bindsym $sup+$alt+f exec firefox -new-window
 bindsym $sup+$alt+r exec gmrun
 bindsym $sup+$alt+1 workspace 6

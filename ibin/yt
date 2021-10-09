@@ -8,7 +8,7 @@ interactive() {
 		name=$(echo "$line" | sed 's|.*[?]||;s|[^=]*=||;s|[&].*||')
 		log="logs/$name"
 		echo "log: $log"
-		youtube-dl "$line" > $log &
+		nohup youtube-dl "$line" > $log &
 	done
 }
 

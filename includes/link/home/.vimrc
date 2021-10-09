@@ -23,6 +23,7 @@ set nocindent
 set nosmartindent
 set indentexpr=
 
+set hidden
 set nobackup
 set noswapfile
 set nowrap
@@ -33,14 +34,20 @@ set splitright
 set showcmd
 set shiftwidth=4
 set tabstop=4
+set history=200
 
 
 " make Y consistent with D and C (yank til end of line)
 map Y y$
 
+" disable default binding for showing command history
+map q: <Nop>
+
 " navigating buffers
-nnoremap + :bn<CR>
-nnoremap - :bp<CR>
+nnoremap +  :bn<CR>
+nnoremap -  :bp<CR>
+
+nnoremap !x :.!bash<CR>
 
 nnoremap <space>c :close         <CR>
 nnoremap <space>d :bd            <CR>
@@ -66,12 +73,10 @@ nnoremap <C-K> :wincmd k <CR>:resize +1 <CR>
 nnoremap <C-L> :wincmd h <CR>:vertical resize +1 <CR>
 
 " delete first character on line and move down
-map <F2> @='^xj'<CR>
-" comment line with '#' and move down
-nmap <F3> @='I#<C-V><Esc>j'<CR>
-" delete first character on line and move down
+nmap <F2> @='^xj'<CR>
 imap <F2> <Esc>@='^xj'<CR>i
 " comment line with '#' and move down
+nmap <F3> @='I#<C-V><Esc>j'<CR>
 imap <F3> <Esc>@='I#<C-V><Esc>j'<CR>i
 
 " on F1 execute the command stored in register 'r'
@@ -86,7 +91,6 @@ map! <F8> <ESC>:w <bar> !clear; ./% <CR>
 " toggle file browser
 map <F9> :NERDTreeToggle <CR>
 map! <F9> <ESC>:NERDTreeToggle <CR>
-
 
 
 

@@ -1,4 +1,56 @@
+#!/bin/dash
+set -e
 
-cd ~/Applications/doclauncher
-java -client -classpath .:doclauncher.jar com.eriklievaart.doclauncher.boot.Main ~/Applications/doclauncher/api $1 $2
+root=~/Applications/doclauncher/api
+
+open_file() {
+	cd "$1"
+	for path in $(find -iname "$2.html" | grep -v '/class-use/' | cut -c '3-')
+	do
+		file="$1/$path"
+		echo "found file: $file"
+		exec lynx "$file"
+	done
+	echo "$2 not found in $1"
+	cd - > /dev/null
+}
+
+open_any() {
+	cd "$root"
+	for project in $(ls)
+	do
+		test -d "$project" && open_file "$root/$project" "$1"
+	done
+}
+
+open_project() {
+	cd "$root"
+	for project in $(ls | grep "$1")
+	do
+		open_file "$root/$project" "$2"
+	done
+}
+
+doclauncher() {
+	cd ~/Applications/doclauncher
+	java -jar doclauncher.jar "$root" "$1" "$2"
+	exit 0
+}
+
+if [ "$1" = "-b" ]; then
+	doclauncher "$2" "$3"
+fi
+
+if [ $# -eq 0 -o $# -gt 2 ]; then
+	echo "usage: $0 [project]? [file]"
+	exit 44
+fi
+
+if [ $# -eq 1 ]; then
+	open_any "$1"
+fi
+
+if [ $# -eq 2 ]; then
+	open_project "$1" "$2"
+fi
 

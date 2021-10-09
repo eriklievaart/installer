@@ -1,6 +1,5 @@
 
-alias ddg='lynx -cookies -lss=~/lynx.lss "https://lite.duckduckgo.com/lite/"'
-alias lynx='lynx -cookies -lss=~/lynx.lss'
+alias lynx='docker run --rm -it -v /home/eazy/Development/git/cheat/lynx.html:/root/bookmarks.html lievaart/lynx'
 
 alias l='ls'
 alias ll='ls -l'
