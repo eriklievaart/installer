@@ -1,14 +1,33 @@
 #!/bin/sh
+set -e
+
+download() {
+	url="$1"
+	[ -d /tmp/dl ] || mkdir /tmp/dl
+	name=$(echo "$url" | sed 's|.*[?]||;s|[^=]*=||;s|[&].*||')
+	log="/tmp/dl/$name"
+	echo "downloading: $1 => log: $log"
+	nohup youtube-dl "$url" > $log 2> /dev/null &
+}
 
 interactive() {
-	[ -d logs ] || mkdir logs
+	echo "## interactive ##"
 	while read line
 	do
-		[ -z "$line" ] && break
-		name=$(echo "$line" | sed 's|.*[?]||;s|[^=]*=||;s|[&].*||')
-		log="logs/$name"
-		echo "log: $log"
-		nohup youtube-dl "$line" > $log &
+		download "$line"
+	done
+}
+
+toggle() {
+	if [ "$#" -eq 0 ]; then
+		interactive
+		exit 0
+	fi
+
+	while [ "$1" != "" ]
+	do
+		download "$1"
+		shift
 	done
 }
 
@@ -25,9 +44,23 @@ play() {
 	vlc .
 }
 
+resume() {
+	echo $PWD
+	for file in *
+	do
+		if echo "$file" | grep -q '.part$'; then
+			code=$(echo "$file" | sed -r 's/[.][^-]+$//' | sed -r 's/.*-(\S{8,})$/\1/')
+			if ! pgrep -a youtube-dl | grep -q "$code"; then
+				download "https://www.youtube.com/watch?v=$code"
+			fi
+		fi
+	done
+}
+
 case $1 in
-	-i) interactive;;
 	-p) play $2;;
+	--resume) resume;;
+	*) toggle $@ ;;
 esac
 
 
