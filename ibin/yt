@@ -6,15 +6,17 @@ download() {
 	[ -d /tmp/dl ] || mkdir /tmp/dl
 	name=$(echo "$url" | sed 's|.*[?]||;s|[^=]*=||;s|[&].*||')
 	log="/tmp/dl/$name"
-	echo "downloading: $1 => log: $log"
+	echo "downloading: $1 => log: $log \n"
 	nohup youtube-dl "$url" > $log 2> /dev/null &
 }
 
 interactive() {
-	echo "## interactive ##"
+	echo "## interactive ##\n"
 	while read line
 	do
-		download "$line"
+		if [ "$line" != "" ]; then
+			download "$line"
+		fi
 	done
 }
 
@@ -26,6 +28,7 @@ toggle() {
 
 	while [ "$1" != "" ]
 	do
+		echo "download $1"
 		download "$1"
 		shift
 	done
@@ -45,7 +48,6 @@ play() {
 }
 
 resume() {
-	echo $PWD
 	for file in *
 	do
 		if echo "$file" | grep -q '.part$'; then

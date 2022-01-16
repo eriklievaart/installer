@@ -21,11 +21,13 @@ alias vimw='vimfind -w'
 alias vimrc='vim ~/.vimrc'
 
 alias dl='yt'
+alias dlr='yt --resume'
 alias dl480='youtube-dl -i -f "[height <= 480][tbr<=500]"'
 alias dl720='youtube-dl -i -f "[height <= 720][tbr<=500]"'
 alias dlmp3='youtube-dl -i -x --audio-format mp3 '
 
 alias ncal='ncal -bM'
+alias cookie='cd /media/eazy/2TB/data/vms/cookie; autoqemu'
 
 alias run='docker run -it'
 alias wdocker='watch -n 1 docker ps'

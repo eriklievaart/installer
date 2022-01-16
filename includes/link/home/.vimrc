@@ -26,17 +26,22 @@ set indentexpr=
 set hidden
 set nobackup
 set noswapfile
-set nowrap
-set hlsearch
-set incsearch
-set splitbelow
-set splitright
-set showcmd
-set shiftwidth=4
-set tabstop=4
 set history=200
 
+set hlsearch
+set incsearch
+set showcmd
 
+set nowrap
+set sidescroll=1
+set sidescrolloff=10
+set shiftwidth=4
+set tabstop=4
+set splitbelow
+set splitright
+
+
+"" NORMAL MODE ""
 " make Y consistent with D and C (yank til end of line)
 map Y y$
 
@@ -63,6 +68,9 @@ nnoremap <space>.       :cnext                  <CR>
 nnoremap <space>,       :clast                  <CR>
 nnoremap <space>/       :copen                  <CR>
 
+nmap <TAB> >>
+nmap <S-TAB> <<
+
 " ctrl-n to toggle line numbers
 nmap <C-N> :set invnumber<CR>
 
@@ -72,16 +80,14 @@ nnoremap <C-J> :wincmd k <CR>:resize -1 <CR>
 nnoremap <C-K> :wincmd k <CR>:resize +1 <CR>
 nnoremap <C-L> :wincmd h <CR>:vertical resize +1 <CR>
 
-" delete first character on line and move down
-nmap <F2> @='^xj'<CR>
-imap <F2> <Esc>@='^xj'<CR>i
-" comment line with '#' and move down
-nmap <F3> @='I#<C-V><Esc>j'<CR>
-imap <F3> <Esc>@='I#<C-V><Esc>j'<CR>i
 
 " on F1 execute the command stored in register 'r'
 map <F1> :@r<CR>
 map! <F1> <ESC>:@r<CR>
+" delete first character on line and move down
+nmap <F2> @='^xj'<CR>
+" comment line with '#' and move down
+nmap <F3> @='I#<C-V><Esc>j'<CR>
 " on F5 store last executed command in register 'r'
 map <F5> :let @r = @:<CR>
 map! <F5> <ESC>:let @r = @:<CR>
@@ -93,5 +99,10 @@ map <F9> :NERDTreeToggle <CR>
 map! <F9> <ESC>:NERDTreeToggle <CR>
 
 
+
+" insert mode
+imap <F2> <Esc>@='^xj'<CR>i
+imap <F3> <Esc>@='I#<C-V><Esc>j'<CR>i
+imap <S-Tab> <Esc><<i
 
 

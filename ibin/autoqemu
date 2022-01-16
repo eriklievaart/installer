@@ -16,12 +16,7 @@ if [ ! "$(ls *.img)" ]; then
 	fi
 fi
 
-params="-m 4G -smp 2 -enable-kvm"
-
-for image in *.img
-do
-	params="$params -drive file=$image,format=raw"
-done
+params="-m 4G -smp 2 -enable-kvm -soundhw hda"
 
 if [ "$1" != "" ]; then
 	params="$params -cdrom $1"
@@ -30,6 +25,13 @@ for iso in $(ls | grep '[.]iso$')
 do
 	params="$params -cdrom $iso"
 done
+for image in *.img
+do
+	params="$params -drive file=$image,format=raw"
+done
+if [ -f vga.txt ]; then
+	params="$params -vga $(cat vga.txt)"
+fi
 
 [ "$1" ] && params="$params -boot d"
 
