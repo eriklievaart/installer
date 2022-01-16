@@ -1,30 +1,39 @@
 #!/bin/sh
 
-if [ ! "$(ls *.img)" ]; then
-	echo 'create image of size [100G]:'
-	read size
-	size=$([ "$size" == "" ] && echo 100G || echo "$size")
-	qemu-img create disk.img $size
 
-	if [ -f "$1" -o "$(ls *.iso)" ]; then
-		echo "iso found"
-	else
-		echo "no iso found!"
-		echo "either call: autoqemu [iso]"
-		echo "or place iso in current directory"
-		exit 4
-	fi
-fi
-
+cache=~/.cache/autoqemu
 params="-m 4G -smp 2 -enable-kvm -soundhw hda"
 
 if [ "$1" != "" ]; then
-	params="$params -cdrom $1"
+	if [ -f "$1" ]; then
+		echo "iso found"
+		params="$params -cdrom $1 -boot d"
+
+		if [ ! "$(ls *.img)" ]; then
+			echo 'create image of size [100G]:'
+			read size
+			size=$([ "$size" == "" ] && echo 100G || echo "$size")
+			qemu-img create disk.img $size
+		fi
+	elif [ -d "$1" ]; then
+		cd "$1"
+	else
+		dir=$(sed -nr "/\/$1$/{p;q}" $cache)
+		if [ -d "$dir" ]; then
+			cd "$dir"
+		else
+			echo "*invalid*: $1 => $dir"
+			exit 0
+		fi
+	fi	
 fi
-for iso in $(ls | grep '[.]iso$')
-do
-	params="$params -cdrom $iso"
-done
+
+if [ ! "$(ls *.img)" ]; then
+	exit 44
+fi
+
+[ -f "$cache" ] && sed -ir "/\/${PWD##*/}$/d" $cache
+echo "$PWD" >> "$cache"
 for image in *.img
 do
 	params="$params -drive file=$image,format=raw"
@@ -32,8 +41,6 @@ done
 if [ -f vga.txt ]; then
 	params="$params -vga $(cat vga.txt)"
 fi
-
-[ "$1" ] && params="$params -boot d"
 
 echo "qemu-system-x86_64 $params"
 qemu-system-x86_64 $params
