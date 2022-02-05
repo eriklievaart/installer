@@ -1,11 +1,11 @@
 #!/bin/dash
 
 automount
-dp -p s &
+dp -p l &
 history-cleanup &
 unclutter -idle 1 -root &
 setxkbmap -layout erik &
-xsetroot -solid "#888888" &
+xsetroot -solid "#333" &
 for id in $(xinput list | grep -i touchpad | sed -r 's/.*id=([0-9]*).*/\1/'); do xinput --disable $id; done &
 rm -rf ~/.lesshst ~/.swt ~/.wget-hsts ~/.xsession-errors.old ~/.sudo_as_admin_successful &
 redshift -P -O 4500 &

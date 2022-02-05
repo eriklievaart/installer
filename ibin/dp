@@ -60,9 +60,14 @@ apply() {
 		previous="$port"
 
 	done
+	if grep -q "^l " $presets; then
+		sed -i "s/^l .*/l $1/" $presets
+	else
+		echo "l $1" >> $presets
+	fi
+
 	echo "$xrandr" | tee /tmp/dp.log
 	$xrandr
-	background
 	redshift -P -O 4500
 	exit 0
 }
@@ -107,7 +112,7 @@ if [ ! -f $presets ]; then
 	echo "h =====" >> $presets
 	echo "- onooo" >> $presets
 	echo "= nnooo" >> $presets
-	echo "s nnnnn" >> $presets
+	echo "l nnnnn" >> $presets
 fi
 
 [ "$#" -gt 0 ] || die "either call $0 -p [preset] or $0 [settings]"

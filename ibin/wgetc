@@ -23,7 +23,7 @@ url="$1"
 if [ ! -f "$2" ]
 then
 	parents "$2"
-	wget "$url" -O "$2" || [ $errors = false ] || die "wget error on '$url'"
+	wget "$url" -O "$2" && errors=false || die "wget error on '$url'"
 fi
 
 # delete cached file if it is empty

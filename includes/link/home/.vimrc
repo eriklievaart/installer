@@ -34,7 +34,7 @@ set showcmd
 
 set nowrap
 set sidescroll=1
-set sidescrolloff=10
+set sidescrolloff=4
 set shiftwidth=4
 set tabstop=4
 set splitbelow

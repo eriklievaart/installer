@@ -12,7 +12,7 @@ if [ "$1" != "" ]; then
 		if [ ! "$(ls *.img)" ]; then
 			echo 'create image of size [100G]:'
 			read size
-			size=$([ "$size" == "" ] && echo 100G || echo "$size")
+			size=$([ "$size" = "" ] && echo 100G || echo "$size")
 			qemu-img create disk.img $size
 		fi
 	elif [ -d "$1" ]; then
