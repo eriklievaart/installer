@@ -131,7 +131,9 @@ bindsym $sup+$ctrl+p           exec audtool --playback-pause
 bindsym $sup+$ctrl+r           exec audtool --playlist-repeat-toggle; exec notify-send "repeat: $(audtool --playlist-repeat-status)"
 bindsym $sup+$ctrl+s           exec audtool --playlist-shuffle-toggle; exec notify-send "shuffle: $(audtool --playlist-shuffle-status)"
 bindsym $sup+$ctrl+v           exec pkill vlc
-bindsym $sup+$ctrl+0           exec audacious-queue -d
+bindsym $sup+$ctrl+0           exec sink 0
+bindsym $sup+$ctrl+1           exec sink 1
+bindsym $sup+$ctrl+2           exec sink 2
 bindsym $sup+$ctrl+Left        exec audtool --playlist-reverse
 bindsym $sup+$ctrl+Down        exec audtool --playback-play
 bindsym $sup+$ctrl+Right       exec audtool --playlist-advance

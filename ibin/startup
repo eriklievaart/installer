@@ -13,5 +13,6 @@ xset -dpms &
 xset s off &
 flatpak run org.gajim.Gajim &
 nmcli radio wifi off &
+sink streamer
 
 

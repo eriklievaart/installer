@@ -1,0 +1,25 @@
+#!/bin/dash
+
+channels=$(pacmd list-sinks | sed '/name:/!d;s/[^<]*<alsa_output[.]//;s/[.][^.]*>$//' | nl -v 0)
+
+if [ "$1" = "" ]; then
+	echo "$channels"
+	exit 0
+fi
+
+if echo "$1" | grep '^[0-9]$'; then
+	pacmd set-default-sink $1
+	exit 0
+fi
+
+selected=$(echo "$channels" | grep -i "$1")
+if [ $(echo "$selected" | wc -l ) -eq 1 ]; then
+	index=$(echo "$selected" | awk '{print $1}')
+	pacmd set-default-sink $index
+else
+	echo "expecting exactly 1 result, got:\n$selected"
+fi
+
+
+
+

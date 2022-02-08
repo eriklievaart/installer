@@ -60,10 +60,13 @@ apply() {
 		previous="$port"
 
 	done
-	if grep -q "^l " $presets; then
-		sed -i "s/^l .*/l $1/" $presets
-	else
-		echo "l $1" >> $presets
+	dpon="$(echo $1 | sed 's/[o0]//g')"
+	if [ "$dpon" != "" ]; then
+		if grep -q "^l " $presets; then
+			sed -i "s/^l .*/l $1/" $presets
+		else
+			echo "l $1" >> $presets
+		fi
 	fi
 
 	echo "$xrandr" | tee /tmp/dp.log
