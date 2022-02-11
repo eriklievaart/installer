@@ -1,4 +1,5 @@
 #!/bin/sh
+# script for creating backups for migrating my installation
 set -e
 
 backupdir=storage

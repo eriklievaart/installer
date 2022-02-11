@@ -1,4 +1,5 @@
 #!/bin/sh
+# script for launching a felix docker container
 set -e
 
 

@@ -1,0 +1,42 @@
+#!/bin/dash
+# script for organizing obs recordings
+set -e
+
+die() {
+	echo >&2 "$@"
+	exit 40
+}
+
+[ -z "$1" ] && die "missing argument scp target"
+echo "$1" | grep ':' > /dev/null || die "missing ':' in scp target"
+echo "$1" | grep '@' > /dev/null || die "missing '@' in scp target"
+
+# select destination directory
+dir=$(find ~/Videos -maxdepth 1 -mindepth 1 -type d | sort | rofi -dmenu -theme gruvbox-dark)
+
+find "$dir" -type f | sort
+echo
+echo "enter filename to move latest recording"
+echo
+
+while read line
+do
+	if [ "$line" != "" ]; then
+		recording=~/Videos/$(ls ~/Videos -t | grep '^[0-9 -]\+.mkv$' | head -n 1)
+		if [ ! -f "$recording" ]; then
+			echo "no valid recording found\n"
+			ls -l ~/Videos
+			continue
+		fi
+		index=$(ls "$dir" | sed -r '/^[0-9]+\..*\.mkv/!d;s/\..*//' | sort | tail -n 1)
+		destination="$dir/$(printf '%02d' $(($index+1)))."$(echo "$line" | sed '/.mkv$/!s/$/.mkv/')
+		echo "$destination"
+		mv -v "$recording" "$destination"
+		scp "$destination" "$1"
+	fi
+	echo
+done
+
+
+
+

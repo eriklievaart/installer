@@ -1,5 +1,5 @@
 #!/bin/sh
-
+# convenience script for running qemu without having to specify a long list of parameters
 
 cache=~/.cache/autoqemu
 params="-m 4G -smp 2 -enable-kvm -soundhw hda"

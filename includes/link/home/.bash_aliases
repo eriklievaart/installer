@@ -7,6 +7,7 @@ alias la='ls -al'
 alias lh='ls -sShr --format=single-column'
 
 alias dep="cat ~/Development/repo/index.txt | grep"
+alias bashrc='vim ~/.bashrc'
 alias hgrep="history | grep"
 alias grepi="grep -i"
 alias findg="find . | grep"
@@ -17,6 +18,7 @@ alias vima="vim ~/.bash_aliases"
 alias vimc="vimfind -c"
 alias vimd='vimfind -d'
 alias vimf='vimfind -g'
+alias vimi='vim ~/.config/i3/config'
 alias vimw='vimfind -w'
 alias vimrc='vim ~/.vimrc'
 
@@ -27,7 +29,6 @@ alias dl720='youtube-dl -i -f "[height <= 720][tbr<=500]"'
 alias dlmp3='youtube-dl -i -x --audio-format mp3 '
 
 alias ncal='ncal -bM'
-alias cookie='cd /media/eazy/2TB/data/vms/cookie; autoqemu'
 
 alias run='docker run -it'
 alias wdocker='watch -n 1 docker ps'
@@ -37,4 +38,5 @@ alias dockerrun='docker run --rm -it '
 alias s='mpsort s'
 alias targets='sed -n "/target/{s/.*name=\"//;s/\".*//;p}" ~/Development/git/ant/master.xml | sort'
 
+alias v='killall vlc; nohup vlc --quiet "$(ls | sed "/part$/d" | sort -R | tail -n 1)" > /dev/null &'
 

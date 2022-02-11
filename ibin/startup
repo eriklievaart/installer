@@ -2,7 +2,7 @@
 
 automount
 dp -p l &
-history-cleanup &
+sed -i -r '/^\s*+(cd|l[sla]( -[la]*)?|gits|history|z)\s*+$/d' ~/.bash_history &
 unclutter -idle 1 -root &
 setxkbmap -layout erik &
 xsetroot -solid "#333" &

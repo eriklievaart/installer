@@ -76,7 +76,6 @@ bindsym $sup+Return exec i3-sensible-terminal
 bindsym $sup+Right focus right
 bindsym $sup+slash exec felix q
 bindsym $sup+space workspace back_and_forth
-bindsym $sup+Tab exec i3cycle
 bindsym $sup+Up focus up
 bindsym $sup+F1  exec sakura
 bindsym $sup+F2  exec gnome-terminal
@@ -123,11 +122,12 @@ bindsym $sup+$shift+space floating toggle
 bindsym $sup+$shift+Left  move workspace to output left
 bindsym $sup+$shift+Right move workspace to output right
 
-bindsym $sup+$ctrl+q           exec audtool --shutdown
 bindsym $sup+$ctrl+a           exec audtool --playlist-auto-advance-toggle; exec notify-send "advance: $(audtool --playlist-auto-advance-status)"
 bindsym $sup+$ctrl+i           exec notify-send "$(audtool --current-song-filename | sed 's:.*/::')"
+bindsym $sup+$ctrl+l           exec audacious-queue -l
 bindsym $sup+$ctrl+m           exec pkill audacious; exec pkill vlc
 bindsym $sup+$ctrl+p           exec audtool --playback-pause
+bindsym $sup+$ctrl+q           exec audtool --shutdown
 bindsym $sup+$ctrl+r           exec audtool --playlist-repeat-toggle; exec notify-send "repeat: $(audtool --playlist-repeat-status)"
 bindsym $sup+$ctrl+s           exec audtool --playlist-shuffle-toggle; exec notify-send "shuffle: $(audtool --playlist-shuffle-status)"
 bindsym $sup+$ctrl+v           exec pkill vlc

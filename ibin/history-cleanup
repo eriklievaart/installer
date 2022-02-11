@@ -1,5 +1,0 @@
-#!/bin/sh
-
-sed -i -r '/^\s*+(cd|l[sla]( -[la]*)?|gits|history|z)\s*+$/d' ~/.bash_history
-
-

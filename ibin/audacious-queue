@@ -2,26 +2,17 @@
 set -e
 
 dir=~/.config/audacious
-config=$dir/mp3-home-dir
-type=$([ "$1" = "-f" ] && echo "f" || echo "d")
-echo "audacious root dir config file: $config"
+config="$dir/mp3-home-dir"
+stored="$dir/stored"
+tag="$dir/tag"
 
 if [ ! -d ~/$dir ]; then
 	echo "creating dir $dir"
 	mkdir -p $dir
 fi
 
-root=$([ -f $config ] && head -n 1 $config || echo "")
-if [ ! -d "$root" ]; then
-	echo "mp3 root dir not configured"
-	root=$(zenity --entry --text="mp3 root dir not configured in $config, where to load mp3 from?")
-	if [ "$root" != "" ]; then
-		echo "$root" > $config
-	fi
-fi
-
 # remove empty directories from list
-not_empty () {
+not_empty() {
 	while read directory
 	do
 		if [ "$(ls -A "$directory" )" != "" ]; then
@@ -30,12 +21,49 @@ not_empty () {
 	done
 }
 
-if [ "$root" != "" ]; then
-	echo "root: $root"
-	cd $root
-	selection=$(find "$root" -type $type | not_empty | cut -c $(($(echo "$root" | wc -m)+1))- | rofi -i -l 40 -dmenu)
-	if [ "$selection" != "" ]; then
-		audacious "$root/$selection"
+select() {
+	echo "audacious root dir config file: $config"
+
+	root=$([ -f $config ] && head -n 1 $config || echo "")
+	if [ ! -d "$root" ]; then
+		echo "mp3 root dir not configured"
+		root=$(zenity --entry --text="mp3 root dir not configured in $config, where to load mp3 from?")
+		if [ "$root" != "" ]; then
+			echo "$root" > $config
+		fi
 	fi
-fi
+
+	if [ "$root" != "" ]; then
+		echo "root: $root"
+		cd $root
+		selection=$(find "$root" -type $1 | not_empty | cut -c $(($(echo "$root" | wc -m)+1))- | rofi -i -l 40 -dmenu)
+		if [ "$selection" != "" ]; then
+			audacious "$root/$selection"
+		fi
+	fi
+}
+
+load() {
+	path="$(cat "$stored")"
+	nohup audacious "$path" > /dev/null &
+}
+
+store() {
+	if [ -f "$1" -o -d "$1" ]; then
+		echo "$PWD/$1" > $stored
+		load
+	else
+		echo "invalid argument: '$1'"
+	fi
+}
+
+case "$1" in
+	-d) select d ;;
+	-f) select f ;;
+	-l) load ;;
+	*) store "$1" ;;
+esac
+
+
+
 
