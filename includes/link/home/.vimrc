@@ -101,8 +101,9 @@ map! <F9> <ESC>:NERDTreeToggle <CR>
 
 
 " insert mode
-imap <F2> <Esc>@='^xj'<CR>i
-imap <F3> <Esc>@='I#<C-V><Esc>j'<CR>i
-imap <S-Tab> <Esc><<i
+imap <F2>    <C-o>@='^xj'<CR>
+imap <F3>    <C-o>@='I#<C-V><Esc>j'<CR>
+imap <C-F>   <C-o>dw
+imap <S-Tab> <C-o><<
 
 
