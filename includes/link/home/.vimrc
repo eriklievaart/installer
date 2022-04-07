@@ -23,15 +23,15 @@ set nocindent
 set nosmartindent
 set indentexpr=
 
-set hidden
+"set noswapfile
 set nobackup
-set noswapfile
 set history=200
 
 set hlsearch
 set incsearch
 set showcmd
 
+set hidden
 set nowrap
 set sidescroll=1
 set sidescrolloff=4

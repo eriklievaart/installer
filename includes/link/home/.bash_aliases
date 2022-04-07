@@ -18,9 +18,10 @@ alias vima="vim ~/.bash_aliases"
 alias vimc="vimfind -c"
 alias vimd='vimfind -d'
 alias vimf='vimfind -g'
+alias vimh='vimfind -h'
 alias vimi='vim ~/.config/i3/config'
 alias vimw='vimfind -w'
-alias vimrc='vim ~/.vimrc'
+alias vimrc='vim --clean ~/.vimrc'
 
 alias dl='yt'
 alias dlr='yt --resume'

@@ -16,6 +16,10 @@ dependencies() {
 	fi
 }
 
+vimhelp() {
+	exec vim "+help $1 | only"
+}
+
 vimgrep() {
 	exec vim $(find -type f | sed '/\/\.git\//d' | grep "$1")
 }
@@ -33,6 +37,7 @@ case $1 in
 	-c) cheat        "$2";;
 	-d) dependencies "$2";;
 	-g) vimgrep      "$2";;
+	-h) vimhelp      "$2";;
 	-w) vimwhich     "$2";;
 esac
 
