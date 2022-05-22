@@ -140,7 +140,6 @@ if [ ! -f ~/.vim/autoload/pathogen.vim ]; then
 	mkdir -p ~/.vim/autoload ~/.vim/bundle && curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 fi
 cd ~/.vim/bundle
-[ -d nerdtree ]           || git clone https://github.com/preservim/nerdtree.git
 [ -d colorizer ]          || git clone https://github.com/lilydjwg/colorizer
 [ -d vim-airline ]        || git clone https://github.com/vim-airline/vim-airline
 [ -d vim-airline-themes ] || git clone https://github.com/vim-airline/vim-airline-themes

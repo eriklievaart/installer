@@ -21,7 +21,7 @@ alias vimf='vimfind -g'
 alias vimh='vimfind -h'
 alias vimi='vim ~/.config/i3/config'
 alias vimw='vimfind -w'
-alias vimrc='vim --clean ~/.vimrc'
+alias vimrc='vim ~/.vimrc'
 
 alias dl='yt'
 alias dlr='yt --resume'

@@ -1,0 +1,15 @@
+#!/bin/perl
+use 5.27.1;
+
+my $letter='a';
+
+while (<>) {
+		if(/^[0-9]/) {
+			$letter='a';
+		} elsif (/\s*[a-z]?[)]/) {
+			s/(\s*)[a-z]?/$1$letter/;
+			$letter++;
+		}
+		print "$_";
+}
+
