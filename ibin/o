@@ -33,11 +33,14 @@ do
 		destination="$dir/$(printf '%02d' $(($index+1)))."$(echo "$line" | sed '/.mkv$/!s/$/.mkv/')
 		echo "$destination"
 		mv -v "$recording" "$destination"
+
+		if ls ~/Videos/ | grep -Eiq '^20[0-9][0-9]-.*mkv$'; then
+			rm ~/Videos/20[0-9][0-9]-*.mkv
+		fi
 		[ "$1" != "" ] && scp "$destination" "$1"
 	fi
 	echo
 done
 
-rm ~/Videos/20[0-9][0-9]-*.mkv
 
 
