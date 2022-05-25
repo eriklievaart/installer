@@ -5,6 +5,7 @@ if docker ps | grep -q apt-cache; then
 	echo "apt-cache is running"
 else
 	echo "*error* apt-cache not available!"
+	echo '    check project apt-cacher-docker'
 	exit 1
 fi
 

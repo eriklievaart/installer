@@ -136,14 +136,17 @@ do
 done
 
 # vim plugins
-if [ ! -f ~/.vim/autoload/pathogen.vim ]; then
-	mkdir -p ~/.vim/autoload ~/.vim/bundle && curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+[ -d ~/.vim/pack ] || mkdir -p ~/.vim/pack
+cd ~/.vim/pack
+[ -d colorizer ] || git clone https://github.com/lilydjwg/colorizer colorizer/start/colorizer
+if [ ! -d airline ]; then
+	git clone https://github.com/vim-airline/vim-airline         airline/start/airline
+	git clone https://github.com/vim-airline/vim-airline-themes  airline/start/airline-themes
 fi
-cd ~/.vim/bundle
-[ -d colorizer ]          || git clone https://github.com/lilydjwg/colorizer
-[ -d vim-airline ]        || git clone https://github.com/vim-airline/vim-airline
-[ -d vim-airline-themes ] || git clone https://github.com/vim-airline/vim-airline-themes
 cd -
+
+git clone https://github.com/preservim/nerdtree.git ~/.vim/pack/vendor/start/nerdtree
+
 
 # configure xed text editor
 if [ "$display" != "" ]; then
