@@ -13,6 +13,7 @@ xset -dpms &
 xset s off &
 flatpak run org.gajim.Gajim &
 nmcli radio wifi off &
+mkdir -p /tmp/vim/swp
 sink streamer
 
 

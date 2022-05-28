@@ -22,6 +22,7 @@ set spellcapcheck=
 
 set nobackup
 set history=200
+set directory=/tmp/vim/swp
 
 set hlsearch
 set incsearch
