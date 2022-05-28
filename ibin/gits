@@ -20,10 +20,6 @@ list() {
 	done
 }
 
-if [ "$@" = "+" ]; then
-	set acp @cheat +
-fi
-
 if [ "$1" = "acp" ]; then
 	message=$(echo "$@" | sed 's/^-c *//')
 	if [ -z "$message" ]; then
