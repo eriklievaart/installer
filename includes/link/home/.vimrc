@@ -18,8 +18,8 @@ set noautoindent
 set nocindent
 set nosmartindent
 set indentexpr=
+set spellcapcheck=
 
-"set noswapfile
 set nobackup
 set history=200
 
@@ -49,44 +49,42 @@ nmap <silent> Y y$
 nmap <silent> Q :bd<CR>
 nmap S :w <bar> :source %<CR>
 
+nnoremap g<left>  g0
+nnoremap g<right> g$
 
 nnoremap !x :.!sh<CR>
 nnoremap !p !ipsh<CR>
 
-nnoremap <space>c :normal <C-V><C-W>c<CR>
-nnoremap <space>d :bd            <CR>
-nnoremap <space>h :split         <CR>
-nnoremap <space>r :w             <CR>:compiler vimtastic <CR>:set shellpipe= <CR>:set makeef=/tmp/build/vimtastic.log <CR>:make <CR>
-nnoremap <space>t :vert terminal <CR>
-nnoremap <space>v :vsplit        <CR>
-nnoremap <space>w :set invwrap   <CR>
+nnoremap          <space>c       :normal      <C-V><C-W>c<CR>
+nnoremap          <space>d       :bd                     <CR>
+nnoremap          <space>r       :w                      <CR>:compiler vimtastic <CR>:set shellpipe= <CR>:set makeef=/tmp/build/vimtastic.log <CR>:make <CR>
+nnoremap          <space>s       :split                  <CR>
+nnoremap          <space>t       :vert terminal          <CR>
+nnoremap          <space>v       :vsplit                 <CR>
+nnoremap          <space>w       :set invwrap            <CR>
+nnoremap          <space>.       :cnext                  <CR>
+nnoremap          <space>,       :clast                  <CR>
+nnoremap          <space>/       :copen                  <CR>
+nnoremap          <space>$       :%s/$\(\w\+\)/${\1:?}/gc<CR>
+nnoremap          <space>4       <space>$                <CR>
+nnoremap <silent> <space><space> :nohlsearch             <CR>
+nnoremap <silent> <space><left>  g0
+nnoremap <silent> <space><right> g$
+nnoremap <silent> <space><down>  gm
 
-nmap     <space>4       <space>$                <CR>
-nnoremap <space>$       :%s/$\(\w\+\)/${\1:?}/gc<CR>
-nnoremap <space>.       :cnext                  <CR>
-nnoremap <space>,       :clast                  <CR>
-nnoremap <space>/       :copen                  <CR>
-nnoremap <silent> <space><space> :nohlsearch    <CR>
+nnoremap <S-Up>    gk
+nnoremap <S-Down>  gj
+nnoremap <S-Left>  B
+nnoremap <S-Right> W
 
-nmap <S-Up>    gk
-nmap <S-Down>  gj
-nmap <S-Left>  B
-nmap <S-Right> W
-
-nmap <TAB>   >>
-nmap <S-TAB> <<
+nnoremap   <TAB> >>
+nnoremap <S-TAB> <<
 
 nnoremap <silent> <C-A-Up>    :bp<CR>
 nnoremap <silent> <C-A-Down>  :bn<CR>
 
 " ctrl-n to toggle line numbers
 nmap <C-N> :set invnumber<CR>
-
-" resize window
-nnoremap <C-H> :wincmd h <CR>:vertical resize -1 <CR>
-nnoremap <C-J> :wincmd k <CR>:resize -1 <CR>
-nnoremap <C-K> :wincmd k <CR>:resize +1 <CR>
-nnoremap <C-L> :wincmd h <CR>:vertical resize +1 <CR>
 
 " delete first character on line and move down
 nmap <F2> @='^xj'<CR>
