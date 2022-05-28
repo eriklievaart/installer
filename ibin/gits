@@ -78,7 +78,11 @@ if [ "$(echo "$1" | cut -c 1)" = "@" ]; then
 	fi
 
 	if [ "$1" = "" ]; then
-		git status
+		git status -s
+		if [ "$(git status -s)" = "" ]; then
+			echo " up to date"
+			exit 0
+		fi
 		echo
 		echo "show diff? (y)"
 		read answer
