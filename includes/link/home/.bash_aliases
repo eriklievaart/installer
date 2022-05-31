@@ -2,9 +2,10 @@
 alias lynx='docker run --rm -it -v /home/eazy/Development/git/cheat/lynx.html:/root/bookmarks.html lievaart/lynx'
 
 alias l='ls'
-alias ll='ls -l'
 alias la='ls -al'
+alias lb='ls -lb'
 alias lh='ls -sShr --format=single-column'
+alias ll='ls -lh'
 
 alias dep="cat ~/Development/repo/index.txt | grep"
 alias bashrc='vim ~/.bashrc'
@@ -31,7 +32,7 @@ alias dlmp3='youtube-dl -i -x --audio-format mp3 '
 
 alias ncal='ncal -bM'
 
-alias run='docker run -it'
+alias run='docker run --rm -it'
 alias wdocker='watch -n 1 docker ps'
 alias dockerrm='docker container rm -f $(docker container ps -aq)'
 alias dockerrun='docker run --rm -it '

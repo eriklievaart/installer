@@ -5,6 +5,8 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline_statusline_ontop=0
 let g:airline_theme='powerlineish'
 
+let g:user_emmet_leader_key='<C-p>'
+
 " fix airline in tmux
 set t_Co=256
 
@@ -50,8 +52,10 @@ nmap <silent> Y y$
 nmap <silent> Q :bd<CR>
 nmap S :w <bar> :source %<CR>
 
-nnoremap g<left>  g0
-nnoremap g<right> g$
+nmap g<left>  g0
+nmap g<right> g$
+nmap g/       yiw:vimgrep /\<<C-r>0\>/ **
+nmap g*       g/<cr>:copen<cr>
 
 nnoremap !x :.!sh<CR>
 nnoremap !p !ipsh<CR>

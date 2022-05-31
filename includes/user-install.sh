@@ -138,14 +138,22 @@ done
 # vim plugins
 [ -d ~/.vim/pack ] || mkdir -p ~/.vim/pack
 cd ~/.vim/pack
-[ -d colorizer ] || git clone https://github.com/lilydjwg/colorizer colorizer/start/colorizer
+[ -d colorizer ] || git clone https://github.com/lilydjwg/colorizer  colorizer/start/colorizer
+[ -d emmet]      || git clone https://github.com/mattn/emmet-vim.git emmet/start/emmet
+if [ ! -d tpope ]; then
+	git clone https://github.com/tpope/vim-fugitive                  tpope/start/fugitive
+    git clone https://github.com/tpope/vim-surround                  tpope/start/surround
+fi
 if [ ! -d airline ]; then
-	git clone https://github.com/vim-airline/vim-airline         airline/start/airline
-	git clone https://github.com/vim-airline/vim-airline-themes  airline/start/airline-themes
+	git clone https://github.com/vim-airline/vim-airline             airline/start/airline
+	git clone https://github.com/vim-airline/vim-airline-themes      airline/start/airline-themes
 fi
 cd -
-
-git clone https://github.com/preservim/nerdtree.git ~/.vim/pack/vendor/start/nerdtree
+# generate help files
+for dir in $(find ~/.vim/pack -type d -name doc)
+do
+    vim -u NONE -c "$dir" -c q
+done
 
 
 # configure xed text editor
