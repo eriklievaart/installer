@@ -7,7 +7,7 @@ skip.generate=true
 
 toolkit        master-osgi-install
 osgi           master-osgi-install
-javalightning  master-osgi-install
+jl             master-osgi-install
 
 toolkit        master-install
 pb-parser      master-install
