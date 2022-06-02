@@ -1,4 +1,4 @@
-#!/usr/bin/dash
+#!/bin/dash
 
 for file in $(find -type f $1 | grep -E '[.](xml|txt|sh)$')
 do

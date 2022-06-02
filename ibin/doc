@@ -1,4 +1,4 @@
-#!/usr/bin/dash
+#!/bin/dash
 set -e
 
 root=~/Applications/doclauncher/api
@@ -17,6 +17,7 @@ open_file() {
 
 open_any() {
 	cd "$root"
+	[ -d "$1" ] && exec lynx "$1/index.html"
 	for project in $(ls)
 	do
 		test -d "$project" && open_file "$root/$project" "$1"

@@ -1,4 +1,4 @@
-#!/usr/bin/dash
+#!/bin/dash
 # script to run git commands on multiple git repos simultaneously
 set -e
 

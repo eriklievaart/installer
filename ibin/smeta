@@ -1,4 +1,4 @@
-#!/usr/bin/dash
+#!/bin/dash
 
 #######################################################
 ## verify files against hashes stored in smeta files ##

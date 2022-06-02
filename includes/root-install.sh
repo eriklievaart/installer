@@ -1,4 +1,4 @@
-#!/usr/bin/dash
+#!/bin/dash
 set -e
 
 . ./globals.sh
@@ -44,15 +44,17 @@ zbashrc() {
 		echo ". $Z_SCRIPT" >> $bashrc
 	fi
 }
+
 Z_DIR="/opt/q"
 Z_SCRIPT="$Z_DIR/q.sh"
 if [ -d "$Z_DIR" ]; then
-	echo "shortcut(q) is already installed"
+	echo "updating shortcut(q)"
+	cp -r q/* $Z_DIR
 else
 	echo "installing shortcut(q)"
-	cp -r q /opt/q
-	cd /opt/q
-	chmod -w /opt/q/*
+	cp -r q $Z_DIR
+	cd $Z_DIR
+	chmod -w $Z_DIR/*
 	zbashrc /root
 	zbashrc "$HOME"
 fi

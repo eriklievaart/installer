@@ -1,4 +1,4 @@
-#!/usr/bin/dash
+#!/bin/dash
 
 pkill -i -f steam
 sleep 1

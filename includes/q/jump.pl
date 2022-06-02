@@ -1,8 +1,9 @@
-#!/usr/bin/perl
+#!/bin/perl
 use 5.27.1;
 
-my $root="$ENV{'HOME'}/.cache/q";
-my $cache="$root/visited.txt";
+my $root = "$ENV{'HOME'}/.cache/q";
+my $cache = "$root/visited.txt";
+my $sensitive = 1;
 system "mkdir -p $root";
 
 sub trim {
@@ -50,10 +51,11 @@ sub update {
 # delete all entries that don't have all passed parts in order
 sub filter_parameters {
 	ELEMENT: for (my $i = 0; $i<$#_+1; $i++) {
-		my $element=$_[$i];
-		my $index=0;
+		my $element = $sensitive ? $_[$i] : uc($_[$i]);
+		my $index = 0;
 		foreach (@ARGV) {
-			$index = index($element, $_, $index);
+			my $arg = $sensitive ? $_ : uc($_);
+			$index = index($element, $arg, $index);
 			if ($index == -1) {
 				splice @_, $i--, 1 if ($index == -1);
 				last;
@@ -63,11 +65,17 @@ sub filter_parameters {
 	return @_;
 }
 
+sub tail {
+	my $value = $_[0];
+	my $result = substr($value, rindex($value, '/') + 1);
+	return $sensitive ? $result : uc($result);
+}
+
 # last part of query must be in name
 sub filter_tail {
-	my $tail = @ARGV[$#ARGV] =~ s|.*/|/|r;
+	my $tail = tail(@ARGV[$#ARGV]);
 	for (my $i = 0; $i<$#_+1; $i++) {
-		my $name = $_[$i] =~ s|.*/|/|r;
+		my $name = tail($_[$i]);
 		splice @_, $i--, 1 if index($name, $tail) == -1;
 	}
 	return @_;
@@ -93,6 +101,13 @@ sub prioritize {
 		push @filter, $_ if $name eq $tail;
 	}
 	return @filter if $#filter >= 0;
+
+	for (@paths) {
+		my $name = $_ =~ s|.*/||r;
+		push @filter, $_ if index($name, $tail) == 0;
+	}
+	return @filter if $#filter >= 0;
+
 	return @paths;
 }
 
@@ -112,9 +127,17 @@ sub filter {
 if (@ARGV[0] eq "-u") {
 	update(@ARGV[1]);
 
-} elsif(@ARGV[0] eq "-f") {
+} elsif (@ARGV[0] eq "-f") {
 	shift @ARGV;
 	filter(paths());
+
+} elsif (@ARGV[0] eq "-i") {
+	shift @ARGV;
+	$sensitive = 0;
+	filter(paths());
+
+} else {
+	say "unknown flag @ARGV";
 }
 
 

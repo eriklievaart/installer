@@ -3,6 +3,7 @@ use 5.27.1;
 
 my @errors = ();
 my $cache = '/tmp/ignore.txt';
+my $sensitive = 1;
 
 
 ## subs ##
@@ -41,7 +42,7 @@ push @errors, "#partial.match# @result" unless $result[0] eq '/tmp/github';
 my @result = ('/tmp/git/bar');
 my @result = filter_parameters(@result);
 my @result = filter_tail(@result);
-push @errors, "#exact.match# @result" if $#result == 0;
+push @errors, "#mismatch# @result" if $#result == 0;
 
 #slash# q t/b accepts /tmp/git/bar
 @ARGV = ('t/b');
@@ -71,29 +72,44 @@ if ($result[0] ne '/tmp/foo' || $result[1] ne '/tmp/bar/foo') {
 	push @errors, "#prioritize.order# @result";
 }
 
+#prioritize.exact# q foo prioritizes /tmp/fool over /tmp/junk-food
+@ARGV = ('foo');
+my @result = ('/tmp/fool', '/tmp/junk-food');
+my @result = prioritize(@result);
+push @errors, "#prioritize.starts# @result" if $#result == 1 || $result[0] ne '/tmp/fool';
+
+#insensitive.path# q git should match /tmp/GIT
+$sensitive = 0;
+@ARGV = ('git');
+my @result = ('/tmp/GIT');
+my @result = filter_parameters(@result);
+my @result = filter_tail(@result);
+push @errors, "#insensitive.path# '@result'" unless $result[0] eq '/tmp/GIT';
+
+#insensitive.arg# q GIT should match /tmp/git
+$sensitive = 0;
+@ARGV = ('GIT');
+my @result = ('/tmp/git');
+my @result = filter_parameters(@result);
+my @result = filter_tail(@result);
+push @errors, "#insensitive.arg# '@result'" unless $result[0] eq '/tmp/git';
+
+#tail# tail(/tmp/git) = git
+$sensitive = 1;
+my $result = tail('/tmp/git');
+push @errors, "#tail# '$result'" unless $result eq 'git';
+
+#tail.insensitive# tail(/tmp/git) = GIT
+$sensitive = 0;
+my $result = tail('/tmp/git');
+push @errors, "#tail.insensitive# '$result'" unless $result eq 'GIT';
+
+
+
 for(@errors) {
 	say "error: $_";
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+say "*all tests passed*" if $#errors == -1
 
 
 

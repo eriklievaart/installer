@@ -1,27 +1,22 @@
 #!/bin/dash
 set -e
 
-if [ "$1" = "-i" ]; then
-	echo
-	echo '<enter> to run tests, type "bash" to start bash'
-	read input
-fi
-if [ "$input" != "" ]; then
+interactive() {
 	echo ""
 	echo "installer script located at:"
 	echo "/installer/test/integration/entrypoint.sh"
-	echo ""
-	exec "$input"
-fi
+	exec bash
+}
+[ "$1" = "-i" ] && interactive
 
 # mock setup
 name=automated
-useradd ${name:?}
-
+grep -q $name /etc/passwd || useradd ${name:?}
 export USER="$name"
 export homedir=/home/${name:?}
 export java_version=11
 git="$homedir/Development/git"
+
 
 # create normal desktop linux directory structure
 mkdir -p "$git"
@@ -35,16 +30,21 @@ echo "#!/bin/dash" >> /bin/ufw
 echo "echo 'dummy ufw' >> /bin/ufw"
 chmod +x /bin/ufw
 
-echo 'Acquire::http::Proxy "http://apt-cache:3142";' > /etc/apt/apt.conf.d/01proxy
+echo 'Acquire::http::Proxy "http://apt-cacher:3142";' > /etc/apt/apt.conf.d/01proxy
+
 cp -r /installer "$git"
-chown -R $name /home/$name
+chown -R $name $homedir
 
 cd "$git/installer/includes"
+find | grep root
+echo "$PWD"
 ./root-install.sh
 su ${USER:?} -c ./user-install.sh
 
 cd ../projects
 su ${USER:?} -c './projects.sh -a'
+cd -
 
+[ "$(pgrep bash)" = "" ] && interactive
 
 

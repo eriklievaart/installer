@@ -1,4 +1,4 @@
-#!/usr/bin/dash
+#!/bin/dash
 set -e
 
 die() {
@@ -17,7 +17,7 @@ else
 fi
 
 if [ ! -f "$path" ]; then
-	echo "#!/usr/bin/$interpreter" > $path
+	echo "#!/bin/$interpreter" > $path
 fi
 chmod +x $path
 vim $path

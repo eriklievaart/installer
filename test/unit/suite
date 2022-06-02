@@ -7,7 +7,7 @@ script=$root/jumpu
 mkdir -p $root
 
 sed '/^## subs ##/,$d' jump-u > $script
-sed -n '/^sub/,/^}/p' $IBIN/jump >> $script
+sed -n '/^sub/,/^}/p' ~/Development/git/installer/includes/q/jump.pl >> $script
 sed '0,/^## subs ##/d' jump-u >> $script
 
 chmod +x $script

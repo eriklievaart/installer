@@ -1,4 +1,4 @@
-#!/usr/bin/dash
+#!/bin/dash
 
 channels=$(pacmd list-sinks | sed '/name:/!d;s/[^<]*<alsa_output[.]//;s/[.][^.]*>$//' | nl -v 0)
 

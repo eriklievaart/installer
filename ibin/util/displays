@@ -1,4 +1,4 @@
-#!/usr/bin/dash
+#!/bin/dash
 set -e
 
 cache=/tmp/snap/cache
@@ -30,7 +30,7 @@ do
 	fi
 
 	file="$cache/display$display"
-	echo "#!/usr/bin/dash" > $file
+	echo "#!/bin/dash" > $file
 	echo "dx=$dx" >> $file
 	echo "dy=$dy" >> $file
 	echo "dw=$dw" >> $file

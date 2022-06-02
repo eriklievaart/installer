@@ -25,10 +25,13 @@ cd projects
 if [ ! -z "$@" ]; then
 	./projects.sh "$@"
 fi
+cd -
 
 STAMP_END=$(date +%s)
 spent=$(expr "$STAMP_END" '-' "$STAMP_START")
 echo "total time spent = $spent seconds"
 
+# load bashrc, sourcing does not work from script
+exec bash
 
 
