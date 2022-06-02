@@ -2,7 +2,7 @@
 
 # global properties
 HOME=~
-echo "$homedir"
+echo "homedir: $homedir"
 if [ "$homedir" != "" ]; then
 	HOME="$homedir"
 fi

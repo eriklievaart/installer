@@ -41,4 +41,5 @@ install openjdk-${java_version?}-jdk
 install openjdk-${java_version?}-doc
 install openjdk-${java_version?}-source
 update-alternatives --set java /usr/lib/jvm/java-${java_version?}-openjdk-amd64/bin/java
+echo
 

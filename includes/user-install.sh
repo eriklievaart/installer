@@ -1,5 +1,6 @@
 #!/bin/dash
 set -e
+
 . ./globals.sh
 
 LOG_DIR=/tmp/installer
@@ -139,7 +140,7 @@ done
 [ -d ~/.vim/pack ] || mkdir -p ~/.vim/pack
 cd ~/.vim/pack
 [ -d colorizer ] || git clone https://github.com/lilydjwg/colorizer  colorizer/start/colorizer
-[ -d emmet]      || git clone https://github.com/mattn/emmet-vim.git emmet/start/emmet
+[ -d emmet ]     || git clone https://github.com/mattn/emmet-vim.git emmet/start/emmet
 if [ ! -d tpope ]; then
 	git clone https://github.com/tpope/vim-fugitive                  tpope/start/fugitive
     git clone https://github.com/tpope/vim-surround                  tpope/start/surround
