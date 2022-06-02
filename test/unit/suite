@@ -1,0 +1,16 @@
+#!/bin/dash
+
+root=/tmp/suite
+script=$root/jumpu
+
+[ -d $root ] && rm -rf $root
+mkdir -p $root
+
+sed '/^## subs ##/,$d' jump-u > $script
+sed -n '/^sub/,/^}/p' $IBIN/jump >> $script
+sed '0,/^## subs ##/d' jump-u >> $script
+
+chmod +x $script
+$script
+
+

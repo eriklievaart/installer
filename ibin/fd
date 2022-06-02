@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/dash
 # script for launching a felix docker container
 set -e
 
@@ -64,7 +64,7 @@ restart() {
 }
 
 auto() {
-	app=$(echo "$@" | sed 's/.* //')
+	app=$(echo "$@" | sed 's/.* //;s/:.*//')
 	terminate $app
 	build $@
 	wait_on_terminate $app

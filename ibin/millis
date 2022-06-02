@@ -1,2 +1,2 @@
-#!/bin/sh
+#!/usr/bin/dash
 echo $(($(date +%s%N)/1000000))

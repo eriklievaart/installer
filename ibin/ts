@@ -1,4 +1,0 @@
-#!/bin/dash
-# commandline thesaurus
-
-dict -d moby-thesaurus "$1"

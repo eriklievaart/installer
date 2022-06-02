@@ -1,0 +1,19 @@
+#!/usr/bin/dash
+
+deamon() {
+	docker run --name $1 --rm -d $@
+}
+run() {
+	docker run --name $1 --rm -it $@
+}
+
+flag="$1"
+shift
+
+case $flag in
+	-d) deamon "$@";;
+	-r) run "$@";;
+esac
+
+
+

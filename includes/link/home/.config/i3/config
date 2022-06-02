@@ -124,7 +124,7 @@ bindsym $sup+$shift+Right move workspace to output right
 
 bindsym $sup+$ctrl+a           exec audtool --playlist-auto-advance-toggle && exec notify-send "advance: $(audtool --playlist-auto-advance-status)"
 bindsym $sup+$ctrl+i           exec notify-send "$(audtool --current-song-filename | sed 's:.*/::')"
-bindsym $sup+$ctrl+l           exec audacious-queue -l
+bindsym $sup+$ctrl+l           exec audaciousctl -l
 bindsym $sup+$ctrl+m           exec pkill audacious; exec pkill vlc
 bindsym $sup+$ctrl+p           exec audtool --playback-pause
 bindsym $sup+$ctrl+q           exec audtool --shutdown
@@ -140,8 +140,8 @@ bindsym $sup+$ctrl+Right       exec audtool --playlist-advance
 bindsym $sup+$ctrl+comma       exec audtool --playback-seek-relative -10
 bindsym $sup+$ctrl+Escape      exec mpsort s $(zenity --entry --text='mpsort') >> /tmp/mpsort
 bindsym $sup+$ctrl+period      exec audtool --playback-seek-relative +10
-bindsym $sup+$ctrl+KP_Multiply exec audacious-queue -d
-bindsym $sup+$ctrl+KP_Divide   exec audacious-queue -f
+bindsym $sup+$ctrl+KP_Multiply exec audaciousctl -d
+bindsym $sup+$ctrl+KP_Divide   exec audaciousctl -f
 bindsym $sup+$ctrl+KP_Add      exec amixer -D pulse sset Master 5%+
 bindsym $sup+$ctrl+KP_Subtract exec amixer -D pulse sset Master 5%-
 bindsym $sup+$ctrl+equal scratchpad show

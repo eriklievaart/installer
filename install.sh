@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/bin/bash
 # usage: ./install    = skip projects
 # usage: ./install -a = git pull & install projects
 # usage: ./install -i = install projects
@@ -19,6 +19,7 @@ cd includes
 	sudo dash root-install.sh
 	dash user-install.sh
 cd -
+. ~/.bashrc
 
 # install my own hobby projects
 cd projects

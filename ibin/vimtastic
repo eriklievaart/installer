@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/usr/bin/dash
 set -e
 log=/tmp/build/vimtastic.log
 [ -f "$log" ] && rm "$log"

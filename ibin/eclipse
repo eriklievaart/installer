@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/dash
 set -e
 
 installer=~/Development/git/installer/includes/eclipse-minimal.sh

@@ -41,7 +41,7 @@ set splitbelow
 set splitright
 
 set path=.,~/Development/git/installer/ibin,~/Development/git/cheat/**,**
-set suffixesadd=.java,.txt
+set suffixesadd=.java,.txt,.sh
 
 
 " @ NORMAL MODE @ "
@@ -97,8 +97,8 @@ nmap <F2> @='^xj'<CR>
 nmap <F3> @='I#<C-V><Esc>j'<CR>
 " edit the vimrc
 nmap <F6> :hide edit $MYVIMRC<CR>
-" on F8 clear console and run current file, arguments can be stored in register @a
-nmap <F8> :w <Bar> !clear; ./% <C-R>a<CR>
+" on F8 clear console and run current file, arguments can be stored in register @p
+nmap <F8> :w <Bar> !clear; ./% <C-R>p<CR>
 " on F12 copy document to system clipboard
 nmap <F12> :0,$ yank + <CR>
 

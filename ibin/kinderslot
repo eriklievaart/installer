@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/usr/bin/dash
 
 # install with crontab -e
 # * 0-6 * * * /home/eazy/Development/git/installer/ibin/kinderslot

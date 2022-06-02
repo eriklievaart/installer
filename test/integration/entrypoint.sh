@@ -1,6 +1,18 @@
 #!/bin/dash
 set -e
 
+if [ "$1" = "-i" ]; then
+	echo
+	echo '<enter> to run tests, type "bash" to start bash'
+	read input
+fi
+if [ "$input" != "" ]; then
+	echo ""
+	echo "installer script located at:"
+	echo "/installer/test/integration/entrypoint.sh"
+	echo ""
+	exec "$input"
+fi
 
 # mock setup
 name=automated

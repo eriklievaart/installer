@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/dash
 # convenience script for running qemu without having to specify a long list of parameters
 
 cache=~/.cache/autoqemu

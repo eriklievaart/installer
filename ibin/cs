@@ -1,7 +1,24 @@
-#!/bin/dash
+#!/usr/bin/dash
 set -e
 
-[ -f $1 ] || echo "#!/bin/dash" > $1
-chmod +x $1
-vim $1
+die() {
+	echo >&2 "$@"
+	exit 1
+}
+
+if [ $# -eq 1 ]; then
+	interpreter="dash"
+	path="$1"
+elif [ $# -eq 2 ]; then
+	interpreter="$1"
+	path="$2"
+else
+	die "invalid number of argument: $#"
+fi
+
+if [ ! -f "$path" ]; then
+	echo "#!/usr/bin/$interpreter" > $path
+fi
+chmod +x $path
+vim $path
 

@@ -39,22 +39,20 @@ swapconfig=/etc/sysctl.d/99-swappiness.conf
 zbashrc() {
 	home=${1:?}
 	bashrc=${home:?}/.bashrc
-	if ! cat $bashrc | grep -q '/z/z.sh'; then
+	if ! cat $bashrc | grep -q '/opt/q/q.sh'; then
 		echo "" >> $bashrc
-		echo '_Z_DATA=$HOME/.cache/z' >> $bashrc
 		echo ". $Z_SCRIPT" >> $bashrc
 	fi
 }
-Z_PARENT="/opt"
-Z_DIR="$Z_PARENT/z"
-Z_SCRIPT="$Z_DIR/z.sh"
+Z_DIR="/opt/q"
+Z_SCRIPT="$Z_DIR/q.sh"
 if [ -d "$Z_DIR" ]; then
-	echo "shortcut(z) is already installed"
+	echo "shortcut(q) is already installed"
 else
-	echo "installing shortcut(z)"
-	cd "$Z_PARENT"
-	git clone https://github.com/rupa/z
-	chmod a+x "$Z_SCRIPT"
+	echo "installing shortcut(q)"
+	cp -r q /opt/q
+	cd /opt/q
+	chmod -w /opt/q/*
 	zbashrc /root
 	zbashrc "$HOME"
 fi

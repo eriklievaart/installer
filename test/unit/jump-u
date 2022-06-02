@@ -1,0 +1,99 @@
+#!/bin/perl
+use 5.27.1;
+
+my @errors = ();
+my $cache = '/tmp/ignore.txt';
+
+
+## subs ##
+
+
+#in.order# q foo bar accepts /tmp/foo/bar
+@ARGV = ('foo', 'bar');
+my @result = ('/tmp/foo/bar');
+my @result = filter_parameters(@result);
+my @result = filter_tail(@result);
+push @errors, "#in.order# @result" unless $result[0] eq '/tmp/foo/bar';
+
+#out.of.order# q bar foo baz rejects /tmp/foo/bar/baz
+@ARGV = ('baz', 'bar', 'foo');
+my @result = ('/tmp/bar/baz/foo');
+my @result = filter_parameters(@result);
+my @result = filter_tail(@result);
+push @errors, "#out.of.order# $#result @result" if $#result != -1;
+
+#exact.match# q git accepts /tmp/git
+@ARGV = ('git');
+my @result = ('/tmp/git');
+my @result = filter_parameters(@result);
+my @result = filter_tail(@result);
+push @errors, "#exact.match# @result" unless $result[0] eq '/tmp/git';
+
+#partial.match# q git accepts /tmp/github
+@ARGV = ('git');
+my @result = ('/tmp/github');
+my @result = filter_parameters(@result);
+my @result = filter_tail(@result);
+push @errors, "#partial.match# @result" unless $result[0] eq '/tmp/github';
+
+#mismatch# q git rejects /tmp/git/bar
+@ARGV = ('git');
+my @result = ('/tmp/git/bar');
+my @result = filter_parameters(@result);
+my @result = filter_tail(@result);
+push @errors, "#exact.match# @result" if $#result == 0;
+
+#slash# q t/b accepts /tmp/git/bar
+@ARGV = ('t/b');
+my @result = ('/tmp/git/bar');
+my @result = filter_parameters(@result);
+my @result = filter_tail(@result);
+push @errors, "#slash# @result" unless $result[0] eq '/tmp/git/bar';
+
+#slash.tail# q t/b rejects /tmp/git/bar/foo
+@ARGV = ('t/b');
+my @result = ('/tmp/git/bar/foo');
+my @result = filter_parameters(@result);
+my @result = filter_tail(@result);
+push @errors, "#slash.tail# @result" if $#result == 0;
+
+#prioritize.exact# q foo prioritizes /tmp/foo over /tmp/fool
+@ARGV = ('foo');
+my @result = ('/tmp/fool', '/tmp/foo');
+my @result = prioritize(@result);
+push @errors, "#prioritize.exact# @result" if $#result == 1 || $result[0] ne '/tmp/foo';
+
+#prioritize.order# q foo keeps multiple exact matches in order
+@ARGV = ('foo');
+my @result = ('/tmp/foo', '/tmp/bar/foo');
+my @result = prioritize(@result);
+if ($result[0] ne '/tmp/foo' || $result[1] ne '/tmp/bar/foo') {
+	push @errors, "#prioritize.order# @result";
+}
+
+for(@errors) {
+	say "error: $_";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
