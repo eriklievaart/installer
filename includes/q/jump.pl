@@ -114,13 +114,15 @@ sub prioritize {
 # select the most appropriate match based on the passed arguments
 sub filter {
 	my @paths = @_;
+	my $filter = $#ARGV > -1;
 
-	@paths = filter_parameters(@paths);
-	@paths = filter_tail(@paths);
-	@paths = rm_missing(@paths);
-	@paths = prioritize(@paths);
+	if ($filter) {
+		@paths = filter_parameters(@paths);
+		@paths = filter_tail(@paths);
+		@paths = rm_missing(@paths);
+		@paths = prioritize(@paths);
+	}
 	say $_ for(@paths);
-
 	return @paths;
 }
 

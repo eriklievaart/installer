@@ -1,6 +1,4 @@
 
-colorscheme default
-
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_statusline_ontop=0
 let g:airline_theme='powerlineish'
@@ -10,11 +8,15 @@ let g:user_emmet_leader_key='<C-p>'
 " fix airline in tmux
 set t_Co=256
 
+hi Search ctermbg=magenta ctermfg=black
+au Filetype * hi Error ctermbg=234 ctermfg=darkred cterm=NONE
+au FileType * hi MatchParen ctermbg=darkgray
+
 " use syntax highlighting on search
 syntax on
 
 " don't highlight matching parenthesis
-let loaded_matchparen = 0
+" let loaded_matchparen = 1
 
 set noautoindent
 set nocindent
@@ -99,6 +101,8 @@ nmap <F3> @='I#<C-V><Esc>j'<CR>
 nmap <F6> :hide edit $MYVIMRC<CR>
 " on F8 clear console and run current file, arguments can be stored in register @p
 nmap <F8> :w <Bar> !clear; ./% <C-R>p<CR>
+" open file explorer
+nmap <F9> :Explore<CR>
 " on F12 copy document to system clipboard
 nmap <F12> :0,$ yank + <CR>
 
@@ -135,6 +139,30 @@ vmap <S-Tab> <
 
 " nmap # :normal I#<enter>
 nmap # @='I#<C-V><esc>j'<enter>
+
+
+" @auto commands@
+" delete trailing whitespace on save
+autocmd BufWritePre * :%s/\s\+$//e
+
+autocmd Filetype css compiler csslint
+function! ToggleQuickFix()
+    if empty(filter(getwininfo(), 'v:val.quickfix'))
+        copen
+    else
+        cclose
+    endif
+endfunction
+
+nmap <silent> <F4> :!clear<cr> :make %<cr>
+nmap <F5> :call ToggleQuickFix()<cr>
+
+
+
+" keybinding make
+" keybinding copen
+" keybinding cclose
+
 
 
 

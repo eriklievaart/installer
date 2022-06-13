@@ -13,6 +13,7 @@ alias dep="cat ~/Development/repo/index.txt | grep"
 alias bashrc='vim ~/.bashrc'
 alias hgrep="history | grep"
 alias grepi="grep -i"
+alias wps="watch -n 0.5 pgrep -a"
 alias findg="find . | grep"
 
 alias todo='cd ~/Development/git/cheat/; vim drive/todo.txt'
