@@ -15,5 +15,6 @@ flatpak run org.gajim.Gajim &
 nmcli radio wifi off &
 mkdir -p /tmp/vim/swp
 sink streamer
+which gajim > /dev/null && gajim
 
 

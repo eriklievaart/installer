@@ -179,6 +179,7 @@ for_window [class="(?i)vlc"]                                        move workspa
 for_window [class="(?i)xviewer"]                                    move workspace 6; workspace 6
 for_window [class="(?i)viewnior"]                                   move workspace 6; workspace 6
 for_window [class="(?i)shotcut"]                                    move workspace 7; workspace 7
+for_window [class="(?i)obs"]                                    move workspace 7; workspace 7
 for_window [class="(?i)gajim"]                                      move workspace 8; workspace 8
 for_window [class="(?i)steam"]                                      move workspace 9; workspace 9
 for_window [class="(?i)java-lang-thread" title="(?i)q filebrowser"] move workspace 10; workspace 10

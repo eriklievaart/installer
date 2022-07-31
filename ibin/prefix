@@ -1,0 +1,23 @@
+#!/bin/perl
+use 5.27.1;
+
+chomp(my @lines = <STDIN>);
+
+my $even = $lines[0] =~ s/(: *).*/$1/r;
+my $odd  = $lines[1] =~ s/(: *).*/$1/r;
+
+for(my $i = 0; $i <= $#lines; $i++) {
+	$_ = $lines[$i];
+
+	if(/^[a-zA-Z0-9]+:.*/) {
+		say "$lines[$i]";
+
+	} elsif(/^\s*$/ || /^{/) {
+		say "$_";
+		 ($odd, $even) = ($even, $odd);
+
+	} else {
+		my $prefix = $i % 2 == 0 ? $even : $odd;
+		say "$prefix$_";
+	}
+}

@@ -70,7 +70,7 @@ nnoremap          <space>t       :vert terminal          <CR>
 nnoremap          <space>v       :vsplit                 <CR>
 nnoremap          <space>w       :set invwrap            <CR>
 nnoremap          <space>.       :cnext                  <CR>
-nnoremap          <space>,       :clast                  <CR>
+nnoremap          <space>,       :cprevious              <CR>
 nnoremap          <space>/       :copen                  <CR>
 nnoremap          <space>$       :%s/$\(\w\+\)/${\1:?}/gc<CR>
 nnoremap          <space>4       <space>$                <CR>
@@ -92,6 +92,7 @@ nnoremap <silent> <C-A-Down>  :bn<CR>
 
 " ctrl-n to toggle line numbers
 nmap <C-N> :set invnumber<CR>
+
 
 " delete first character on line and move down
 nmap <F2> @='^xj'<CR>
@@ -144,8 +145,11 @@ nmap # @='I#<C-V><esc>j'<enter>
 " @auto commands@
 " delete trailing whitespace on save
 autocmd BufWritePre * :%s/\s\+$//e
+autocmd BufNewFile,BufRead * if getline(1) == '#!/bin/dash' | set filetype=sh | endif
 
 autocmd Filetype css compiler csslint
+autocmd Filetype conf set makeprg=/tmp/a/iaac | set errorformat=*error*\ %f:%l%m
+
 function! ToggleQuickFix()
     if empty(filter(getwininfo(), 'v:val.quickfix'))
         copen
@@ -154,14 +158,12 @@ function! ToggleQuickFix()
     endif
 endfunction
 
+nnoremap \\ :cnext<cr>
+nnoremap \. :cnext<cr>
+nnoremap \, :cprevious<cr>
+
 nmap <silent> <F4> :!clear<cr> :make %<cr>
 nmap <F5> :call ToggleQuickFix()<cr>
-
-
-
-" keybinding make
-" keybinding copen
-" keybinding cclose
 
 
 
