@@ -62,6 +62,7 @@ nmap g*       g/<cr>:copen<cr>
 nnoremap !x :.!sh<CR>
 nnoremap !p !ipsh<CR>
 
+nmap              <space>4       <space>$                <CR>
 nnoremap          <space>c       :normal      <C-V><C-W>c<CR>
 nnoremap          <space>d       :bd                     <CR>
 nnoremap          <space>r       :w                      <CR>:compiler vimtastic <CR>:set shellpipe= <CR>:set makeef=/tmp/build/vimtastic.log <CR>:make <CR>
@@ -73,7 +74,6 @@ nnoremap          <space>.       :cnext                  <CR>
 nnoremap          <space>,       :cprevious              <CR>
 nnoremap          <space>/       :copen                  <CR>
 nnoremap          <space>$       :%s/$\(\w\+\)/${\1:?}/gc<CR>
-nnoremap          <space>4       <space>$                <CR>
 nnoremap <silent> <space><space> :nohlsearch             <CR>
 nnoremap <silent> <space><left>  g0
 nnoremap <silent> <space><right> g$
@@ -93,7 +93,8 @@ nnoremap <silent> <C-A-Down>  :bn<CR>
 " ctrl-n to toggle line numbers
 nmap <C-N> :set invnumber<CR>
 
-
+" enable digraph shortcuts
+nmap <F1> :call Digraph()<CR>
 " delete first character on line and move down
 nmap <F2> @='^xj'<CR>
 " comment line with '#' and move down
@@ -166,5 +167,33 @@ nmap <silent> <F4> :!clear<cr> :make %<cr>
 nmap <F5> :call ToggleQuickFix()<cr>
 
 
+function! Digraph()
 
+	imap ,1 <C-K>1s
+	imap ,2 <C-K>2s
+	imap ,3 <C-K>3s
+	imap ,4 <C-K>4s
+	imap ,5 <C-K>5s
+	imap ,6 <C-K>6s
+	imap ,7 <C-K>7s
+	imap ,8 <C-K>8s
+	imap ,9 <C-K>9s
+	imap ,0 <C-K>0s
+	imap ,- <C-K>-s
+	imap ,+ <C-K>+s
+
+	imap .1 <C-K>1S
+	imap .2 <C-K>2S
+	imap .3 <C-K>3S
+	imap .4 <C-K>4S
+	imap .5 <C-K>5S
+	imap .6 <C-K>6S
+	imap .7 <C-K>7S
+	imap .8 <C-K>8S
+	imap .9 <C-K>9S
+	imap .0 <C-K>0S
+	imap .- <C-K>-S
+	imap .+ <C-K>+S
+
+endfunction
 
