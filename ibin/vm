@@ -4,28 +4,25 @@
 cache=~/.cache/autoqemu
 params="-m 4G -smp 2 -cpu host -enable-kvm -soundhw hda "
 
-if [ "$1" != "" ]; then
+while [ "$1" != "" ]
+do
 	if [ -f "$1" ]; then
 		echo "iso found"
 		params="$params -cdrom $1 -boot d"
-
-		if [ ! "$(ls *.img)" ]; then
-			echo 'create image of size [100G]:'
-			read size
-			size=$([ "$size" = "" ] && echo 100G || echo "$size")
-			qemu-img create disk.img $size
-		fi
 	elif [ -d "$1" ]; then
-		cd "$1"
+		dir="$1"
 	else
 		dir=$(sed -nr "/\/$1$/{p;q}" $cache)
-		if [ -d "$dir" ]; then
-			cd "$dir"
-		else
-			echo "*invalid*: $1 => $dir"
-			exit 0
-		fi
-	fi	
+	fi
+	shift
+done
+
+cd "$dir"
+if [ ! "$(ls *.img)" ]; then
+	echo 'create image of size [50G]:'
+	read size
+	size=$([ "$size" = "" ] && echo 50G || echo "$size")
+	qemu-img create disk.img $size
 fi
 
 if [ ! "$(ls *.img)" ]; then

@@ -105,6 +105,7 @@ bindsym $sup+$alt+Right move right
 
 bindsym $sup+$shift+c reload
 bindsym $sup+$shift+h layout splitv
+bindsym $sup+$shift+m exec toggle-mousepad
 bindsym $sup+$shift+r restart
 bindsym $sup+$shift+t layout tabbed
 bindsym $sup+$shift+v layout splith

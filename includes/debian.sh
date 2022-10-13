@@ -7,7 +7,7 @@ install() {
 		update_once
 		echo
 		echo "Installing $1."
-		apt -y -qq install $1
+		apt-get -y install $1
 		check_status $?
 	else
 		echo "$1 is already installed"

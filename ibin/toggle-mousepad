@@ -1,0 +1,22 @@
+#!/bin/dash
+
+marker=/tmp/touchpad-disabled
+
+
+for id in $(xinput list | grep -i touchpad | sed -r 's/.*id=([0-9]*).*/\1/')
+do
+	if [ -f $marker ]; then
+		xinput --enable $id
+		rm $marker
+		notify-send "touchpad enabled"
+	else
+		xinput --disable $id
+		touch $marker
+		notify-send "touchpad disabled"
+	fi
+done
+
+xinput list-props $id | grep -i 'touchpad\|enabled\|disabled'
+
+
+

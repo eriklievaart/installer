@@ -1,5 +1,5 @@
 #!/bin/perl
-use 5.27.1;
+use 5.26.1;
 
 my $root = "$ENV{'HOME'}/.cache/q";
 my $cache = "$root/visited.txt";
