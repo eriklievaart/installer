@@ -86,6 +86,7 @@ bindsym $sup+F9  exec link-select surf
 bindsym $sup+F10 exec link-select chromium-browser
 bindsym $sup+F11 fullscreen toggle
 
+bindsym $sup+$alt+b exec "notify-send $(upower --dump | sed -nr '/\/battery/,/^$/{/percentage/!d;s/.* //;p}')"
 bindsym $sup+$alt+c workspace 1; exec firefox -new-window "http://eriklievaart.com/cheat?q=$(zenity --entry --text="lookup")"
 bindsym $sup+$alt+d exec sakura -e "tty-clock -cs -f '%a %d-%m-%Y'"
 bindsym $sup+$alt+l exec sakura -e "docker run --rm -it lievaart/lynx"
