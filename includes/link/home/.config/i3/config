@@ -180,8 +180,8 @@ bindsym $sup+$ctrl+$alt+equal exec dp -p '='
 # application window rules
 for_window [class="(?i)gvim"]                                       move workspace 4; workspace 4
 for_window [class="(?i)vlc"]                                        move workspace 5; workspace 5
-for_window [class="(?i)xviewer"]                                    move workspace 6; workspace 6
-for_window [class="(?i)viewnior"]                                   move workspace 6; workspace 6
+for_window [class="(?i)xviewer"]                                    move workspace 9; workspace 9
+for_window [class="(?i)viewnior"]                                   move workspace 9; workspace 9
 for_window [class="(?i)shotcut"]                                    move workspace 7; workspace 7
 for_window [class="(?i)obs"]                                        move workspace 7; workspace 7
 for_window [class="(?i)steam"]                                      move workspace 9; workspace 9
