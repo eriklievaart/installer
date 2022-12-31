@@ -1,0 +1,9 @@
+#!/bin/dash
+set -x
+
+if [ "$1" = "" ]; then
+	echo "no param set"
+else
+	wmctrl -a $1
+fi
+

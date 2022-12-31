@@ -2,7 +2,6 @@
 # script for launching a felix docker container
 set -e
 
-
 die() {
 	echo >&2 "$@"
 	exit 1
@@ -19,9 +18,9 @@ if [ "$#" -lt 1 ]; then
 fi
 
 terminate() {
-	if docker ps | sed -r '1d;s/.* //' | grep -q "$1"; then
-		echo "stopping container $1"
-		docker stop $1 &
+	if docker ps | sed -r '1d;s/.* //' | grep -q "${1:?}"; then
+		echo "fd: stopping container ${1:?}"
+		docker stop ${1:?} &
 	fi
 }
 
@@ -29,67 +28,81 @@ build() {
 	antastic $@
 }
 
-start(){
-	override=~/Applications/$1/docker.sh
-	if [ -f "$override" ]; then
-		echo "using docker override: $override"
-		$override &
+init_properties() {
+	if [ ! -f "${1:?}" ]; then
+		defaults=$IBIN/util/fd.properties
+		if [ -f "${defaults:?}" ]; then
+			echo "fd: initializing property file: ${1:?}"
+			cp -n "${defaults:?}" "${1:?}"
+		else
+			die "fd: missing defaults ${defaults:?}"
+		fi
+	fi
+}
+
+start() {
+	override=~/Applications/${1:?}/docker.sh
+	if [ -f "${override:?}" ]; then
+		echo "fd: using docker override: ${override:?}"
+		${override:?} &
 	else
-		echo "to override docker command create $override"
-		volumes="-v $HOME/Applications/$1:/vol/application"
+		echo "fd: to override docker command create ${override:?}"
+		volumes="-v $HOME/Applications/${1:?}:/vol/application"
 
 		# enable hot deployment of freemarker templates
-		osgiprops=~/Applications/$1/osgi.properties
+		osgiprops=~/Applications/${1:?}/osgi.properties
+		init_properties "${osgiprops:?}"
+
 		freemarker=$(cat "${osgiprops:?}" | sed -n '/^\s*com.eriklievaart.javalightning.freemarker.path\s*=/p')
 		if [ "$freemarker" != "" ]; then
-			hotpath=$(echo "$freemarker" | sed -r 's/[^=]+=\s*//')
-			volumes="$volumes -v $HOME/Development/git/$1/main/resources:${hotpath:?}"
+			hotpath=$(echo "${freemarker:?}" | sed -r 's/[^=]+=\s*//')
+			volumes="$volumes -v $HOME/Development/git/${1:?}/main/resources:${hotpath:?}"
 		fi
-		docker run --rm --name $1 $volumes --network=host lievaart/felix &
+		docker run --rm --name ${1:?} ${volumes:?} --network=host lievaart/felix &
 	fi
 }
 
 wait_on_terminate() {
-	[ -z "$1" ] && die "missing argument for wait_on_terminate"
-	while docker ps -a | sed -r '1d;s/.* //' | grep -q "$1";
+	[ -z "${1:?}" ] && die "missing argument for wait_on_terminate"
+	while docker ps -a | sed -r '1d;s/.* //' | grep -q "${1:?}";
 	do
 		sleep 0.1
 	done
 }
 
 restart() {
-	terminate $1
-	wait_on_terminate $1
-	start $1
+	terminate ${1:?}
+	wait_on_terminate ${1:?}
+	start ${1:?}
 }
 
 auto() {
 	app=$(echo "$@" | sed 's/.* //;s/:.*//')
-	terminate $app
+	terminate ${app:?}
 	build $@
-	wait_on_terminate $app
-	start $app
+	wait_on_terminate ${app:?}
+	start ${app:?}
 }
 
 logs() {
-	docker logs $1
+	docker logs ${1:?}
 }
 
 shell() {
-	docker exec -it $1 bash
+	docker exec -it ${1:?} bash
 }
 
 if [ "$#" -eq 1 ]; then
-	auto $1
+	auto ${1:?}
 	exit 0
 fi
 
-case $1 in
-	start|run) start        $2;;
-	stop)      terminate    $2;;
-	restart)   restart      $2;;
-	bash)      shell        $2;;
-	logs)      logs         $2;;
+case ${1:?} in
+	start|run) start        ${2:?};;
+	stop)      terminate    ${2:?};;
+	restart)   restart      ${2:?};;
+	bash)      shell        ${2:?};;
+	logs)      logs         ${2:?};;
 	build)     shift; build $@;;
 	auto)      shift; auto  $@;;
 	--)        shift; auto  $@;;
