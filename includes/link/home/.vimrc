@@ -87,6 +87,8 @@ nnoremap <S-Right> W
 nnoremap   <TAB> >>
 nnoremap <S-TAB> <<
 
+nnoremap <silent> <A-Up>      yyPk<CR>
+nnoremap <silent> <A-Down>    yypk<CR>
 nnoremap <silent> <C-A-Up>    :bp<CR>
 nnoremap <silent> <C-A-Down>  :bn<CR>
 
