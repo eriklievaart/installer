@@ -16,7 +16,7 @@ au FileType * hi MatchParen ctermbg=darkgray
 syntax on
 
 " don't highlight matching parenthesis
-" let loaded_matchparen = 1
+let loaded_matchparen = 1
 
 set noautoindent
 set nocindent
@@ -95,8 +95,6 @@ nnoremap <silent> <C-A-Down>  :bn<CR>
 " ctrl-n to toggle line numbers
 nmap <C-N> :set invnumber<CR>
 
-" enable digraph shortcuts
-nmap <F1> :call Digraph()<CR>
 " delete first character on line and move down
 nmap <F2> @='^xj'<CR>
 " comment line with '#' and move down
@@ -111,6 +109,8 @@ nmap <F9> :Explore<CR>
 nmap <F12> :0,$ yank + <CR>
 
 " @ insert mode @ "
+imap <A-Up>    <esc>yyPi
+imap <A-Down>  <esc>yypi
 imap <S-Up>    <C-o>gk
 imap <S-Down>  <C-o>gj
 imap <S-Left>  <C-o>B
@@ -119,6 +119,7 @@ imap <S-Tab>   <C-o><<
 
 imap <C-B>     <C-o>dB
 imap <C-F>     <C-o>dW
+imap <C-_>     <C-K>hh
 
 imap <F1>      <C-o><F1>
 imap <F2>      <C-o><F2>
@@ -136,10 +137,14 @@ imap <F12>     <C-o><F12>
 inoremap <silent> <C-A-Up>    <ESC>:bp<CR>
 inoremap <silent> <C-A-Down>  <ESC>:bn<CR>
 
+
+
 " @ visual mode @ "
 vmap <F12>   "+y
 vmap <Tab>   >
 vmap <S-Tab> <
+vnoremap <space>y "ay
+vnoremap <space>p "ap
 
 " nmap # :normal I#<enter>
 nmap # @='I#<C-V><esc>j'<enter>
@@ -169,38 +174,14 @@ nmap <silent> <F4> :!clear<cr> :make %<cr>
 nmap <F5> :call ToggleQuickFix()<cr>
 
 
-function! Digraph()
-
-	imap ,1 <C-K>1s
-	imap ,2 <C-K>2s
-	imap ,3 <C-K>3s
-	imap ,4 <C-K>4s
-	imap ,5 <C-K>5s
-	imap ,6 <C-K>6s
-	imap ,7 <C-K>7s
-	imap ,8 <C-K>8s
-	imap ,9 <C-K>9s
-	imap ,0 <C-K>0s
-	imap ,- <C-K>-s
-	imap ,+ <C-K>+s
-
-	imap .1 <C-K>1S
-	imap .2 <C-K>2S
-	imap .3 <C-K>3S
-	imap .4 <C-K>4S
-	imap .5 <C-K>5S
-	imap .6 <C-K>6S
-	imap .7 <C-K>7S
-	imap .8 <C-K>8S
-	imap .9 <C-K>9S
-	imap .0 <C-K>0S
-	imap .- <C-K>-S
-	imap .+ <C-K>+S
-
-endfunction
-
-
 " register digraphs for subscript / superscript letters
+digraph 44 8308
+digraph 55 8309
+digraph 66 8310
+digraph 77 8311
+digraph 88 8312
+digraph 99 8313
+
 execute "digraphs as " . 0x2090
 execute "digraphs es " . 0x2091
 execute "digraphs hs " . 0x2095
