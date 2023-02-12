@@ -154,6 +154,7 @@ nmap # @='I#<C-V><esc>j'<enter>
 " delete trailing whitespace on save
 autocmd BufWritePre * :%s/\s\+$//e
 autocmd BufNewFile,BufRead * if getline(1) == '#!/bin/dash' | set filetype=sh | endif
+autocmd BufWritePost *.latex :call system('snuggle ' . shellescape(expand('%:p')))
 
 autocmd Filetype css compiler csslint
 autocmd Filetype conf set makeprg=/tmp/a/iaac | set errorformat=*error*\ %f:%l%m

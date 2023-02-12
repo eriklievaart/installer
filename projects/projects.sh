@@ -60,6 +60,8 @@ sources() {
 
 install() {
 	echo "building ws"
+	repo=~/bin/repo
+	ant -f "$buildfile" -Dproject.name=ws -Dproject.main=com.eriklievaart.ws.boot.Rp -Ddeploy.local.sh.file=$repo task-deploy-sh
 	ant -f "$buildfile" -Dskip.test=true -Dskip.checkstyle=true -Dskip.preprocess=true -Dproject.name=ws master-jar-deploy -Dskip.resolve=true -Dskip.test.compile=true > /tmp/ant.log
 
 	echo "building toolkit"
