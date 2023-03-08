@@ -182,6 +182,8 @@ digraph 66 8310
 digraph 77 8311
 digraph 88 8312
 digraph 99 8313
+digraph ++ 8314
+digraph -- 8315
 
 execute "digraphs as " . 0x2090
 execute "digraphs es " . 0x2091
