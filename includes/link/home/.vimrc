@@ -156,6 +156,9 @@ autocmd BufWritePre * :%s/\s\+$//e
 autocmd BufNewFile,BufRead * if getline(1) == '#!/bin/dash' | set filetype=sh | endif
 autocmd BufWritePost *.latex :call system('snuggle ' . shellescape(expand('%:p')))
 
+autocmd BufNewFile,BufRead *.snippet set syntax=html
+autocmd BufWritePost *.snippet :call system('curl -s http://localhost:8000/web/push/body -X POST -d "$(cat ' . shellescape(expand('%:p')) . ')" &')
+
 autocmd Filetype css compiler csslint
 autocmd Filetype conf set makeprg=/tmp/a/iaac | set errorformat=*error*\ %f:%l%m
 
