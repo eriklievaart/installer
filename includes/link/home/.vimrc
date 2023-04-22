@@ -143,6 +143,18 @@ inoremap <silent> <C-A-Down>  <ESC>:bn<CR>
 vmap <F12>   "+y
 vmap <Tab>   >
 vmap <S-Tab> <
+vmap ,1      Sth1>
+vmap ,2      Sth2>
+vmap ,3      Sth3>
+vmap ,b      Stb>
+vmap ,c      Stcenter>
+vmap ,d      Stdiv>
+vmap ,i      Sti>
+vmap ,l      Stli>
+vmap ,p      Stp>
+vmap ,s      Stspan>
+vmap ,td     Sttd>
+vmap ,tr     Sttr>
 vnoremap <space>y "ay
 vnoremap <space>p "ap
 
@@ -158,6 +170,7 @@ autocmd BufWritePost *.latex :call system('snuggle ' . shellescape(expand('%:p')
 
 autocmd BufNewFile,BufRead *.snippet set syntax=html
 autocmd BufWritePost *.snippet :call system('curl -s http://localhost:8000/web/push/body -X POST -d "$(cat ' . shellescape(expand('%:p')) . ')" &')
+autocmd BufWritePost *.hashdoc :call system('curl -s http://localhost:8000/web/refresh -X POST &')
 
 autocmd Filetype css compiler csslint
 autocmd Filetype conf set makeprg=/tmp/a/iaac | set errorformat=*error*\ %f:%l%m
