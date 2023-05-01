@@ -6,7 +6,7 @@ download() {
 	[ -d /tmp/dl ] || mkdir /tmp/dl
 	name=$(echo "$url" | sed 's|.*[?]||;s|[^=]*=||;s|[&].*||')
 	log="/tmp/dl/$name"
-	echo "downloading: $1 => log: $log \n"
+	echo "downloading: $1 \n"
 	nohup youtube-dl "$url" > $log 2> /dev/null &
 }
 
