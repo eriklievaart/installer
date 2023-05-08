@@ -170,7 +170,8 @@ bindsym $sup+$ctrl+$alt+q exec dp -p q
 bindsym $sup+$ctrl+$alt+w exec dp -p w
 bindsym $sup+$ctrl+$alt+e exec dp -p e
 bindsym $sup+$ctrl+$alt+i exec xcalib -invert -alter
-bindsym $sup+$ctrl+$alt+r exec dp -r nnnnn
+bindsym $sup+$ctrl+$alt+r exec redshift -P -O 4500
+bindsym $sup+$ctrl+$alt+t exec redshift -P -O 7500
 bindsym $sup+$ctrl+$alt+minus exec dp -p '-'
 bindsym $sup+$ctrl+$alt+equal exec dp -p '='
 

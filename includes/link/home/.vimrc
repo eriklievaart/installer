@@ -105,6 +105,8 @@ nmap <F6> :hide edit $MYVIMRC<CR>
 nmap <F8> :w <Bar> !clear; ./% <C-R>p<CR>
 " open file explorer
 nmap <F9> :Explore<CR>
+" use chemistry abbreviations
+nmap <F10> :call Chemistry() <CR>
 " on F12 copy document to system clipboard
 nmap <F12> :0,$ yank + <CR>
 
@@ -264,6 +266,22 @@ execute "digraphs TS " . 0x1D40
 execute "digraphs US " . 0x1D41
 execute "digraphs VS " . 0x2C7D
 execute "digraphs WS " . 0x1D42
+
+function  Chemistry ()
+	imap >> →
+	imap `1 ₁
+	imap `2 ₂
+	imap `3 ₃
+	imap `4 ₄
+	imap `5 ₅
+	imap `6 ₆
+	imap `7 ₇
+	imap `8 ₈
+	imap `9 ₉
+	imap `0 ₀
+endfunction
+
+
 
 
 
