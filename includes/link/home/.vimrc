@@ -172,7 +172,7 @@ autocmd BufWritePost *.latex :call system('snuggle ' . shellescape(expand('%:p')
 
 autocmd BufNewFile,BufRead *.snippet set syntax=html
 autocmd BufWritePost *.snippet :call system('curl -s http://localhost:8000/web/push/body -X POST -d "$(cat ' . shellescape(expand('%:p')) . ')" &')
-autocmd BufWritePost *.hashdoc :call system('curl -s http://localhost:8000/web/refresh -X POST &')
+autocmd BufWritePost *.hashdoc :call system('curl -s http://localhost:8000/dev/notify -X POST &')
 
 autocmd Filetype css compiler csslint
 autocmd Filetype conf set makeprg=/tmp/a/iaac | set errorformat=*error*\ %f:%l%m
