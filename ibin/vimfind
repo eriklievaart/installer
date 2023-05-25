@@ -1,5 +1,10 @@
 #!/bin/dash
 
+die(){
+	echo "$@" >&2
+	exit 5
+}
+
 cheat() {
 	cd ~/Development/git/cheat/files
 	exec vim $(find . -type f -name "*$1*")
@@ -24,6 +29,23 @@ vimgrep() {
 	exec vim $(find -type f | sed '/\/\.git\//d' | grep "$1")
 }
 
+vimproject() {
+	[ ! -z "$1" -a ! -z "$2" ] || die "expecting 2 arguments: [project] [file]"
+	dir=~/Development/git/$1
+	[ -d $dir ] || die "invalid project '$1'"
+	cd $dir
+
+	found=/tmp/vim/found.txt
+	find -type f | grep -v '/[.]git/' | grep "$2" > $found
+	count=$(cat /tmp/vim/found.txt | wc -l)
+	cat $found
+	echo "$count matches"
+
+	if [ $count -gt 0 -a $count -lt 4 ]; then
+		vim $(cat $found)
+	fi
+}
+
 vimwhich() {
 	file=$(which "$1")
 	if [ -f "$file" ]; then
@@ -34,11 +56,12 @@ vimwhich() {
 }
 
 case $1 in
-	-c) cheat        "$2";;
-	-d) dependencies "$2";;
-	-g) vimgrep      "$2";;
-	-h) vimhelp      "$2";;
-	-w) vimwhich     "$2";;
+	-c) cheat        "$2"      ;;
+	-d) dependencies "$2"      ;;
+	-g) vimgrep      "$2"      ;;
+	-h) vimhelp      "$2"      ;;
+	-p) vimproject   "$2" "$3" ;;
+	-w) vimwhich     "$2"      ;;
 esac
 
 

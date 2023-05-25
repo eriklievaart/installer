@@ -13,7 +13,7 @@ alias ..='. ~/.bashrc'
 
 alias dep="cat ~/Development/repo/index.txt | grep"
 alias bashrc='vim ~/.bashrc'
-alias hgrep="history | grep"
+alias hgrep="history | grep -i"
 alias grepi="grep -i"
 alias wps="watch -n 0.5 pgrep -a"
 alias findg="find . | grep"
@@ -26,6 +26,7 @@ alias vimd='vimfind -d'
 alias vimf='vimfind -g'
 alias vimh='vimfind -h'
 alias vimi='vim ~/.config/i3/config'
+alias vimp='vimfind -p'
 alias vimw='vimfind -w'
 alias vimrc='vim ~/.vimrc'
 alias write='vim "+set wrap" "+set spell"'

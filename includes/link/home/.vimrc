@@ -1,4 +1,8 @@
 
+
+
+
+
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_statusline_ontop=0
 let g:airline_theme='powerlineish'
@@ -143,8 +147,6 @@ inoremap <silent> <C-A-Down>  <ESC>:bn<CR>
 
 " @ visual mode @ "
 vmap <F12>   "+y
-vmap <Tab>   >
-vmap <S-Tab> <
 vmap ,1      Sth1>
 vmap ,2      Sth2>
 vmap ,3      Sth3>
@@ -157,6 +159,10 @@ vmap ,p      Stp>
 vmap ,s      Stspan>
 vmap ,td     Sttd>
 vmap ,tr     Sttr>
+vmap >       I<space><esc>gv
+vmap <       Xgv
+vnoremap <Tab>    >
+vnoremap <S-Tab>  <
 vnoremap <space>y "ay
 vnoremap <space>p "ap
 
@@ -173,6 +179,7 @@ autocmd BufWritePost *.latex :call system('snuggle ' . shellescape(expand('%:p')
 autocmd BufNewFile,BufRead *.snippet set syntax=html
 autocmd BufWritePost *.snippet :call system('curl -s http://localhost:8000/web/push/body -X POST -d "$(cat ' . shellescape(expand('%:p')) . ')" &')
 autocmd BufWritePost *.hashdoc :call system('curl -s http://localhost:8000/dev/notify -X POST &')
+autocmd BufWritePost *.css :call system('curl -s http://localhost:8000/dev/notify -X POST &')
 
 autocmd Filetype css compiler csslint
 autocmd Filetype conf set makeprg=/tmp/a/iaac | set errorformat=*error*\ %f:%l%m
@@ -192,6 +199,22 @@ nnoremap \, :cprevious<cr>
 nmap <silent> <F4> :!clear<cr> :make %<cr>
 nmap <F5> :call ToggleQuickFix()<cr>
 
+
+
+
+" insert mode aliases, digraphs, etc.
+imap `1 ₁
+imap `2 ₂
+imap `3 ₃
+imap `4 ₄
+imap `5 ₅
+imap `6 ₆
+imap `7 ₇
+imap `8 ₈
+imap `9 ₉
+imap `0 ₀
+
+imap ]] →
 
 " register digraphs for subscript / superscript letters
 digraph 44 8308
@@ -267,19 +290,6 @@ execute "digraphs US " . 0x1D41
 execute "digraphs VS " . 0x2C7D
 execute "digraphs WS " . 0x1D42
 
-function  Chemistry ()
-	imap >> →
-	imap `1 ₁
-	imap `2 ₂
-	imap `3 ₃
-	imap `4 ₄
-	imap `5 ₅
-	imap `6 ₆
-	imap `7 ₇
-	imap `8 ₈
-	imap `9 ₉
-	imap `0 ₀
-endfunction
 
 
 

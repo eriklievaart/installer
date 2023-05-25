@@ -1,15 +1,63 @@
 #!/bin/dash
 # script to run git commands on multiple git repos simultaneously
-set -e
 
-YELLOW='\033[1;33m'
-RED='\033[1;31m'
-PLAIN='\033[0m'
+# usage:
+#     gits → show listing of all repo's and their commit status
+#     gits + [command] → ALL repos: run git command
+#     gits + acp [message] → ALL repos: execute add --all; commit -m "$message"; push
+#
+#     gits [project] → repo show full status and optional diff
+#     gits [project] [command] → repo execute regular git command
+#     gits [project] acp → repo execute add --all; commit; push
+#     gits [project] acp [message] → repo execute add --all; commit -m "$message"; push
+#     gits [project] untracked → repo view new files not shown in git diff
+#     gits [project] config → edit git config for repo
 
-LAST=~/.cache/gits-last-repo
+all_projects() {
+	if [ "$1" = "acp" ]; then
+		message=$(echo "$@" | sed 's/^-c *//')
+		if [ -z "$message" ]; then
+			echo "$RED    git commit message required! $PLAIN"
+			exit 5
+		fi
+	fi
+
+	for dir in $(ls ~/Development/git)
+	do
+		[ -d ~/Development/git/"$dir" ] || continue
+		cd ~/Development/git/$dir
+		[ -d ".git" ] || continue
+
+		color=""
+		branch=$(git status | sed '/^On branch.*/!d; s/^On branch //')
+		untracked=$(git status | sed '/^Untracked.*/!d; s/ntracked.*//')
+		changes=$(git status | sed '/^Changes.*/!d; s/hanges.*//')
+
+		if [ ! -z "$untracked$changes" ]; then
+			color=$YELLOW
+		fi
+
+		echo "$color[$branch] $dir $untracked$changes$PLAIN"
 
 
-list() {
+		if [ "$1" = "acp" ]; then
+			if [  ! -z "$untracked$changes" ]; then
+				git add --all
+				git commit -m "$message"
+				git pull
+				git push
+				echo ''
+			fi
+
+		elif [ "$#" -gt 0 ]; then
+			git "$@"
+			echo
+		fi
+	done
+}
+
+
+list_files() {
 	while read file; do
 		if [ -f "$file" ]; then
 			echo "$file"
@@ -20,16 +68,13 @@ list() {
 	done
 }
 
-if [ "$1" = "acp" ]; then
-	message=$(echo "$@" | sed 's/^-c *//')
-	if [ -z "$message" ]; then
-		echo "$RED    git commit message required! $PLAIN"
-		exit 500
-	fi
-fi
 
-if [ "$(echo "$1" | cut -c 1)" = "@" ]; then
-	project=$(echo "$1" | sed 's/@//')
+view_untracked() {
+	exec vim $(git status | sed '0,/Untracked.*/d;/\t/!d' | list_files)
+}
+
+project() {
+	project="$1"
 	if [ "$1" = "@" ]; then
 		project="$(cat $LAST)"
 	fi
@@ -39,7 +84,7 @@ if [ "$(echo "$1" | cut -c 1)" = "@" ]; then
 	echo "repo: $repo"
 	shift
 
-	if [ ! -d $repo ]; then
+	if [ ! -d "$repo" ]; then
 		echo "$RED repo $project does not exist $PLAIN"
 		exit 404
 	fi
@@ -74,7 +119,7 @@ if [ "$(echo "$1" | cut -c 1)" = "@" ]; then
 	fi
 
 	if [ "$1" = "untracked" ]; then
-		exec vim $(git status | sed '0,/Untracked.*/d;/\t/!d' | list)
+		view_untracked
 	fi
 
 	if [ "$1" = "" ]; then
@@ -88,44 +133,48 @@ if [ "$(echo "$1" | cut -c 1)" = "@" ]; then
 		read answer
 		if [ "$answer" = "y" -o "$answer" = "" ]; then
 			git diff -w
+
+			if [ -z "$(git status | sed '0,/Untracked.*/d;/\t/!d')" ]; then
+				exit 0
+			fi
+			echo "show untracked? (y)"
+			read answer
+			if [ "$answer" = "y" -o "$answer" = "" ]; then
+				view_untracked
+			fi
 		fi
 	else
 		git "$@"
 	fi
 	exit 0
+}
+
+
+set -e
+
+YELLOW='\033[1;33m'
+RED='\033[1;31m'
+PLAIN='\033[0m'
+
+LAST=~/.cache/gits-last-repo
+
+if [ $# -eq 0 ]; then
+	all_projects
+	exit 0
+elif [ "$1" = '+' ]; then
+	shift
+	all_projects "$@"
+else
+	project "$@"
 fi
 
 
-for dir in $(ls ~/Development/git)
-do
-	[ -d ~/Development/git/"$dir" ] || continue
-	cd ~/Development/git/$dir
-	[ -d ".git" ] || continue
-
-	color=""
-	branch=$(git status | sed '/^On branch.*/!d; s/^On branch //')
-	untracked=$(git status | sed '/^Untracked.*/!d; s/ntracked.*//')
-	changes=$(git status | sed '/^Changes.*/!d; s/hanges.*//')
-
-	if [ ! -z "$untracked$changes" ]; then
-		color=$YELLOW
-	fi
-
-	echo "$color[$branch] $dir $untracked$changes$PLAIN"
 
 
-	if [ "$1" = "acp" ]; then
-		if [  ! -z "$untracked$changes" ]; then
-			git add --all
-			git commit -m "$message"
-			git pull
-			git push
-			echo ''
-		fi
 
-	elif [ "$#" -gt 0 ]; then
-		git "$@"
-		echo
-	fi
-done
+
+
+
+
+
 
