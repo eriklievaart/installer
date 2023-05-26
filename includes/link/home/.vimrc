@@ -109,8 +109,6 @@ nmap <F6> :hide edit $MYVIMRC<CR>
 nmap <F8> :w <Bar> !clear; ./% <C-R>p<CR>
 " open file explorer
 nmap <F9> :Explore<CR>
-" use chemistry abbreviations
-nmap <F10> :call Chemistry() <CR>
 " on F12 copy document to system clipboard
 nmap <F12> :0,$ yank + <CR>
 
@@ -213,8 +211,7 @@ imap `7 ₇
 imap `8 ₈
 imap `9 ₉
 imap `0 ₀
-
-imap ]] →
+imap `` →
 
 " register digraphs for subscript / superscript letters
 digraph 44 8308

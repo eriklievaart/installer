@@ -1,9 +1,14 @@
 #!/bin/perl
+# usage
+# perl.pl -f [path]     lookup in recently visited list (case sensitive)
+# perl.pl -i [path]     lookup in recently visited list (case insensitive)
+# perl.pl -u [path]     add file to recently visited list
 use 5.26.1;
 
 my $root = "$ENV{'HOME'}/.cache/q";
 my $cache = "$root/visited.txt";
 my $sensitive = 1;
+my $local = 0;
 system "mkdir -p $root";
 
 sub trim {
@@ -12,7 +17,7 @@ sub trim {
 	$trimmed;
 }
 
-# fill @paths will all paths available
+# fill @paths with all paths available
 sub paths() {
 	my @paths = ();
 	return @paths if(! -f $cache);
@@ -48,16 +53,26 @@ sub update {
 	}
 }
 
+# only search in subdirectories if $local flag is set
+sub filter_local {
+	if($local) {
+		for (my $i = 0; $i<$#_+1; $i++) {
+			splice @_, $i--, 1 if index($_[$i], %ENV{'PWD'}) != 0;
+		}
+	}
+	return @_;
+}
+
 # delete all entries that don't have all passed parts in order
 sub filter_parameters {
-	ELEMENT: for (my $i = 0; $i<$#_+1; $i++) {
+	for (my $i = 0; $i<$#_+1; $i++) {
 		my $element = $sensitive ? $_[$i] : uc($_[$i]);
 		my $index = 0;
 		foreach (@ARGV) {
 			my $arg = $sensitive ? $_ : uc($_);
 			$index = index($element, $arg, $index);
 			if ($index == -1) {
-				splice @_, $i--, 1 if ($index == -1);
+				splice @_, $i--, 1;
 				last;
 			}
 		}
@@ -96,16 +111,19 @@ sub prioritize {
 	my @paths = @_;
 	my @filter = ();
 
+	# exact match in name
 	for (@paths) {
 		my $name = $_ =~ s|.*/||r;
 		push @filter, $_ if $name eq $tail;
 	}
 	return @filter if $#filter >= 0;
 
+	# starts with
 	for (@paths) {
 		my $name = $_ =~ s|.*/||r;
 		push @filter, $_ if index($name, $tail) == 0;
 	}
+	my $i = 0;
 	return @filter if $#filter >= 0;
 
 	return @paths;
@@ -116,14 +134,28 @@ sub filter {
 	my @paths = @_;
 	my $filter = $#ARGV > -1;
 
+	if ($local) {
+		@paths = filter_local(@paths);
+	}
 	if ($filter) {
 		@paths = filter_parameters(@paths);
 		@paths = filter_tail(@paths);
 		@paths = rm_missing(@paths);
 		@paths = prioritize(@paths);
+		say "";
 	}
 	say $_ for(@paths);
 	return @paths;
+}
+
+
+
+
+sub set_local_flag {
+	if (@ARGV[0] eq ".") {
+		shift @ARGV;
+		$local = 1;
+	}
 }
 
 if (@ARGV[0] eq "-u") {
@@ -131,17 +163,18 @@ if (@ARGV[0] eq "-u") {
 
 } elsif (@ARGV[0] eq "-f") {
 	shift @ARGV;
+	set_local_flag();
 	filter(paths());
+	my $pwd = %ENV{'PWD'};
 
 } elsif (@ARGV[0] eq "-i") {
 	shift @ARGV;
+	set_local_flag();
 	$sensitive = 0;
 	filter(paths());
 
 } else {
 	say "unknown flag @ARGV";
 }
-
-
 
 
