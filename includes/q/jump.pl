@@ -123,7 +123,6 @@ sub prioritize {
 		my $name = $_ =~ s|.*/||r;
 		push @filter, $_ if index($name, $tail) == 0;
 	}
-	my $i = 0;
 	return @filter if $#filter >= 0;
 
 	return @paths;

@@ -70,7 +70,7 @@ list_files() {
 
 
 view_untracked() {
-	exec vim $(git status | sed '0,/Untracked.*/d;/\t/!d' | list_files)
+	exec vim $(echo "$untracked" | list_files)
 }
 
 project() {
@@ -118,6 +118,7 @@ project() {
 		exit 0
 	fi
 
+	untracked=$(git status | sed '0,/Untracked.*/d;/\t/!d')
 	if [ "$1" = "untracked" ]; then
 		view_untracked
 	fi
@@ -132,11 +133,14 @@ project() {
 		echo "show diff? (y)"
 		read answer
 		if [ "$answer" = "y" -o "$answer" = "" ]; then
+			clear
 			git diff -w
 
-			if [ -z "$(git status | sed '0,/Untracked.*/d;/\t/!d')" ]; then
+			if [ -z "$untracked" ]; then
 				exit 0
 			fi
+			clear
+			echo "untracked:\n$untracked\n"
 			echo "show untracked? (y)"
 			read answer
 			if [ "$answer" = "y" -o "$answer" = "" ]; then

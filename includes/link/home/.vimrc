@@ -47,7 +47,7 @@ set splitbelow
 set splitright
 
 set path=.,~/Development/git/installer/ibin,~/Development/git/cheat/**,**
-set suffixesadd=.java,.txt,.sh
+set suffixesadd=.java,.txt,.sh,.hashdoc
 
 
 " @ NORMAL MODE @ "
@@ -103,6 +103,10 @@ nmap <C-N> :set invnumber<CR>
 nmap <F2> @='^xj'<CR>
 " comment line with '#' and move down
 nmap <F3> @='I#<C-V><Esc>j'<CR>
+" run make
+nmap <silent> <F4> :!clear<cr> :make %<cr>
+" toggle quickfix window
+nmap <F5> :call ToggleQuickFix()<cr>
 " edit the vimrc
 nmap <F6> :hide edit $MYVIMRC<CR>
 " on F8 clear console and run current file, arguments can be stored in register @p
@@ -194,8 +198,6 @@ nnoremap \\ :cnext<cr>
 nnoremap \. :cnext<cr>
 nnoremap \, :cprevious<cr>
 
-nmap <silent> <F4> :!clear<cr> :make %<cr>
-nmap <F5> :call ToggleQuickFix()<cr>
 
 
 
@@ -211,7 +213,7 @@ imap `7 ₇
 imap `8 ₈
 imap `9 ₉
 imap `0 ₀
-imap `` →
+imap `* →
 
 " register digraphs for subscript / superscript letters
 digraph 44 8308

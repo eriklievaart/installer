@@ -5,6 +5,17 @@ die(){
 	exit 5
 }
 
+open_found() {
+	count=$(cat $found | wc -l)
+	cat $found
+
+	if [ $count -gt 0 -a $count -le 5 ]; then
+		exec vim $(cat $found)
+	else
+		echo "$count matches"
+	fi
+}
+
 cheat() {
 	cd ~/Development/git/cheat/files
 	exec vim $(find . -type f -name "*$1*")
@@ -26,24 +37,34 @@ vimhelp() {
 }
 
 vimgrep() {
-	exec vim $(find -type f | sed '/\/\.git\//d' | grep "$1")
+	find -type f | sed '/\/\.git\//d' | grep "$1" > $found
+	open_found
 }
 
 vimproject() {
-	[ ! -z "$1" -a ! -z "$2" ] || die "expecting 2 arguments: [project] [file]"
-	dir=~/Development/git/$1
-	[ -d $dir ] || die "invalid project '$1'"
-	cd $dir
+	[ $# -eq 0 ] && die "expecting 2 arguments: [project] [file]"
 
-	found=/tmp/vim/found.txt
-	find -type f | grep -v '/[.]git/' | grep "$2" > $found
-	count=$(cat /tmp/vim/found.txt | wc -l)
-	cat $found
-	echo "$count matches"
-
-	if [ $count -gt 0 -a $count -lt 4 ]; then
-		vim $(cat $found)
+	if [ "$1" = '.' -o $# -eq 1 ]; then
+		[ "$1" = '.' ] && shift
+		echo "$PWD" | grep -q '/git/' || die "not in a project '$PWD'"
+		project=$(echo "$PWD" | sed -r 's:.*/git/([^/]++)/.*:\1:')
+		path=$(echo "$PWD" | sed "s:.*/git/$project/::")
+	else
+		project=$1
+		path='.'
+		shift
 	fi
+
+	dir=~/Development/git/"$project"
+	[ -d "$dir" ] || die "invalid project '$project'"
+	cd "$dir"
+
+	[ -f $found ] && rm $found
+	for expr in $@
+	do
+		find "$path" -type f | grep -v '/[.]git/' | grep "$expr" >> $found
+	done
+	open_found
 }
 
 vimwhich() {
@@ -55,13 +76,16 @@ vimwhich() {
 	fi
 }
 
-case $1 in
-	-c) cheat        "$2"      ;;
-	-d) dependencies "$2"      ;;
-	-g) vimgrep      "$2"      ;;
-	-h) vimhelp      "$2"      ;;
-	-p) vimproject   "$2" "$3" ;;
-	-w) vimwhich     "$2"      ;;
+flag="$1"
+found=/tmp/vim/found.txt
+shift
+case $flag in
+	-c) cheat        "$@" ;;
+	-d) dependencies "$@" ;;
+	-g) vimgrep      "$@" ;;
+	-h) vimhelp      "$@" ;;
+	-p) vimproject   "$@" ;;
+	-w) vimwhich     "$@" ;;
 esac
 
 

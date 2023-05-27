@@ -4,6 +4,7 @@ use 5.27.1;
 my @errors = ();
 my $cache = '/tmp/ignore.txt';
 my $sensitive = 1;
+my $local = 0;
 
 
 ## subs ##
@@ -103,6 +104,18 @@ push @errors, "#tail# '$result'" unless $result eq 'git';
 $sensitive = 0;
 my $result = tail('/tmp/git');
 push @errors, "#tail.insensitive# '$result'" unless $result eq 'GIT';
+
+#local.islocal#
+$local = 1;
+$sensitive = 1;
+my @result = filter_local('/tmp/suite/local/child');
+push @errors, "#local.islocal# '@result'" unless $result[0] eq '/tmp/suite/local/child';
+
+#local.notlocal#
+$local = 1;
+$sensitive = 1;
+my @result = filter_local('/tmp/suite/elsewhere/child');
+push @errors, "#local.notlocal# '@result'" unless $#result eq -1;
 
 
 
