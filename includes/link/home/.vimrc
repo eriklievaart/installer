@@ -67,6 +67,7 @@ nnoremap !x :.!sh<CR>
 nnoremap !p !ipsh<CR>
 
 nmap              <space>4       <space>$                <CR>
+nnoremap          <space>b       :leftabove vnew         <CR><C-W><C-W>
 nnoremap          <space>c       :normal      <C-V><C-W>c<CR>
 nnoremap          <space>d       :bd                     <CR>
 nnoremap          <space>r       :w                      <CR>:compiler vimtastic <CR>:set shellpipe= <CR>:set makeef=/tmp/build/vimtastic.log <CR>:make <CR>
