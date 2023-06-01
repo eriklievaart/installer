@@ -1,0 +1,106 @@
+
+@test ignore text
+ignore
+
+ignore
+
+
+@test ignore single line table
+|1|a|
+
+|1|a|
+
+
+@test ignore bars in text
+in java || means or
+in C++ || also means or
+
+in java || means or
+in C++ || also means or
+
+
+@test simplest table
+|1|a|
+|2|b|
+
+| 1 | a |
+| 2 | b |
+
+
+@test leading whitespace
+ |1|a|
+ |2|b|
+
+| 1 | a |
+| 2 | b |
+
+
+@test rightpad
+|123|abc|
+|1|a|
+
+| 123 | abc |
+| 1   | a   |
+
+
+@test #table
+#table#
+|1|a|
+|2|b|
+#/table#
+
+#table#
+| 1 | a |
+| 2 | b |
+#/table#
+
+
+@test header
+`number`header`
+|123|abc|
+|1|a|
+
+` number ` header `
+| 123    | abc    |
+| 1      | a      |
+
+
+@test rows with th and td
+`numerical`|1|
+`letters`|one|
+
+` numerical `| 1   |
+` letters   `| one |
+
+
+@test multiple table
+|1|a|
+|2|b|
+not a table
+|3|c|
+|4|d|
+
+| 1 | a |
+| 2 | b |
+not a table
+| 3 | c |
+| 4 | d |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

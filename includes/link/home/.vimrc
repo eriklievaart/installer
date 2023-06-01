@@ -110,10 +110,10 @@ nmap <silent> <F4> :!clear<cr> :make %<cr>
 nmap <F5> :call ToggleQuickFix()<cr>
 " edit the vimrc
 nmap <F6> :hide edit $MYVIMRC<CR>
-" on F8 clear console and run current file, arguments can be stored in register @p
-nmap <F8> :w <Bar> !clear; ./% <C-R>p<CR>
-" open file explorer
-nmap <F9> :Explore<CR>
+" on F7 clear console and run current file, arguments can be stored in register @p
+nmap <F7> :w <Bar> !clear; ./% <C-R>p<CR>
+" on F7 clear console and run current file without arguments
+nmap <F8> :w <Bar> !clear; ./%<CR>
 " on F12 copy document to system clipboard
 nmap <F12> :0,$ yank + <CR>
 
