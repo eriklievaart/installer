@@ -4,6 +4,7 @@ import re
 import sys
 
 
+# data structure for storing a hashdoc table
 class Table:
 	def __init__(self):
 		self.rows = [];
@@ -34,16 +35,20 @@ class Table:
 			print(line);
 
 
+# datastructure for storing a cell in a hashdoc table
 class Cell:
 	def __init__(self, body, tag):
-		self.body = body.strip();
 		self.tag = tag
+		self.body = body.rstrip();
+		if(self.body.startswith(' ')):
+			self.body = self.body[1:];
 
 	def length(self):
 		return len(self.body);
 
 
-def print_chunk(lines):
+# format a table and print it
+def print_formatted_table(lines):
 	if len(lines) == 0:
 		return;
 
@@ -58,8 +63,8 @@ def print_chunk(lines):
 		for i in range(1, len(th)-1):
 			cells.append(Cell(th[i], 'th'));
 
-		tail = re.sub('/^.*`/', '', line.strip())
-		td = re.split('[|]', tail.strip());
+		tds = re.sub('/^.*`/', '', line.strip())
+		td = re.split('[|]', tds.strip());
 		for i in range(1, len(td)-1):
 			cells.append(Cell(td[i], 'td'));
 
@@ -74,9 +79,9 @@ for line in sys.stdin:
 	if(re.search('^[`|].*[`|]', trimmed)):
 		chunk.append(line);
 	else:
-		print_chunk(chunk);
+		print_formatted_table(chunk);
 		chunk = [];
 		print(line, end='');
 
-print_chunk(chunk);
+print_formatted_table(chunk);
 

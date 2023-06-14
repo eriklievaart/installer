@@ -70,6 +70,7 @@ nmap              <space>4       <space>$                <CR>
 nnoremap          <space>b       :leftabove vnew         <CR><C-W><C-W>
 nnoremap          <space>c       :normal      <C-V><C-W>c<CR>
 nnoremap          <space>d       :bd                     <CR>
+nnoremap          <space>f       :silent! %!fmttbl       <CR>
 nnoremap          <space>r       :w                      <CR>:compiler vimtastic <CR>:set shellpipe= <CR>:set makeef=/tmp/build/vimtastic.log <CR>:make <CR>
 nnoremap          <space>s       :split                  <CR>
 nnoremap          <space>t       :vert terminal          <CR>
@@ -181,8 +182,10 @@ autocmd BufWritePost *.latex :call system('snuggle ' . shellescape(expand('%:p')
 
 autocmd BufNewFile,BufRead *.snippet set syntax=html
 autocmd BufWritePost *.snippet :call system('curl -s http://localhost:8000/web/push/body -X POST -d "$(cat ' . shellescape(expand('%:p')) . ')" &')
-autocmd BufWritePost *.hashdoc :call system('curl -s http://localhost:8000/dev/notify -X POST &')
+autocmd BufWritePost *.js :call system('curl -s http://localhost:8000/dev/notify -X POST &')
 autocmd BufWritePost *.css :call system('curl -s http://localhost:8000/dev/notify -X POST &')
+autocmd BufWritePost *.hashdoc :call system('curl -s http://localhost:8000/dev/notify -X POST &')
+autocmd BufRead *.hashdoc silent! %!fmttbl
 
 autocmd Filetype css compiler csslint
 autocmd Filetype conf set makeprg=/tmp/a/iaac | set errorformat=*error*\ %f:%l%m

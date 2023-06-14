@@ -43,6 +43,14 @@ in C++ || also means or
 | 1   | a   |
 
 
+@test keep leftpad
+| 123.45|a|
+|   1.23|b|
+
+| 123.45 | a |
+|   1.23 | b |
+
+
 @test #table
 #table#
 |1|a|
