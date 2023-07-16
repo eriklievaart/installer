@@ -50,3 +50,5 @@ alias targets='sed -n "/target/{s/.*name=\"//;s/\".*//;p}" ~/Development/git/ant
 
 alias v='killall vlc; nohup vlc --quiet "$(ls | sed "/part$/d" | sort -R | tail -n 1)" > /dev/null &'
 
+alias ryujinx=/home/eazy/Applications/nintendo/ryujinx/Ryujinx.sh
+

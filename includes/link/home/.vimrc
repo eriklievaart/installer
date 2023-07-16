@@ -219,15 +219,19 @@ imap `9 ₉
 imap `0 ₀
 imap `* →
 
+" chemistry
+digraph ~~ 8652 "⇌
+digraph `` 8652 "⇌
+
 " register digraphs for subscript / superscript letters
-digraph 44 8308
-digraph 55 8309
-digraph 66 8310
-digraph 77 8311
-digraph 88 8312
-digraph 99 8313
-digraph ++ 8314
-digraph -- 8315
+digraph 44 8308 "⁴
+digraph 55 8309 "⁵
+digraph 66 8310 "⁶
+digraph 77 8311 "⁷
+digraph 88 8312 "⁸
+digraph 99 8313 "⁹
+digraph ++ 8314 "⁺
+digraph -- 8315 "⁻
 
 execute "digraphs as " . 0x2090
 execute "digraphs es " . 0x2091

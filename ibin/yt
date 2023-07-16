@@ -3,11 +3,13 @@ set -e
 
 download() {
 	url="$1"
-	[ -d /tmp/dl ] || mkdir /tmp/dl
+	log_dir=/var/log/dl
+	[ -d ${log_dir:?} ] || mkdir -p ${log_dir:?}
 	name=$(echo "$url" | sed 's|.*[?]||;s|[^=]*=||;s|[&].*||')
-	log="/tmp/dl/$name"
+	log="${log_dir:?}/$name"
 	echo "downloading: $1 \n"
-	nohup youtube-dl "$url" > $log 2> /dev/null &
+	echo "downloading: $1 \n" > $log
+	nohup youtube-dl "$url" >> $log 2> /dev/null &
 }
 
 interactive() {

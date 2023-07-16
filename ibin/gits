@@ -139,7 +139,6 @@ project() {
 			if [ -z "$untracked" ]; then
 				exit 0
 			fi
-			clear
 			echo "untracked:\n$untracked\n"
 			echo "show untracked? (y)"
 			read answer

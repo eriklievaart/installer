@@ -123,6 +123,8 @@ bindsym $sup+$shift+0 move container to workspace 10; workspace 10
 bindsym $sup+$shift+space floating toggle
 bindsym $sup+$shift+Left  move workspace to output left
 bindsym $sup+$shift+Right move workspace to output right
+bindsym $sup+$shift+Down move down
+bindsym $sup+$shift+Up move up
 
 bindsym $sup+$ctrl+a           exec audtool --playlist-auto-advance-toggle && exec notify-send "advance: $(audtool --playlist-auto-advance-status)"
 bindsym $sup+$ctrl+h           exec sink logitech
