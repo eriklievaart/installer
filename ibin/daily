@@ -1,0 +1,82 @@
+#!/bin/dash
+set -e
+
+config=~/.config/daily.txt
+parsed=`getopt "atv" "$@"` || usage
+
+yesterday=$(date -d yesterday '+%d-%m-%Y')
+today=$(date '+%d-%m-%Y')
+tomorrow=$(date -d tomorrow '+%d-%m-%Y')
+
+PLAIN='\033[0m'
+YELLOW='\033[1;33m'
+RED='\033[1;31m'
+
+
+
+
+if [ ! -f "$config" ]; then
+	echo $RED"file does not exist: $config $PLAIN"
+	exit 44
+fi
+
+
+
+
+
+usage() {
+	all | head -n 5
+	echo
+	echo usage: `basename $0` -[at] 1>&2
+	echo `basename $0` -a    list config 1>&2
+	echo `basename $0` -t    show today 1>&2
+	exit 0
+}
+
+
+today() {
+	if grep -q "$yesterday" $config; then
+		sed -i "0,/$yesterday/d" $config
+	fi
+
+	todmsg=$(sed "/$today/!d" $config)
+	if [ "$todmsg" != "" ]; then
+		echo "$RED$todmsg$PLAIN"
+	fi
+
+	tommsg=$(sed "/$tomorrow/!d" $config)
+	if [ "$tommsg" != "" ]; then
+		echo "$YELLOW$tommsg$PLAIN"
+	fi
+}
+
+
+all() {
+	cat $config
+}
+
+edit() {
+	vim $config
+}
+
+
+
+set -- $parsed
+
+case "$1" in
+	-a) all; break;;
+	-t) today; break;;
+	-v) edit; break;;
+	*) usage;;
+esac
+
+
+
+
+
+
+
+
+
+
+

@@ -1,7 +1,7 @@
 #!/bin/dash
 
 cd() {
-	builtin cd $@
+	builtin cd "$@"
 	/opt/q/jump.pl -u "$PWD"
 }
 
@@ -13,7 +13,7 @@ _q() {
 		[ $(echo "$lines" | wc -l) -gt 1 ] && echo "$lines"
 		builtin cd "$(echo "$lines" | tail -n 1)"
 		/opt/q/jump.pl -u "$PWD"
-	fi 
+	fi
 }
 
 q() {
