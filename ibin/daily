@@ -2,7 +2,7 @@
 set -e
 
 config=~/.config/daily.txt
-parsed=`getopt "atv" "$@"` || usage
+parsed=`getopt "adtv" "$@"` || usage
 
 yesterday=$(date -d yesterday '+%d-%m-%Y')
 today=$(date '+%d-%m-%Y')
@@ -29,8 +29,16 @@ usage() {
 	echo
 	echo usage: `basename $0` -[at] 1>&2
 	echo `basename $0` -a    list config 1>&2
+	echo `basename $0` -d    delete today 1>&2
 	echo `basename $0` -t    show today 1>&2
+	echo `basename $0` -v    edit in vim 1>&2
 	exit 0
+}
+
+
+delete() {
+	sed -i "0,/$today/d" $config
+	today
 }
 
 
@@ -65,6 +73,7 @@ set -- $parsed
 
 case "$1" in
 	-a) all; break;;
+	-d) delete; break;;
 	-t) today; break;;
 	-v) edit; break;;
 	*) usage;;

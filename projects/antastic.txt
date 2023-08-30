@@ -8,6 +8,7 @@ skip.generate=true
 toolkit        osgi-install
 osgi           osgi-install
 jl             osgi-install
+tiqqer         osgi-install
 
 toolkit        install
 pb-parser      install

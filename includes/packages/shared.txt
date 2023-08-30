@@ -22,6 +22,7 @@ tree
 tty-clock
 unclutter
 unrar-free
+vim-gtk
 xcalib
 xclip
 xdotool

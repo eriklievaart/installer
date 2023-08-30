@@ -61,14 +61,14 @@ sources() {
 install() {
 	echo "building ws"
 	repo=~/bin/repo
-	ant -f "$buildfile" -Dskip.test=true -Dskip.checkstyle=true -Dskip.preprocess=true -Dproject.name=ws master-jar-deploy -Dskip.resolve=true -Dskip.test.compile=true > /tmp/ant.log
+	ant -f "$buildfile" -Dskip.test=true -Dskip.checkstyle=true -Dskip.preprocess=true -Dproject.name=ws jar-deploy -Dskip.resolve=true -Dskip.test.compile=true > /tmp/ant.log
 	ant -f "$buildfile" -Dproject.name=ws -Dproject.main=com.eriklievaart.ws.boot.Rp -Ddeploy.local.sh.file=$repo task-deploy-sh
 
 	echo "building toolkit"
-	ant -f "$buildfile" -Dskip.test=true -Dskip.checkstyle=true -Dproject.name=toolkit master-install >> /tmp/ant.log
+	ant -f "$buildfile" -Dskip.test=true -Dskip.checkstyle=true -Dproject.name=toolkit install >> /tmp/ant.log
 
 	echo "building antastic"
-	ant -f "$buildfile" -Dskip.test=true -Dskip.checkstyle=true -Dproject.name=antastic master-jar-deploy >> /tmp/ant.log
+	ant -f "$buildfile" -Dskip.test=true -Dskip.checkstyle=true -Dproject.name=antastic jar-deploy >> /tmp/ant.log
 
 	echo "generating folder structure"
 	for repo in $repos
