@@ -26,7 +26,7 @@ echo "checksums: $smeta"
 echo "verify: $data"
 echo
 
-find . -name '*.smeta' | sed 's:^./::' | while read path
+find . -name '*.smeta' | sed 's:^./::' | sort | while read path
 do
 	expected=$(cat "$path" | sed '/^sha1/!d;s/^sha1=//')
 	check=$(echo "$data$path" | sed 's:.smeta$::')
