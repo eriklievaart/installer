@@ -185,6 +185,7 @@ bindsym $sup+$ctrl+$alt+equal exec dp -p '='
 for_window [class="(?i)gvim"]                                       move workspace 4; workspace 4
 for_window [class="(?i)vlc"]                                        move workspace 5; workspace 5
 for_window [class="(?i)xviewer"]                                    move workspace 9; workspace 9
+for_window [class="(?i)drawing"]                                    move workspace 9; workspace 9
 for_window [class="(?i)viewnior"]                                   move workspace 9; workspace 9
 for_window [class="(?i)shotcut"]                                    move workspace 7; workspace 7
 for_window [class="(?i)obs"]                                        move workspace 7; workspace 7

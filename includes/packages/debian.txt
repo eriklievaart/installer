@@ -6,6 +6,7 @@ synaptic
 
 i3
 
+chromium-browser
 docker.io
 qemu
 qemu-kvm

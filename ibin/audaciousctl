@@ -4,6 +4,7 @@ set -e
 dir=~/.config/audacious
 config="$dir/mp3-home-dir"
 stored="$dir/stored"
+filelist="$dir/filelist"
 tag="$dir/tag"
 
 if [ ! -d ~/$dir ]; then
@@ -30,13 +31,18 @@ select() {
 		root=$(zenity --entry --text="mp3 root dir not configured in $config, where to load mp3 from?")
 		if [ "$root" != "" ]; then
 			echo "$root" > $config
+			update
 		fi
 	fi
 
 	if [ "$root" != "" ]; then
 		echo "root: $root"
 		cd $root
-		selection=$(find "$root" -type $1 | not_empty | cut -c $(($(echo "$root" | wc -m)+1))- | rofi -i -l 40 -dmenu)
+		if [ "$1" = "dir" ]; then
+			selection=$(find "$root" -type d | not_empty | cut -c $(($(echo "$root" | wc -m)+1))- | rofi -i -l 40 -dmenu)
+		else
+			selection=$(cat $filelist | cut -c $(($(echo "$root" | wc -m)+1))- | rofi -i -l 40 -dmenu)
+		fi
 		if [ "$selection" != "" ]; then
 			audacious "$root/$selection"
 		fi
@@ -57,10 +63,21 @@ store() {
 	fi
 }
 
+update() {
+	echo "audacious root dir config file: $config"
+	if [ -f $config ]; then
+		root=$([ -f $config ] && head -n 1 $config || echo "")
+		find "$root" -type f > $filelist
+	else
+		echo "root not set!"
+	fi
+}
+
 case "$1" in
-	-d) select d ;;
-	-f) select f ;;
+	-d) select dir ;;
+	-f) select file ;;
 	-l) load ;;
+	-u) update ;;
 	*) store "$1" ;;
 esac
 

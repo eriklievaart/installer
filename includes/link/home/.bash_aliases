@@ -1,4 +1,5 @@
 
+alias 192='ifconfig | grep 192'
 alias bat='upower --dump | sed -nr "/\/battery/,/^\$/{/percentage/!d;s/.* //;p}"'
 alias battery='upower --dump | sed -nr "/\/battery/,/^\$/{/percentage/!d;s/.* //;p}"'
 alias lynx='docker run --rm -it -v /home/eazy/Development/git/cheat/lynx.html:/root/bookmarks.html lievaart/lynx'

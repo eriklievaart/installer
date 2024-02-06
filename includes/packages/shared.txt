@@ -38,6 +38,7 @@ filelight
 filezilla
 gparted
 kdiff3
+mate-applets
 numlockx
 pcmanfm
 partimage
