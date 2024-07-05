@@ -43,7 +43,8 @@ if [ "$1" = "-b" ]; then
 fi
 
 if [ $# -eq 0 -o $# -gt 2 ]; then
-	echo "usage: $0 [project]? [file]"
+	echo "open in lynx:     ${0##*/}    [project]? [file]"
+	echo "open in browser:  ${0##*/} -b [project]? [file]"
 	exit 44
 fi
 

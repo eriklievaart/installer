@@ -28,10 +28,13 @@ alias vimf='vimfind -g'
 alias vimh='vimfind -h'
 alias vimi='vim ~/.config/i3/config'
 alias vimp='vimfind -p'
+alias vimt="vim *.txt"
 alias vimw='vimfind -w'
 alias vimrc='vim ~/.vimrc'
 alias write='vim "+set wrap" "+set spell"'
 complete -F _filedir_xspec write            # fix autocomplete
+
+alias dark='cd ~/Development/git/; cd $(find -name "dark-*"); vim *.txt'
 
 alias dl='yt'
 alias dlr='yt --resume'

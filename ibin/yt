@@ -50,12 +50,13 @@ play() {
 }
 
 resume() {
-	for file in *
+	for file in *.part
 	do
-		if echo "$file" | grep -q '.part$'; then
-			code=$(echo "$file" | sed -r 's/[.][^-]+$//' | sed -r 's/.*-(\S{8,})$/\1/')
+		code=$(echo "$file" | sed 's/.*-//;s/[.].*//')
+		url=$(grep -r "$code" /var/log/dl | grep hub | sed 's/[^ ]* //')
+		if [ "$url" != "" ]; then
 			if ! pgrep -a youtube-dl | grep -q "$code"; then
-				download "https://www.youtube.com/watch?v=$code"
+				download "$url"
 			fi
 		fi
 	done

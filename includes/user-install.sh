@@ -100,6 +100,7 @@ if cat ~/.profile | grep -q "/ibin"; then
 else
 	echo "adding ibin (personal scripts) to path"
 	chmod +x ${IBIN_DIR:?}/*
+	echo "export GTK_THEME=Adwaita:dark" >> ~/.profile
 	echo "export IBIN=${IBIN_DIR?}" >> ~/.profile
 	echo 'PATH=$PATH:~/bin:$IBIN' >> ~/.profile
 fi

@@ -147,6 +147,7 @@ bindsym $sup+$ctrl+comma       exec audtool --playback-seek-relative -10
 bindsym $sup+$ctrl+Escape      exec mpsort s $(zenity --entry --text='mpsort') >> /tmp/mpsort
 bindsym $sup+$ctrl+period      exec audtool --playback-seek-relative +10
 bindsym $sup+$ctrl+slash       exec audaciousctl -f
+bindsym $sup+$ctrl+backslash   exec audaciousctl -u
 bindsym $sup+$ctrl+KP_Divide   exec audaciousctl -f
 bindsym $sup+$ctrl+KP_Multiply exec audaciousctl -d
 bindsym $sup+$ctrl+KP_Add      exec amixer -D pulse sset Master 5%+
@@ -184,13 +185,12 @@ bindsym $sup+$ctrl+$alt+equal exec dp -p '='
 # application window rules
 for_window [class="(?i)gvim"]                                       move workspace 4; workspace 4
 for_window [class="(?i)vlc"]                                        move workspace 5; workspace 5
-for_window [class="(?i)xviewer"]                                    move workspace 9; workspace 9
-for_window [class="(?i)drawing"]                                    move workspace 9; workspace 9
-for_window [class="(?i)viewnior"]                                   move workspace 9; workspace 9
 for_window [class="(?i)shotcut"]                                    move workspace 7; workspace 7
 for_window [class="(?i)obs"]                                        move workspace 7; workspace 7
+for_window [class="(?i)xviewer"]                                    move workspace 7; workspace 7
+for_window [class="(?i)xreader"]                                    move workspace 8; workspace 8
+for_window [class="(?i)drawing"]                                    move workspace 9; workspace 9
 for_window [class="(?i)steam"]                                      move workspace 9; workspace 9
-for_window [class="(?i)gajim"]                                      move workspace 10; workspace 10
 for_window [class="(?i)java-lang-thread" title="(?i)q filebrowser"] move workspace 10; workspace 10
 for_window [class="(?i)audacious"]                                  move scratchpad
 for_window [class="(?i)speedcrunch"]                                floating enable

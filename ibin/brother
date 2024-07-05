@@ -1,0 +1,50 @@
+#!/bin/dash
+set -e
+
+directory=~/.config/brother
+config="$directory/printer"
+
+echo
+echo config file: $config
+
+if [ ! -f "$config" ]; then
+	echo printer not configured
+
+	echo smb share ip address?
+	read ip
+
+	echo
+	echo user?
+	read usr
+
+	echo password?
+	read pswd
+
+	smbclient -L $ip -U $usr --password="$pswd" | grep -v Disk | grep -v "Remote IPC"
+
+	echo printer name?
+	read printer
+
+	[ -d $directory ] || mkdir $directory
+	echo "ip $ip" > $config
+	echo "user $usr" >> $config
+	echo "printer $printer" >> $config
+
+	echo "config saved in $config"
+	echo
+fi
+
+if [ "$1" = "" ]; then
+	echo "missing required argument: file to print"
+	exit 44
+fi
+
+value="{s/[^ ]* \+//;p}"
+ip=$(sed -n "/^ip/$value" $config)
+usr=$(sed -n "/^user/$value" $config)
+printer=$(sed -n "/^printer/$value" $config)
+
+echo "using $usr@$ip/$printer"
+
+smbclient -U $usr "//$ip/$printer" -c "print $1"
+

@@ -1,4 +1,13 @@
 #!/bin/dash
+#
+# usage:
+#
+#     audaciousctl -d select dir
+#     audaciousctl -f select file
+#     audaciousctl -u update file list
+#     audaciousctl -l load stored directory
+#     audaciousctl [dir] store directory
+#
 set -e
 
 dir=~/.config/audacious

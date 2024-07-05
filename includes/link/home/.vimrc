@@ -49,6 +49,10 @@ set splitright
 set path=.,~/Development/git/installer/ibin,~/Development/git/cheat/**,**
 set suffixesadd=.java,.txt,.sh,.hashdoc
 
+" visit all buffers and do nothing; removes unread buffer warning
+silent bufdo normal! \<nop>
+silent buffer 1
+
 
 " @ NORMAL MODE @ "
 " disable default binding for showing command history
@@ -56,7 +60,7 @@ nmap <silent> q: <Nop>
 " make Y consistent with D and C (yank til end of line)
 nmap <silent> Y y$
 nmap <silent> Q :bd<CR>
-nmap S :w <bar> :source %<CR>
+" nmap S :w <bar> :source %<CR>
 
 nmap g<left>  g0
 nmap g<right> g$
@@ -101,6 +105,8 @@ nnoremap <silent> <C-A-Down>  :bn<CR>
 " ctrl-n to toggle line numbers
 nmap <C-N> :set invnumber<CR>
 
+" save file
+nmap S :w<CR>
 " delete first character on line and move down
 nmap <F2> @='^xj'<CR>
 " comment line with '#' and move down
@@ -129,6 +135,7 @@ imap <S-Tab>   <C-o><<
 
 imap <C-B>     <C-o>dB
 imap <C-F>     <C-o>dW
+imap <C-J>     </><esc>mcT<;yt>`cPla
 imap <C-_>     <C-K>hh
 
 imap <F1>      <C-o><F1>
@@ -217,7 +224,28 @@ imap `7 ₇
 imap `8 ₈
 imap `9 ₉
 imap `0 ₀
-imap `* →
+imap ``1 ¹
+imap ``2 ²
+imap ``3 ³
+imap ``4 ⁴
+imap ``5 ⁵
+imap ``6 ⁶
+imap ``7 ⁷
+imap ``8 ⁸
+imap ``9 ⁹
+imap ``0 ⁰
+imap ``+ ⁺
+imap `++ ⁺
+imap ``- ⁻
+imap `-- ⁻
+imap `` →
+imap `a (aq)
+imap `g (g)
+imap `l (l)
+imap `o °
+imap `s (s)
+imap `h2o H₂O
+imap `h3o+ H₃O⁺
 
 " chemistry
 digraph ~~ 8652 "⇌

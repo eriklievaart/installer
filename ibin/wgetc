@@ -19,18 +19,22 @@ if [ "$1" = "-i" ]; then
 	shift
 fi
 url="$1"
+destination="$2"
+if [ -d "$2" ]; then
+	destination="$2/${url##*/}"
+fi
 
-if [ ! -f "$2" ]
+if [ ! -f "$destination" ]
 then
-	parents "$2"
-	wget "$url" -O "$2" && errors=false || die "wget error on '$url'"
+	parents "$destination"
+	wget "$url" -O "$destination" && errors=false || die "wget error on '$url'"
 fi
 
 # delete cached file if it is empty
-size=$(wc -c < "$2")
+size=$(wc -c < "$destination")
 if [ $size -le 0 ]
 then
-	rm "$2"
+	rm "$destination"
 	if [ "$errors" = "true" ]; then
 		die "downloaded file is empty: '$url'"
 	else
@@ -38,7 +42,7 @@ then
 	fi
 fi
 
-downloaded=$2
+downloaded=$destination
 shift 2
 for file in "$@"
 do

@@ -1,6 +1,7 @@
 #!/bin/dash
 
-channels=$(pacmd list-sinks | sed '/name:/!d;s/[^<]*<alsa_output[.]//;s/[.][^.]*>$//' | nl -v 0)
+sed="/index:/{s/[^0-9]*//;N;s/[^0-9]*<alsa_output[.]/ /;s/[.][^.]*>$//;p}"
+channels=$(pacmd list-sinks | grep 'index:' -A 1 | sed -n "$sed")
 
 if [ "$1" = "" ]; then
 	echo "$channels"
@@ -14,6 +15,7 @@ fi
 
 selected=$(echo "$channels" | grep -i "$1")
 if [ $(echo "$selected" | wc -l ) -eq 1 ]; then
+	echo "selected: $selected"
 	index=$(echo "$selected" | awk '{print $1}')
 	pacmd set-default-sink $index
 else
