@@ -1,17 +1,20 @@
 #!/bin/dash
 # script to run git commands on multiple git repos simultaneously
 
-# usage:
-#     gits → show listing of all repo's and their commit status
-#     gits + [command] → ALL repos: run git command
-#     gits + acp [message] → ALL repos: execute add --all; commit -m "$message"; push
-#
-#     gits [project] → repo show full status and optional diff
-#     gits [project] [command] → repo execute regular git command
-#     gits [project] acp → repo execute add --all; commit; push
-#     gits [project] acp [message] → repo execute add --all; commit -m "$message"; push
-#     gits [project] untracked → repo view new files not shown in git diff
-#     gits [project] config → edit git config for repo
+
+help() {
+	echo ' usage:'
+	echo "     gits → show listing of all repo's and their commit status"
+	echo '     gits + [command] → ALL repos: run git command'
+	echo '     gits + acp [message] → ALL repos: execute add --all; commit -m "$message"; push'
+	echo ''
+	echo '     gits [project] → repo show full status and optional diff'
+	echo '     gits [project] [command] → repo execute regular git command'
+	echo '     gits [project] acp → repo execute add --all; commit; push'
+	echo '     gits [project] acp [message] → repo execute add --all; commit -m "$message"; push'
+	echo '     gits [project] untracked → repo view new files not shown in git diff'
+	echo '     gits [project] config → edit git config for repo'
+}
 
 all_projects() {
 	if [ "$1" = "acp" ]; then
@@ -164,6 +167,8 @@ LAST=~/.cache/gits-last-repo
 if [ $# -eq 0 ]; then
 	all_projects
 	exit 0
+elif [ "$1" = '--help' ]; then
+	help
 elif [ "$1" = '+' ]; then
 	shift
 	all_projects "$@"

@@ -238,12 +238,14 @@ imap ``+ ⁺
 imap `++ ⁺
 imap ``- ⁻
 imap `-- ⁻
-imap `` →
+imap `* →
 imap `a (aq)
+imap `e e⁻
 imap `g (g)
 imap `l (l)
 imap `o °
 imap `s (s)
+imap `h+ H⁺
 imap `h2o H₂O
 imap `h3o+ H₃O⁺
 
