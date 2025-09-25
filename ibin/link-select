@@ -1,54 +1,85 @@
 #!/bin/perl
 use 5.26.1;
 
-my $file = '~/Development/git/cheat/links.ini';
-my $selected = `cat $file | grep name | sed 's/.*=//' | rofi -i -l 40 -dmenu -theme gruvbox-dark`;
-my @lines = `cat $file`;
-my $index = 0;
-my $browser = @ARGV ? $ARGV[0] : 'firefox';
 
+if ($#ARGV >= 0 and $ARGV[0] = "-z") {
+	my $file = '~/Development/git/gamedrive/links.txt';
+	shift @ARGV;
 
-sub try_link() {
-	say;
-	my %link = {};
+	my $selected = `cat $file | sed '/^\s*\$/d;/^#/d;s/ *[^ ]*\$//' | rofi -i -l 40 -dmenu -theme gruvbox-dark | tr -d '\r\n'`;
+	say "selected: '$selected'";
+	if ($selected eq '') {
+		exit
+	}
 
+	my $index = 0;
+	my @lines = `cat $file`;
 	while ( $index <= $#lines ) {
-		my $line = $lines[$index];
+
+		my $line = $lines[$index++];
 		chomp $line;
 
-		if ($line =~ /\s++([^=]++)=(.*+)/) {
-			say "regex match: '$1' = '$2'";
-			$link{$1} = $2;
+		my $name = $line =~ s/ +[^ ]+$//r;
+		my $url  = $line =~ s/.+ //r;
 
-		} else {
-			last; # next link
+		if ($name eq $selected) {
+			say "url: '$url'";
+			system "firefox '$url' &";
 		}
-		$index++;
 	}
-	if ($link{'name'} eq $selected) {
-		say "";
-		say "match:", $link{'name'};
-		say "user:", $link{'user'};
-		system "echo '$link{'user'}' | xclip";
-		system "$browser $link{'url'} &";
-		exit 0;
+
+
+
+
+} else {
+	my $browser = @ARGV ? $ARGV[0] : 'firefox';
+	my $file = '~/Development/git/cheat/links.ini';
+	my $index = 0;
+	my @lines = `cat $file`;
+	my $selected = `cat $file | grep name | sed 's/.*=//' | rofi -i -l 40 -dmenu -theme gruvbox-dark`;
+
+	chomp $selected;
+	say "selection: '$selected'";
+	exit 1 if ! $selected;
+
+	sub try_link() {
+		say;
+		my %link = {};
+
+		while ( $index <= $#lines ) {
+			my $line = $lines[$index];
+			chomp $line;
+
+			if ($line =~ /\s++([^=]++)=(.*+)/) {
+				say "regex match: '$1' = '$2'";
+				$link{$1} = $2;
+
+			} else {
+				last; # next link
+			}
+			$index++;
+		}
+		if ($link{'name'} eq $selected) {
+			say "";
+			say "match:", $link{'name'};
+			say "user:", $link{'user'};
+			system "echo '$link{'user'}' | xclip";
+			system "$browser '$link{'url'}' &";
+			exit 0;
+		}
+	}
+
+	sub goto_next_link() {
+		while ( $index < $#lines and index($lines[$index], '=') < 0 ) {
+			$index++;
+		}
+	}
+
+	while ( $index < $#lines ) {
+		goto_next_link();
+		try_link();
 	}
 }
 
-sub goto_next_link() {
-	while ( $index < $#lines and index($lines[$index], '=') < 0 ) {
-		$index++;
-	}
-}
-
-
-chomp $selected;
-say "selection: '$selected'";
-exit 1 if ! $selected;
-
-while ( $index < $#lines ) {
-	goto_next_link();
-	try_link();
-}
 
 

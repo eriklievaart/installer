@@ -1,0 +1,9 @@
+#!/bin/dash
+
+file=~/Development/git/gamedrive/links.txt
+
+selected=$(sed '/^#/d;s/ *[^ ]*$//' $file | rofi -i -l 40 -dmenu -theme gruvbox-dark)
+url=$(sed -n "/$selected/{s/.* //;p}" $file)
+
+firefox "$url"
+

@@ -5,7 +5,7 @@ dp -p l &
 sed -i -r '/^\s*+(cd|l[sla]( -[la]*)?|gits|history|z)\s*+$/d' ~/.bash_history &
 unclutter -idle 4 -root &
 setxkbmap -layout erik &
-xsetroot -solid "#333" &
+xsetroot -solid "#222" &
 for id in $(xinput list | grep -i touchpad | sed -r 's/.*id=([0-9]*).*/\1/'); do xinput --disable $id; done &
 rm -rf ~/.lesshst ~/.swt ~/.wget-hsts ~/.xsession-errors.old ~/.sudo_as_admin_successful &
 xset -dpms &

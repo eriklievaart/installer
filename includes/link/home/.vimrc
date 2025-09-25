@@ -75,6 +75,7 @@ nnoremap          <space>b       :leftabove vnew         <CR><C-W><C-W>
 nnoremap          <space>c       :normal      <C-V><C-W>c<CR>
 nnoremap          <space>d       :bd                     <CR>
 nnoremap          <space>f       :silent! %!fmttbl       <CR>
+nnoremap          <space>h       :split                  <CR>
 nnoremap          <space>r       :w                      <CR>:compiler vimtastic <CR>:set shellpipe= <CR>:set makeef=/tmp/build/vimtastic.log <CR>:make <CR>
 nnoremap          <space>s       :split                  <CR>
 nnoremap          <space>t       :vert terminal          <CR>
@@ -177,9 +178,6 @@ vnoremap <S-Tab>  <
 vnoremap <space>y "ay
 vnoremap <space>p "ap
 
-" nmap # :normal I#<enter>
-nmap # @='I#<C-V><esc>j'<enter>
-
 
 " @auto commands@
 " delete trailing whitespace on save
@@ -188,7 +186,7 @@ autocmd BufNewFile,BufRead * if getline(1) == '#!/bin/dash' | set filetype=sh | 
 autocmd BufWritePost *.latex :call system('snuggle ' . shellescape(expand('%:p')))
 
 autocmd BufNewFile,BufRead *.snippet set syntax=html
-autocmd BufWritePost *.snippet :call system('curl -s http://localhost:8000/web/push/body -X POST -d "$(cat ' . shellescape(expand('%:p')) . ')" &')
+autocmd BufWritePost *.snippet,*.svg :call system('curl -s http://localhost:8000/web/push/body -X POST -d "$(cat ' . shellescape(expand('%:p')) . ')" &')
 autocmd BufWritePost *.js :call system('curl -s http://localhost:8000/dev/notify -X POST &')
 autocmd BufWritePost *.css :call system('curl -s http://localhost:8000/dev/notify -X POST &')
 autocmd BufWritePost *.hashdoc :call system('curl -s http://localhost:8000/dev/notify -X POST &')

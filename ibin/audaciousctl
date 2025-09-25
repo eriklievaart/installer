@@ -76,11 +76,21 @@ update() {
 	echo "audacious root dir config file: $config"
 	if [ -f $config ]; then
 		root=$([ -f $config ] && head -n 1 $config || echo "")
-		find "$root" -type f > $filelist
+		find "$root" -type f | grep -v 'jpg$' | grep -v 'png$' > $filelist
 	else
 		echo "root not set!"
 	fi
 }
+
+if [ "$1" = "" ]; then
+	echo "usage"
+	echo "	audaciousctl -d"
+	echo "	audaciousctl -f"
+	echo "	audaciousctl -u"
+	echo "	audaciousctl -l"
+	echo "	audaciousctl [dir]"
+	exit
+fi
 
 case "$1" in
 	-d) select dir ;;

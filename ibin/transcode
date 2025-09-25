@@ -1,0 +1,148 @@
+#!/bin/dash
+#
+# resolution  lq  mq   hq
+#  640:360   400  600 1000
+#  854:480   750 1200 1800
+# 1280:720  2000 3000 4500
+
+set -e
+
+lq="-b:v 2000000"
+mq="-b:v 3000000"
+hq="-b:v 4500000"
+
+ss=
+to=
+chunk=
+resolution="720p"
+bitrate="hq"
+video=""
+speedup=
+
+# show usage
+if [ $# -eq 0 ]; then
+	echo "usage:"
+	echo "	[0-9.;]+          chunk timestamp extraction"
+	echo "  360p|480p|720p    resolution"
+	echo "	lq|hq|oq          video quality"
+	echo "	[0-9]*.[0-9]*x    speedup"
+	exit 0
+fi
+
+# process custom CLI arguments
+for arg in $@
+do
+	if [ $arg = "hq" ]; then
+		bitrate="hq"
+		shift
+		continue
+	fi
+	if [ $arg = "mq" ]; then
+		bitrate=mq
+		shift
+		continue
+	fi
+	if [ $arg = "lq" ]; then
+		bitrate=lq
+		shift
+		continue
+	fi
+	if [ $arg = "oq" ]; then
+		bitrate=
+		shift
+		continue
+	fi
+	# chunk extraction
+	if echo "$arg" | grep -q "^[0-9:.]\+$"; then
+		if [ -z "$ss" ]; then
+			ss="$arg"
+		else
+			to="$arg"
+		fi
+		shift
+		continue
+	fi
+	# resolution
+	if echo "$arg" | grep -q "^[0-9.]\+p$"; then
+		resolution="$arg"
+		shift
+		continue
+	fi
+	# speedup
+	if echo "$arg" | grep -q "^[0-9.]\+x$"; then
+		x=$(echo "$arg" | sed 's/x//g')
+		speedup=",setpts=1/$x*PTS -filter:a atempo=$x"
+		shift
+		continue
+	fi
+	break
+done
+
+for arg in $@
+do
+	if [ ! -f "$arg" ]; then
+		echo "$arg is not a file!"
+		exit 44
+	fi
+done
+
+
+
+
+p360() {
+	case "$bitrate" in
+		lq) bitrate="-b:v  400000";;
+		mq) bitrate="-b:v  600000";;
+		hq) bitrate="-b:v 1000000";;
+	esac
+	video="-vf scale=640:360$speedup"
+}
+
+p480() {
+	case "$bitrate" in
+		lq) bitrate="-b:v  600000";;
+		mq) bitrate="-b:v 1200000";;
+		hq) bitrate="-b:v 2400000";;
+	esac
+	video="-vf scale=854:480$speedup"
+}
+
+p720() {
+	case "$bitrate" in
+		lq) bitrate="-b:v 2000000";;
+		mq) bitrate="-b:v 3000000";;
+		hq) bitrate="-b:v 4500000";;
+	esac
+	video="-vf scale=1280:720$speedup"
+}
+
+case "$resolution" in
+	360p) p360;;
+	480p) p480;;
+	720p) p720;;
+esac
+
+
+
+
+echo "$@"
+if [ "$ss" != "" ]; then
+	chunk="-ss $ss"
+	if [ "$to" != "" ]; then
+		chunk="$chunk -to $to"
+	fi
+fi
+
+for file in $@
+do
+	if echo "$file" | grep -q transcoded; then continue; fi
+	base="${file%.*}"
+	ext="${file##*.}"
+	transcoded="$resolution-$file"
+	[ -f "$transcoded" ] && rm "$transcoded"
+	set -x
+	ffmpeg -i "$file" $chunk $bitrate $video "$transcoded"
+done
+
+ls -lh
+
