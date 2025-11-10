@@ -136,7 +136,7 @@ imap <S-Tab>   <C-o><<
 
 imap <C-B>     <C-o>dB
 imap <C-F>     <C-o>dW
-imap <C-J>     </><esc>mcT<;yt>`cPla
+imap <C-J>     </><esc>mcT<;yiw`cPla
 imap <C-_>     <C-K>hh
 
 imap <F1>      <C-o><F1>

@@ -34,7 +34,7 @@ alias vimrc='vim ~/.vimrc'
 alias write='vim "+set wrap" "+set spell"'
 complete -F _filedir_xspec write            # fix autocomplete
 
-alias dark='cd ~/Development/git/; cd $(find -name "dark-*"); vim *.txt'
+alias dark='cd $(find ~/Development/git/ -type d -name "ds2"); vim *.txt'
 
 alias dl='yt'
 alias dlr='yt --resume'
