@@ -47,7 +47,7 @@ set splitbelow
 set splitright
 
 set path=.,~/Development/git/installer/ibin,~/Development/git/cheat/**,**
-set suffixesadd=.java,.txt,.sh,.hashdoc
+set suffixesadd=.java,.txt,.sh,.hashdoc,.ftlh
 
 " visit all buffers and do nothing; removes unread buffer warning
 silent bufdo normal! \<nop>
@@ -59,7 +59,7 @@ silent buffer 1
 nmap <silent> q: <Nop>
 " make Y consistent with D and C (yank til end of line)
 nmap <silent> Y y$
-nmap <silent> Q :bd<CR>
+nmap <silent> Q :bwipeout<CR>
 " nmap S :w <bar> :source %<CR>
 
 nmap g<left>  g0
@@ -181,11 +181,12 @@ vnoremap <space>p "ap
 
 " @auto commands@
 " delete trailing whitespace on save
-autocmd BufWritePre * :%s/\s\+$//e
-autocmd BufNewFile,BufRead * if getline(1) == '#!/bin/dash' | set filetype=sh | endif
+autocmd BufWritePre * if &filetype != 'markdown' | :%s/\s\+$//e
+autocmd BufWinEnter * if getline(1) == '#!/bin/dash' | setfiletype sh | endif
 autocmd BufWritePost *.latex :call system('snuggle ' . shellescape(expand('%:p')))
 
-autocmd BufNewFile,BufRead *.snippet set syntax=html
+autocmd BufWinEnter *.snippet,*.ftlh setfiletype html
+autocmd BufWinEnter *.svg setfiletype svg
 autocmd BufWritePost *.snippet,*.svg :call system('curl -s http://localhost:8000/web/push/body -X POST -d "$(cat ' . shellescape(expand('%:p')) . ')" &')
 autocmd BufWritePost *.js :call system('curl -s http://localhost:8000/dev/notify -X POST &')
 autocmd BufWritePost *.css :call system('curl -s http://localhost:8000/dev/notify -X POST &')

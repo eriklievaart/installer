@@ -97,6 +97,7 @@ update() {
 	value="$(cat $brightness)"
 	for display in $(xrandr | sed -nr '/ connected/{s/ .*//;p}')
 	do
+		echo "xrandr --output $display --brightness '$value' --gamma '1.0:0.74:0.5'"
 		xrandr --output $display --brightness "$value" --gamma "1.0:0.74:0.5"
 	done
 }

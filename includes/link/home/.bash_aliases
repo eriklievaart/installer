@@ -54,5 +54,7 @@ alias targets='sed -n "/target/{s/.*name=\"//;s/\".*//;p}" ~/Development/git/ant
 
 alias v='killall vlc; nohup vlc --quiet "$(ls | sed "/part$/d" | sort -R | tail -n 1)" > /dev/null &'
 
+alias http="python3 -m http.server"
 alias ryujinx=/home/eazy/Applications/nintendo/ryujinx/Ryujinx.sh
+alias sw="cd $IBIN/python; python3 stopwatch.py"
 

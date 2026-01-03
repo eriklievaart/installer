@@ -35,10 +35,16 @@ swapconfig=/etc/sysctl.d/99-swappiness.conf
 [ -f $swapconfig ] || echo "vm.swappiness=10" > $swapconfig
 
 
-# convenience script for jumping to directories
+# convenience additions to the .bashrc for user and root
 zbashrc() {
 	home=${1:?}
 	bashrc=${home:?}/.bashrc
+	if ! cat $bashrc | grep -q 'mkcd()'; then
+		echo "" >> $bashrc
+		echo 'mkcd() {' >> $bashrc
+		echo '	mkdir -p "$1" && cd "$1"' >> $bashrc
+		echo '}' >> $bashrc
+	fi
 	if ! cat $bashrc | grep -q '/opt/q/q.sh'; then
 		echo "" >> $bashrc
 		echo ". $Z_SCRIPT" >> $bashrc

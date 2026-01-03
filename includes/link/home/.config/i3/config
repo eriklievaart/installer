@@ -37,7 +37,8 @@ bindsym $sup+g exec link-select
 bindsym $sup+i exec gvim ~/.config/i3/config
 bindsym $sup+l exec links
 bindsym $sup+m exec speedcrunch
-bindsym $sup+p exec pcmanfm
+bindsym $sup+o exec pcmanfm
+bindsym $sup+p exec thunar
 bindsym $sup+q kill
 bindsym $sup+r exec rofi -show run -theme sidebar
 bindsym $sup+s exec scrot -u ~/Pictures/$(date +%s).png
