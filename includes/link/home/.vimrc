@@ -1,8 +1,5 @@
 
 
-
-
-
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_statusline_ontop=0
 let g:airline_theme='powerlineish'
@@ -18,6 +15,8 @@ au FileType * hi MatchParen ctermbg=darkgray
 
 " use syntax highlighting on search
 syntax on
+
+
 
 " don't highlight matching parenthesis
 let loaded_matchparen = 1
@@ -70,6 +69,7 @@ nmap g*       g/<cr>:copen<cr>
 nnoremap !x :.!sh<CR>
 nnoremap !p !ipsh<CR>
 
+nnoremap          <space>3       miT#yiw`ia</#<esc>pa><esc>F<
 nmap              <space>4       <space>$                <CR>
 nnoremap          <space>b       :leftabove vnew         <CR><C-W><C-W>
 nnoremap          <space>c       :normal      <C-V><C-W>c<CR>
