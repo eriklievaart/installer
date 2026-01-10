@@ -1,0 +1,47 @@
+#!/bin/dash
+
+build=/tmp/build/darkdoc/spool
+output="$build"/output.html
+css=~/.config/darkdoc/style.css
+endpoint=http://localhost:8000/web/push/body
+
+update() {
+	if [ ! -f "$1" ]; then
+		echo "*error*: file does not exist: '$1'"
+		return
+	fi
+	asciidoctor "$1" -o "$output"
+	if [ -f "$css" ]; then
+		curl -s "$endpoint" -X POST -d "<style>$(cat "$css")</style>$(sed '0,/<body/d;/<\/body>/,$d' "$output")"
+	else
+		echo "*error*: file not found → $css"
+	fi
+}
+
+stamp() {
+	stat -c "%y" "$1"
+}
+
+watch() {
+	last=""
+	while true
+	do
+		modified=$(stamp "$1")
+		if [ "$last" != "$modified" ]; then
+			echo "refresh $(date)"
+			last="$modified"
+			update "$1"
+		fi
+		sleep 0.1
+	done
+}
+
+
+if [ "$1" = "" ]; then
+	echo "*error*: missing argument document"
+elif [ "$1" = "-w" ]; then
+	watch "$2"
+else
+	update "$1"
+fi
+
