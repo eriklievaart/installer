@@ -1,8 +1,0 @@
-#!/bin/dash
-
-pkill -i -f steam
-sleep 1
-pkill -i -f -9 steam
-
-
-

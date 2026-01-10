@@ -57,4 +57,5 @@ alias v='killall vlc; nohup vlc --quiet "$(ls | sed "/part$/d" | sort -R | tail 
 alias http="python3 -m http.server"
 alias ryujinx=/home/eazy/Applications/nintendo/ryujinx/Ryujinx.sh
 alias sw="cd $IBIN/python; python3 stopwatch.py"
+alias sw6="cd $IBIN/python; python3 stopwatch.py -a 6:"
 

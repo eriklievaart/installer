@@ -85,6 +85,8 @@ nnoremap          <space>.       :cnext                  <CR>
 nnoremap          <space>,       :cprevious              <CR>
 nnoremap          <space>/       :copen                  <CR>
 nnoremap          <space>$       :%s/$\(\w\+\)/${\1:?}/gc<CR>
+nnoremap          <space>[       :ALEPrevious            <CR>
+nnoremap          <space>]       :ALENext                <CR>
 nnoremap <silent> <space><space> :nohlsearch             <CR>
 nnoremap <silent> <space><left>  g0
 nnoremap <silent> <space><right> g$
