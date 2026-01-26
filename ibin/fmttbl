@@ -7,81 +7,83 @@ import sys
 # data structure for storing a hashdoc table
 class Table:
 	def __init__(self):
-		self.rows = [];
-		self.lengths = [];
+		self.rows = []
+		self.trailing = []
+		self.lengths = []
 
-	def addRow(self, cells):
-		self.rows.append(cells);
+	def addRow(self, cells, trail):
+		self.rows.append(cells)
+		self.trailing.append(trail)
 		for i in range(0, len(cells)):
 			if i == len(self.lengths):
-				self.lengths.append(cells[i].length());
+				self.lengths.append(cells[i].length())
 			elif cells[i].length() > self.lengths[i]:
-				self.lengths[i] = cells[i].length();
+				self.lengths[i] = cells[i].length()
 
 	def dump(self):
-		for row in self.rows:
-			line = '';
-			i = 0;
+		for r, row in enumerate(self.rows):
+			line = ''
+			i = 0
 			if row[0].tag == 'th':
-				line += '`';
+				line += '`'
 				while i < len(row) and row[i].tag == 'th':
 					line += ' ' + row[i].body.ljust(self.lengths[i]) + ' `'
-					i += 1;
+					i += 1
 			if i < len(row):
-				line += '|';
+				line += '|'
 				while i < len(row):
 					line += ' ' + row[i].body.ljust(self.lengths[i]) + ' |'
-					i += 1;
-			print(line);
+					i += 1
+			print(line + self.trailing[r])
 
 
 # datastructure for storing a cell in a hashdoc table
 class Cell:
 	def __init__(self, body, tag):
 		self.tag = tag
-		self.body = body.rstrip();
+		self.body = body.rstrip()
 		if(self.body.startswith(' ')):
-			self.body = self.body[1:];
+			self.body = self.body[1:]
 
 	def length(self):
-		return len(self.body);
+		return len(self.body)
 
 
 # format a table and print it
 def print_formatted_table(lines):
 	if len(lines) == 0:
-		return;
+		return
 
 	if len(lines) == 1:
-		sys.stdout.write(lines[0]);
-		return;
+		sys.stdout.write(lines[0])
+		return
 
-	table = Table();
+	table = Table()
 	for line in lines:
-		cells = [];
-		th = re.split('[`]', line.strip());
+		cells = []
+		th = re.split('[`]', line.strip())
 		for i in range(1, len(th)-1):
-			cells.append(Cell(th[i], 'th'));
+			cells.append(Cell(th[i], 'th'))
 
-		tds = re.sub('/^.*`/', '', line.strip())
-		td = re.split('[|]', tds.strip());
+		tds = re.sub('^.*`', '', line.strip())
+		td = re.split('[|]', tds.strip())
 		for i in range(1, len(td)-1):
-			cells.append(Cell(td[i], 'td'));
+			cells.append(Cell(td[i], 'td'))
 
-		table.addRow(cells);
+		table.addRow(cells, td[-1])
 
-	table.dump();
+	table.dump()
 
 
-chunk = [];
+chunk = []
 for line in sys.stdin:
-	trimmed = line.strip();
+	trimmed = line.strip()
 	if(re.search('^[`|].*[`|]', trimmed)):
-		chunk.append(line);
+		chunk.append(line)
 	else:
-		print_formatted_table(chunk);
-		chunk = [];
-		print(line, end='');
+		print_formatted_table(chunk)
+		chunk = []
+		print(line, end='')
 
-print_formatted_table(chunk);
+print_formatted_table(chunk)
 

@@ -2,7 +2,7 @@
 
 build=/tmp/build/darkdoc/spool
 output="$build"/output.html
-css=~/.config/darkdoc/style.css
+css=$IBIN/data/darkdoc/style.css
 endpoint=http://localhost:8000/web/push/body
 
 update() {
@@ -18,29 +18,41 @@ update() {
 	fi
 }
 
+document() {
+	echo "$1"
+	asciidoctor "$1" -o "$output"
+	pandoc "$output" -o document.docx
+}
+
 stamp() {
 	stat -c "%y" "$1"
 }
 
 watch() {
-	last=""
+	lastcss=""
+	lastadoc=""
 	while true
 	do
-		modified=$(stamp "$1")
-		if [ "$last" != "$modified" ]; then
+		cssstamp=$(stamp "$css")
+		adocstamp=$(stamp "$1")
+		if [ "$lastadoc" != "$adocstamp" -o "$lastcss" != "$cssstamp" ]; then
 			echo "refresh $(date)"
-			last="$modified"
+			lastcss="$cssstamp"
+			lastadoc="$adocstamp"
 			update "$1"
 		fi
 		sleep 0.1
 	done
 }
 
+mkdir -p "$build"
 
 if [ "$1" = "" ]; then
 	echo "*error*: missing argument document"
 elif [ "$1" = "-w" ]; then
 	watch "$2"
+elif [ "$1" = "-d" ]; then
+	document "$2"
 else
 	update "$1"
 fi

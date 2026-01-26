@@ -1,6 +1,5 @@
 
 import os
-import re
 import select
 import sys
 import termios
@@ -29,7 +28,7 @@ class Stopwatch:
 
 	def seconds(self, string):
 		split = string.split(':')
-		split.reverse();
+		split.reverse()
 		seconds = int(split[0]) if split[0] else 0
 		if len(split) > 1 and split[1]:
 			seconds += 60 * int(split[1])
@@ -65,20 +64,20 @@ class Stopwatch:
 		return self.alarm < self.elapsed()
 
 	def timestamp(self):
-		time = self.elapsed() if self.alarm == 0 else self.alarm - self.elapsed()
-		if time < 0:
+		seconds = self.elapsed() if self.alarm == 0 else self.alarm - self.elapsed()
+		if seconds < 0:
 			return "00:00:00"
 
-		h = time // 3600
-		m = time % 3600 // 60
-		s = time % 60
+		h = seconds // 3600
+		m = seconds % 3600 // 60
+		s = seconds % 60
 		return f"{h:02d}:{m:02d}:{s:02d}"
 
 def clear_screen():
 	os.system('cls' if os.name == 'nt' else 'clear')
 
 def key_pressed():
-	dr, dw, de = select.select([sys.stdin], [], [], 0)
+	dr = select.select([sys.stdin], [], [], 0)[0]
 	return dr
 
 def load_ascii_numbers(file):
@@ -105,7 +104,7 @@ def load_ascii_numbers(file):
 
 def center(lines):
 	sw = os.get_terminal_size().columns
-	result = [];
+	result = []
 
 	maxlw = 0
 	for line in lines:
@@ -122,7 +121,7 @@ def print_clock(sw, numbers):
 	height = len(next(iter(numbers.values())))
 	clock_lines = [""] * height
 
-	print("timestamp: " + sw.timestamp());
+	print("timestamp: " + sw.timestamp())
 	for char in sw.timestamp():
 		digit_block = numbers.get(char)
 		for i in range(height):
@@ -135,9 +134,9 @@ def print_clock(sw, numbers):
 		if sw.isOdd():
 			print("\n\n\n\n\n")
 			return
-		print("\033[31m", end="");
+		print("\033[31m", end="")
 	elif sw.isRunning():
-		print("\033[32m", end="");
+		print("\033[32m", end="")
 	for line in centered:
 		print(line)
 	print("\033[0m")
@@ -149,16 +148,17 @@ def main():
 	fd = sys.stdin.fileno()
 	old_settings = termios.tcgetattr(fd)
 	tty.setcbreak(fd)
+	ring = 0.9
 
 	try:
 		sw = Stopwatch()
 		sw.startTimer()
 		if len(sys.argv) > 1:
 			if sys.argv[1] == "-a":
-				sw.setAlarm(":".join(sys.argv[2:]));
+				sw.setAlarm(":".join(sys.argv[2:]))
 			else:
 				sw.init(":".join(sys.argv[1:]))
-		last = None;
+		last = None
 
 		while True:
 			if key_pressed():
@@ -166,13 +166,16 @@ def main():
 				if c.lower() == 'p':
 					sw.toggleTimer()
 				if c.lower() == 'q':
-					exit(0)
+					sys.exit(0)
 
-			stamp = sw.timestamp();
+			stamp = sw.timestamp()
 			if stamp != last:
 				print_clock(sw, numbers)
 			if sw.isRinging():
 				os.system("paplay /usr/share/sounds/freedesktop/stereo/bell.oga")
+				if ring > 0:
+					time.sleep(ring)
+					ring = ring - 0.05
 
 			time.sleep(0.1)
 

@@ -1,4 +1,10 @@
 
+let g:ale_python_pylint_options = '--disable=missing-docstring,C0103,C0304,C0305,R1705 --indent-string="\t"'
+let g:ale_linters = {
+\   'java': [],
+\   'python': ['pylint'],
+\}
+
 
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_statusline_ontop=0
@@ -46,7 +52,7 @@ set splitbelow
 set splitright
 
 set path=.,~/Development/git/installer/ibin,~/Development/git/cheat/**,**
-set suffixesadd=.java,.txt,.sh,.hashdoc,.ftlh
+set suffixesadd=.java,.txt,.sh,.hashdoc,.ftlh,.js,.css
 
 " visit all buffers and do nothing; removes unread buffer warning
 silent bufdo normal! \<nop>
@@ -195,7 +201,6 @@ autocmd BufWritePost *.css :call system('curl -s http://localhost:8000/dev/notif
 autocmd BufWritePost *.hashdoc :call system('curl -s http://localhost:8000/dev/notify -X POST &')
 autocmd BufRead *.hashdoc silent! %!fmttbl
 
-autocmd Filetype css compiler csslint
 autocmd Filetype conf set makeprg=/tmp/a/iaac | set errorformat=*error*\ %f:%l%m
 
 function! ToggleQuickFix()

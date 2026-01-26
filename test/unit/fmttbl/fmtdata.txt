@@ -95,6 +95,18 @@ not a table
 | 4 | d |
 
 
+@test trailing text
+#table#
+|1|a| keep
+|2|b| me
+#/table#
+
+#table#
+| 1 | a | keep
+| 2 | b | me
+#/table#
+
+
 
 
 

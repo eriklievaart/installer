@@ -1,0 +1,15 @@
+{
+	"ignore": [
+		"known-properties",
+		"order-alphabetical",
+		"ids",
+		"zero-units",
+		"overqualified-elements",
+		"qualified-headings",
+		"unique-headings"
+	],
+	"warnings": [
+	],
+	"errors": [
+	]
+}
