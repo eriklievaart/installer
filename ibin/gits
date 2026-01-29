@@ -9,11 +9,11 @@ help() {
 	echo '     gits + acp [message] → ALL repos: execute add --all; commit -m "$message"; push'
 	echo ''
 	echo '     gits [project] → repo show full status and optional diff'
-	echo '     gits [project] [command] → repo execute regular git command'
 	echo '     gits [project] acp → repo execute add --all; commit; push'
 	echo '     gits [project] acp [message] → repo execute add --all; commit -m "$message"; push'
 	echo '     gits [project] untracked → repo view new files not shown in git diff'
 	echo '     gits [project] config → edit git config for repo'
+	echo '     gits [project] [command] → repo execute regular git command'
 }
 
 all_projects() {

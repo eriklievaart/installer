@@ -1,10 +1,11 @@
 
 let g:ale_python_pylint_options = '--disable=missing-docstring,C0103,C0304,C0305,R1705 --indent-string="\t"'
+let g:ale_css_mycsslint_executable = 'mycsslint'
+
 let g:ale_linters = {
 \   'java': [],
 \   'python': ['pylint'],
 \}
-
 
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_statusline_ontop=0
@@ -52,7 +53,7 @@ set splitbelow
 set splitright
 
 set path=.,~/Development/git/installer/ibin,~/Development/git/cheat/**,**
-set suffixesadd=.java,.txt,.sh,.hashdoc,.ftlh,.js,.css
+set suffixesadd=.java,.txt,.sh,.hashdoc,.ftlh,.js,.css,.ini
 
 " visit all buffers and do nothing; removes unread buffer warning
 silent bufdo normal! \<nop>
@@ -79,9 +80,10 @@ nnoremap          <space>3       miT#yiw`ia</#<esc>pa><esc>F<
 nmap              <space>4       <space>$                <CR>
 nnoremap          <space>b       :leftabove vnew         <CR><C-W><C-W>
 nnoremap          <space>c       :normal      <C-V><C-W>c<CR>
-nnoremap          <space>d       :bd                     <CR>
+nnoremap          <space>d       :w                      <CR>:!clear; antastic -p $PWD<CR>
 nnoremap          <space>f       :silent! %!fmttbl       <CR>
 nnoremap          <space>h       :split                  <CR>
+nnoremap          <space>o       yiw:find <C-R>"         <CR>
 nnoremap          <space>r       :w                      <CR>:compiler vimtastic <CR>:set shellpipe= <CR>:set makeef=/tmp/build/vimtastic.log <CR>:make <CR>
 nnoremap          <space>s       :split                  <CR>
 nnoremap          <space>t       :vert terminal          <CR>
@@ -201,6 +203,8 @@ autocmd BufWritePost *.css :call system('curl -s http://localhost:8000/dev/notif
 autocmd BufWritePost *.hashdoc :call system('curl -s http://localhost:8000/dev/notify -X POST &')
 autocmd BufRead *.hashdoc silent! %!fmttbl
 
+autocmd Filetype css set makeprg=mycsslint\ %:S | set errorformat=%f:%l%m
+" autocmd Filetype css compiler mycsslint
 autocmd Filetype conf set makeprg=/tmp/a/iaac | set errorformat=*error*\ %f:%l%m
 
 function! ToggleQuickFix()

@@ -33,7 +33,7 @@ if ($#ARGV >= 0 and $ARGV[0] = "-z") {
 
 } else {
 	my $browser = @ARGV ? $ARGV[0] : 'firefox';
-	my $file = '~/Development/git/cheat/links.ini';
+	my $file = '~/Development/git/drive/links.ini';
 	my $index = 0;
 	my @lines = `cat $file`;
 	my $selected = `cat $file | grep name | sed 's/.*=//' | rofi -i -l 40 -dmenu -theme gruvbox-dark`;

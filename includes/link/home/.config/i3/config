@@ -128,7 +128,7 @@ bindsym $sup+$shift+Right move workspace to output right
 bindsym $sup+$shift+Down move down
 bindsym $sup+$shift+Up move up
 
-bindsym $sup+$ctrl+a           exec audtool --playlist-auto-advance-toggle && exec notify-send "advance: $(audtool --playlist-auto-advance-status)"
+bindsym $sup+$ctrl+a           exec sink audioengine
 bindsym $sup+$ctrl+h           exec sink logitech
 bindsym $sup+$ctrl+i           exec notify-send "$(audtool --current-song-filename | sed 's:.*/::')"
 bindsym $sup+$ctrl+l           exec audaciousctl -l

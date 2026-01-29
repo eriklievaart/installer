@@ -7,6 +7,7 @@ use 5.26.1;
 
 my $root = "$ENV{'HOME'}/.cache/q";
 my $cache = "$root/visited.txt";
+my $priority_file = "$ENV{HOME}/.config/q/prioritize.txt";
 my $sensitive = 1;
 my $local = 0;
 system "mkdir -p $root";
@@ -33,6 +34,25 @@ sub paths() {
 		say "error message: $!";
 		die "unable to open file $cache";
 	}
+}
+
+# returns all prioritized locations
+sub priority_list() {
+    my @result = ();
+    return @result if(! -f $priority_file);
+    my $noerror = open FILE, '<', $priority_file;
+    if($noerror) {
+        while (<FILE>) {
+            next if /^#/;
+            next if /^\s*$/;
+            push @result, trim($_);
+        }
+        close FILE;
+        return @result;
+    } else {
+        say "error message: $!";
+        die "unable to open file $cache";
+    }
 }
 
 sub update {
@@ -104,9 +124,9 @@ sub rm_missing {
 	return @_;
 }
 
-# if there is an exact match, move that one to last
-sub prioritize {
-	my $tail = @ARGV[$#ARGV] =~ s|.*/|/|r;
+# pick exact match, starts with, finally any other match
+sub filter_most_specific {
+	my $last = @ARGV[$#ARGV] =~ s|.*/|/|r;
 
 	my @paths = @_;
 	my @filter = ();
@@ -114,18 +134,44 @@ sub prioritize {
 	# exact match in name
 	for (@paths) {
 		my $name = $_ =~ s|.*/||r;
-		push @filter, $_ if $name eq $tail;
+		push @filter, $_ if $name eq $last;
 	}
 	return @filter if $#filter >= 0;
 
-	# starts with
+	# name starts with
 	for (@paths) {
 		my $name = $_ =~ s|.*/||r;
-		push @filter, $_ if index($name, $tail) == 0;
+		push @filter, $_ if index($name, $last) == 0;
 	}
 	return @filter if $#filter >= 0;
 
 	return @paths;
+}
+
+# sort by length descending (longest first)
+sub shortest {
+    my (@arr) = @_;
+    return reverse sort { length($a) <=> length($b) } @arr;
+}
+
+# prioritize directories configured in home dir
+sub configured_order {
+    my @paths = @_;
+    my @prioritized = priority_list;
+    my @head = ();
+    my @tail = ();
+
+    ITEM:
+    for my $path (@paths) {
+        for my $prio (@prioritized) {
+            if (index($path, $prio) == 0) {
+                push @tail, $path;
+                next ITEM;
+            }
+        }
+        push @head, $path;
+    }
+    return (@head, @tail);
 }
 
 # select the most appropriate match based on the passed arguments
@@ -140,7 +186,9 @@ sub filter {
 		@paths = filter_parameters(@paths);
 		@paths = filter_tail(@paths);
 		@paths = rm_missing(@paths);
-		@paths = prioritize(@paths);
+        @paths = filter_most_specific(@paths);
+		@paths = shortest(@paths);
+        @paths = configured_order(@paths);
 		say "";
 	}
 	say $_ for(@paths);

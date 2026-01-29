@@ -17,7 +17,7 @@ open_found() {
 }
 
 cheat() {
-	cd ~/Development/git/cheat/files
+	cd ~/Development/git/cheat
 	exec vim $(find . -type f -name "*$1*")
 }
 

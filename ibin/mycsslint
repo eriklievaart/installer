@@ -1,0 +1,37 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+
+# Check that a filename is provided
+my $file = shift or die "Usage: $0 <css-file>\n";
+
+open my $fh, '<', $file or die "Cannot open $file: $!\n";
+
+my $line_num = 0;
+my $open_braces = 0;
+
+while (my $line = <$fh>) {
+    $line_num++;
+
+	# skip comments and blank lines
+    chomp $line;
+    $line =~ s:/\*.*\*/::g;
+    $line =~ s/^\s+|\s+$//g;
+    next if $line eq '';
+
+    # Count braces
+    $open_braces++ while $line =~ /\{/g;
+    $open_braces-- while $line =~ /\}/g;
+
+    # Warn if missing semicolon at end of property (ignore lines ending with { or })
+	if ($open_braces > 0) {
+		if ($line =~ /:/ && $line !~ /;\s*$/ && $line !~ /\{$/ && $line !~ /\}$/) {
+			print "$file:$line_num:1: W: Missing semicolon\n";
+		}
+	}
+}
+
+# Warn if unmatched braces
+if ($open_braces != 0) {
+    print "$file:0:0: E: Unmatched braces detected\n";
+}
